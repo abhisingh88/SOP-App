@@ -1,0 +1,3 @@
+after cloning
+1. run git install command
+2. copy the html files in templates folder
