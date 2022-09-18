@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-// Login
+// Login routes
 // router.get("/user/signupPage", Cred.getSignUpPage)
 router.get("/user/loginPage", Cred.getLoginPage)
 router.get("/user/logout",auth, Cred.logoutUser)
@@ -32,17 +32,20 @@ router.get("/user/tester",auth, Manager.tester)
 router.get("/user/createUserPage",auth, Manager.createUserPage)
 
 
-// files
+// data/files uploader
 router.post("/data/itDetails", Details.itDetails)
 router.post("/data/trDetails", Details.trDetails)
 router.post("/data/piDetails", Details.piDetails)
 router.post("/data/invoiceDetails", Details.invoiceDetails)
 router.post("/user/createUser", Details.createUser)
 
-// file details
-router.get("/data/itDetailsCount",paginatedResult(UserDetail), Details.invoiceDetailsRes)
+// paginated file details
+router.get("/data/itDetailsCount",paginatedResult(UserDetail), Details.itDetailsRes)
+router.get("/data/piDetailsCount",paginatedResult(UserDetail), Details.piDetailsRes)
+router.get("/data/trDetailsCount",paginatedResult(UserDetail), Details.trDetailssRes)
+router.get("/data/invoiceDetailsCount",paginatedResult(UserDetail), Details.invoiceDetailsRes)
 
-// Test List Update API
+// Test-List Update API
 
 
 

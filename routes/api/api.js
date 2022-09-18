@@ -133,6 +133,27 @@ async function invoiceDetailsRes(req, res) {
         res.status(500).send(error)
     }
 };
+async function itDetailsRes(req, res) {
+    try {
+        res.json(res.paginatedResult)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+async function piDetailsRes(req, res) {
+    try {
+        res.json(res.paginatedResult)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+async function trDetailssRes(req, res) {
+    try {
+        res.json(res.paginatedResult)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
 
 module.exports = {
     itDetails: itDetails,
@@ -140,5 +161,8 @@ module.exports = {
     createUser: createUser,
     piDetails: piDetails,
     invoiceDetails: invoiceDetails,
-    invoiceDetailsRes:invoiceDetailsRes
+    invoiceDetailsRes:invoiceDetailsRes,
+    trDetailssRes:trDetailssRes,
+    piDetailsRes:piDetailsRes,
+    itDetailsRes:itDetailsRes
 }
