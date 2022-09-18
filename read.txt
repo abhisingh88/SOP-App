@@ -1,6 +1,19 @@
 after cloning
-1. run git install command
-2. copy the html files in templates folder
+1. run "npm install" command
+2. Create database in MongoDB "SOP"
+3. Run "npm run dev"
+4. Add Director from ThunderClient or PostMan
+URL
+localhost:3000/user/createUser
 
+body
+{
+  "username":"abhi",
+  "email":"abhi@abhi.com",
+  "password":"abhi",
+  "role":"Director"
+}
 
+//Extra
+copy the html files in templates folder
 https://www.ijrpr.com/publication_charges.php

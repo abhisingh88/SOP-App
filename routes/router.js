@@ -45,6 +45,7 @@ router.get("/data/piDetailsCount",paginatedResult(UserDetail), Details.piDetails
 router.get("/data/trDetailsCount",paginatedResult(UserDetail), Details.trDetailssRes)
 router.get("/data/invoiceDetailsCount",paginatedResult(UserDetail), Details.invoiceDetailsRes)
 
+
 // Test-List Update API
 
 
