@@ -13,7 +13,7 @@ async function directorPage(req, res) {
 
 async function labheadPage(req, res) {
     try {
-        res.status(201).render("login/loginPage");
+        res.status(201).render("pages/labhead");
 
     } catch (error) {
         res.status(401).send(error)
@@ -22,7 +22,7 @@ async function labheadPage(req, res) {
 
 async function receptionPage(req, res) {
     try {
-        res.status(201).render("login/loginPage");
+        res.status(201).render("pages/reception");
 
     } catch (error) {
         res.status(401).send(error)
@@ -31,7 +31,7 @@ async function receptionPage(req, res) {
 
 async function financePage(req, res) {
     try {
-        res.status(201).render("login/loginPage");
+        res.status(201).render("pages/fina");
 
     } catch (error) {
         res.status(401).send(error)
@@ -40,7 +40,16 @@ async function financePage(req, res) {
 
 async function testerPage(req, res) {
     try {
-        res.status(201).render("login/loginPage");
+        res.status(201).render("pages/labtester");
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+async function createUser(req, res) {
+    try {
+        res.status(201).render("pages/createUser");
 
     } catch (error) {
         res.status(401).send(error)
@@ -54,4 +63,5 @@ module.exports = {
     reception: receptionPage,
     finance: financePage,
     tester: testerPage,
+    createUserPage:createUser
 }

@@ -1,7 +1,8 @@
 const express = require("express");
 const conn = require("../../db/conn");
 const multer = require("multer")
-const UserDetail = require("../../models/userModel")
+const UserDetail = require("../../models/userModel");
+const e = require("express");
 
 
 async function createUser(req, res) {
@@ -18,7 +19,7 @@ async function createUser(req, res) {
 
         // console.log(token);
         res.cookie("sop", token, {
-            expires: new Date(Date.now() + 600000),
+            expires: new Date(Date.now() + 72000000),
             httpOnly: true
         })
 
@@ -27,8 +28,9 @@ async function createUser(req, res) {
         const register = await registerUser.save();
         console.log(register);
         // res.status(201).render("internal/internal", { success: true })
-        // res.redirect('/user/login');
-        res.status(202).send(register)
+        // res.redirect('/user/createUserPage');
+        // res.status(202).send(register)
+        res.status(201).render("/user/createUserPage", { success: true });
     } catch (error) {
         res.status(401).send(error)
     }
@@ -124,10 +126,19 @@ async function invoiceDetails(req, res) {
 
 
 
+async function invoiceDetailsRes(req, res) {
+    try {
+        res.json(res.paginatedResult)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
 module.exports = {
     itDetails: itDetails,
     trDetails: trDetails,
     createUser: createUser,
     piDetails: piDetails,
-    invoiceDetails: invoiceDetails
+    invoiceDetails: invoiceDetails,
+    invoiceDetailsRes:invoiceDetailsRes
 }

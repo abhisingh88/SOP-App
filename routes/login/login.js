@@ -30,30 +30,16 @@ async function loginUser(req, res) {
         const email = req.body.email
         const password = req.body.password
         
-        
-        // console.log(email);
-        // console.log(password);
-
-
         const user = await UserDetail.findOne({ email: email })
         const token = await user.generateAuthToken();
 
-
-        // console.log(token);
-        // console.log(user);
-
-
         res.cookie("sop", token, {
-            expires: new Date(Date.now() + 600000),
+            expires: new Date(Date.now() + 72000000),
             httpOnly: true,
             // secure:true   //works on https only
         })
 
-
-        // console.log("here");
         const isMatch = bcrypt.compare(password, user.password)
-        // console.log(isMatch);
-
 
         if (isMatch) {
             if(user.role=="Director"){

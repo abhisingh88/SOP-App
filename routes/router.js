@@ -5,7 +5,8 @@ const Cred = require("./login/login")
 const Manager = require("./manager/manager")
 const Details = require("./api/api")
 
-const auth= require("../middleware/auth")
+const auth= require("../middleware/auth");
+const UserDetail = require("../models/userModel");
 
 router.get("/", async (req, res) => {
     try {
@@ -28,6 +29,7 @@ router.get("/user/labhead",auth, Manager.labhead)
 router.get("/user/reception",auth, Manager.reception)
 router.get("/user/finance",auth, Manager.finance)
 router.get("/user/tester",auth, Manager.tester)
+router.get("/user/createUserPage",auth, Manager.createUserPage)
 
 
 // files
@@ -37,8 +39,47 @@ router.post("/data/piDetails", Details.piDetails)
 router.post("/data/invoiceDetails", Details.invoiceDetails)
 router.post("/user/createUser", Details.createUser)
 
+// file details
+router.get("/data/itDetailsCount",paginatedResult(UserDetail), Details.invoiceDetailsRes)
 
 // Test List Update API
 
+
+
+// Function for paginated result
+function paginatedResult(model){
+    return async (req, res, next)=>{
+        const page= parseInt(req.query.page)
+        const limit= parseInt(req.query.limit)
+
+        const startIndex = (page-1)*limit
+        const endIndex= page*limit
+
+        const results={}
+
+        if(endIndex < await model.countDocuments().exec()){
+            results.next={
+                page:page+1,
+                limit:limit
+            }
+        }
+
+        if(startIndex>0){
+            results.previous={
+                page:page-1,
+                limit:limit
+            }
+        }
+
+        // results.results = model.slice(startIndex, endIndex)
+        try {
+            results.results = await model.find().limit(limit).skip(startIndex).exec()
+            res.paginatedResult = results
+            next()
+        } catch (error) {
+            res.status(500).json({message:e.message})
+        }
+    }
+}
 
 module.exports = router;
