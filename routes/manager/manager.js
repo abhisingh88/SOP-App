@@ -2,7 +2,7 @@ const express = require("express");
 
 async function directorPage(req, res) {
     try {
-        res.status(201).render("login/signUpPage");
+        res.status(201).render("pages/director");
 
     } catch (error) {
         res.status(401).send(error)

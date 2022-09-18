@@ -17,7 +17,7 @@ async function createUser(req, res) {
         const token = await registerUser.generateAuthToken();
 
         // console.log(token);
-        res.cookie("internal", token, {
+        res.cookie("sop", token, {
             expires: new Date(Date.now() + 600000),
             httpOnly: true
         })
@@ -27,7 +27,8 @@ async function createUser(req, res) {
         const register = await registerUser.save();
         console.log(register);
         // res.status(201).render("internal/internal", { success: true })
-        res.redirect('/user/login');
+        // res.redirect('/user/login');
+        res.status(202).send(register)
     } catch (error) {
         res.status(401).send(error)
     }
