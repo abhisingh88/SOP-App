@@ -1,0 +1,44 @@
+* {
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    margin: 3% 3%;
+}
+
+a {
+    text-decoration: none;
+}
+
+.table-responsive {
+    text-align: center;
+}
+
+.table {
+  border: 1px solid black;
+  background: #FEF8F8;
+}
+
+.row {
+    margin: 0%;
+    row-gap: 28px;
+}
+
+.srch-box {
+    padding: 0%;
+    margin: 0 0 24px 0;
+    background: #C4C4C4;
+}
+
+h1 {
+  font-weight: lighter;
+  color: #8A8989;
+}
+
+hr {
+  margin-bottom: 2%;
+}
+
+
+

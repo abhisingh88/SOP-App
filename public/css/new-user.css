@@ -1,0 +1,140 @@
+
+* {
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+form {
+    margin: 3% 10%;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+}
+
+h1, h3 {
+    font-weight: lighter;
+    color: #8A8989;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=email], input[type=number], input[type=date], input[type=time]{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=number]:focus, input[type=date]:focus, input[type=time]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit/register button */
+.registerbtn {
+  background-color: #8A8989;
+  color: black;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  opacity: 0.9;
+  margin-left: 20%;
+}
+
+.cancelbtn {
+  background-color: #F2F2F2;
+  color: black;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+}
+
+.addbtn, .rcvdbtn,.genbtn, .finalbtn {
+  background-color: #F2F2F2;
+  color: black;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  margin-left: 35%;
+}
+
+.subbtn {
+  background-color: #8A8989;
+  color: black;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  margin-left: 35%;
+}
+
+.registerbtn:hover, .addbtn:hover, .subbtn:hover, .rcvdbtn:hover, .genbtn:hover, .finalbtn:hover, .cancelbtn:hover {
+  opacity:1;
+}
+
+#imageUpload
+{
+    margin: 1% 0%;
+}
+#profileImage
+{
+    cursor: pointer;
+}
+#profile-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    text-align: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ddd;
+    padding: 0.5%;
+}
+#profile-container img {
+    width: 150px;
+    height: 150px;
+}
+
+#fileUpload
+{
+    display: none;
+}
+#fileImage
+{
+    cursor: pointer;
+}
+#file-container {
+    width: 40%;
+    height: 1%;
+    background: #ddd;
+    overflow: hidden;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2%;
+}
+
+i {
+  margin-right: 4%;
+}

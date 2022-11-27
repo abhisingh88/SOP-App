@@ -1,0 +1,118 @@
+
+* {
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+form {
+    margin: 3% 3%;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+}
+
+h1, h3 {
+    font-weight: lighter;
+    color: #8A8989;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=email], input[type=date]{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 3%;
+}
+
+/* Set a style for the submit/register button */
+.subbtn, .retestbtn {
+  background-color: #ddd;
+  color: black;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 15%;
+}
+
+.apprbtn {
+  background-color: #8A8989;
+  color: black;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 15%;
+}
+
+.retstbtn {
+  background-color: #ddd;
+  color: black;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+}
+
+.subbtn:hover, .retestbtn:hover, .apprbtn {
+  opacity:1;
+}
+
+#fileUpload
+{
+    display: none;
+}
+#fileImage
+{
+    cursor: pointer;
+}
+#file-container {
+    width: 24%;
+    height: 1%;
+    background: #ddd;
+    overflow: hidden;
+    text-align: center;
+}
+
+#subject {
+    width: 80%;
+    padding: 1%;
+    background: #ddd;
+    font-size: 16px;
+    border: none;
+}
+
+i {
+    margin-right: 4%;
+}
+
+.textbox {
+    margin: 3% 0%;
+    width: 80%;
+    padding: 1%;
+    font-size: 16px;
+    background: #ddd;
+    border: none;
+}
