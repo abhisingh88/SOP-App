@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit to Lab Head</title>
+
+    <link rel="stylesheet" href="css/sidemenu.css">
+    <link rel="stylesheet" href="css/uploads.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+</head>
+<body>
+  {{> navigation }}
+
+    <form action="">
+        <div class="container">
+          <h1>--T.R. No.--</h1>
+          <hr>
+           <input id="subject" placeholder="Subject">
+           <input id="fileUpload" type="file" name="file" placeholder="Upload File" required capture>
+           
+
+           <textarea rows="10" class="textbox" placeholder="Long Explanation"></textarea>
+           <hr>
+
+          <button type="submit" class="retstbtn">Submit to Lab Head for Retesting</button>
+        </div>
+      </form>
+
+      <script>
+        $("#fileImage").click(function(e) {
+            $("#fileUpload").click();
+        });
+        function fasterPreview( uploader ) {
+            if ( uploader.files && uploader.files[0] ){
+                $('#fileImage').attr('src', 
+                    window.URL.createObjectURL(uploader.files[0]) );
+            }
+        }
+        $("#fileUpload").change(function(){
+            fasterPreview( this );
+        });
+      </script>
+</body>
+</html>
