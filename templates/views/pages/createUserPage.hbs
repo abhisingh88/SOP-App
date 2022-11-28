@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User</title>
+
+    <link rel="stylesheet" href="css/sidemenu.css">
+    <link rel="stylesheet" href="css/new-user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+</head>
+<body>
+  {{> navigation }}
+
+    <form action="action_page.php">
+        <div class="container">
+          <h1>New User Details</h1>
+          <hr>
+
+          <input type="text" placeholder="User ID" name="usrid" id="usrid" required>
+      
+          <input type="email" placeholder="Email" name="email" id="email" required>
+      
+          <input type="text" placeholder="Name" name="name" id="name" required>
+      
+          <input type="password" placeholder="Password" name="psw" id="psw" required>
+
+          <select id="role" name="role">
+            <option value="Role">Select a Role</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+
+          <h3>Profile</h3>
+          <div id="profile-container">
+            <image id="profileImage" alt="Upload Photo" />
+           </div>
+           <input id="imageUpload" type="file" name="profile_photo" placeholder="Upload Photo" required capture>
+           <hr>
+
+          <button type="submit" class="registerbtn">Add User</button>
+          <button type="submit" class="cancelbtn">Cancel</button>
+        </div>
+      
+        <!-- <div class="container signin">
+          <p>Already have an account? <a href="#">Sign in</a>.</p>
+        </div> -->
+      </form>
+
+      <script>
+        $("#profileImage").click(function(e) {
+            $("#imageUpload").click();
+        });
+        function fasterPreview( uploader ) {
+            if ( uploader.files && uploader.files[0] ){
+                $('#profileImage').attr('src', 
+                    window.URL.createObjectURL(uploader.files[0]) );
+            }
+        }
+        $("#imageUpload").change(function(){
+            fasterPreview( this );
+        });
+      </script>
+</body>
+</html>
