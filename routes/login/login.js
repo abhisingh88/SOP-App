@@ -1,4 +1,4 @@
-const express = require("express");
+// const express = require("express");
 const conn = require("../../db/conn");
 const UserDetail = require("../../models/userModel")
 const bcrypt = require("bcryptjs")

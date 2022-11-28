@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-var format = require('date-format');
+// var format = require('date-format');
 
 // Defining Schema
 const itSchema = new mongoose.Schema({
@@ -20,7 +20,7 @@ const itSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        default:format(Date.now(),"dd-mm-yyyy")
+        // default:format(Date.now(),"dd-mm-yyyy"),
         // required: true,
     },
     submittedToLabHead:{

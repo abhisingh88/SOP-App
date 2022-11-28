@@ -1,15 +1,18 @@
 const express = require("express")
 const hbs = require("hbs");
 const router = new express.Router()
-const Cred = require("./login/login")
+const CredManager = require("./login/login")
 const Manager = require("./manager/manager")
 const Details = require("./api/api")
 
 const auth= require("../middleware/auth");
 const UserDetail = require("../models/userModel");
+const ItDetail = require("../models/itDetails");
 
 router.get("/", async (req, res) => {
     try {
+        // res.status(201).render("pages/getLoginPage");
+
         res.status(201).render("index");
     } catch (error) {
         res.status(401).send(error)
@@ -17,10 +20,10 @@ router.get("/", async (req, res) => {
 });
 
 // Login routes
-// router.get("/user/signupPage", Cred.getSignUpPage)
-router.get("/user/loginPage", Cred.getLoginPage)
-router.get("/user/logout",auth, Cred.logoutUser)
-router.post("/user/login", Cred.loginUser)
+// router.get("/user/signupPage", CredManager.getSignUpPage)
+router.get("/user/loginPage", CredManager.getLoginPage)
+router.get("/user/logout",auth, CredManager.logoutUser)
+router.post("/user/login", CredManager.loginUser)
 
 
 // Render Page for diff users
@@ -40,7 +43,7 @@ router.post("/data/invoiceDetails", Details.invoiceDetails)
 router.post("/user/createUser", Details.createUser)
 
 // paginated file details
-router.get("/data/itDetailsCount",paginatedResult(UserDetail), Details.itDetailsRes)
+router.get("/data/itDetailsCount",paginatedResult(ItDetail), Details.itDetailsRes)
 router.get("/data/piDetailsCount",paginatedResult(UserDetail), Details.piDetailsRes)
 router.get("/data/trDetailsCount",paginatedResult(UserDetail), Details.trDetailssRes)
 router.get("/data/invoiceDetailsCount",paginatedResult(UserDetail), Details.invoiceDetailsRes)
@@ -54,7 +57,8 @@ router.get("/data/invoiceDetailsCount",paginatedResult(UserDetail), Details.invo
 function paginatedResult(model){
     return async (req, res, next)=>{
         const page= parseInt(req.query.page)
-        const limit= parseInt(req.query.limit)
+        // const limit= parseInt(req.query.limit)
+        const limit=2
 
         const startIndex = (page-1)*limit
         const endIndex= page*limit

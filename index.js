@@ -13,10 +13,11 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))
 
+app.set("view engine", "hbs");
+
 const static_path = path.join(__dirname, "./public")
 app.use(express.static(static_path))
 
-app.set("view engine", "hbs");
 const template_path = path.join(__dirname, "./templates/views")
 const parials_path = path.join(__dirname, "./templates/partials")
 app.set("views", template_path)

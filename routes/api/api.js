@@ -1,9 +1,8 @@
-const express = require("express");
+// const express = require("express");
 const conn = require("../../db/conn");
 const multer = require("multer")
 const UserDetail = require("../../models/userModel");
-const e = require("express");
-
+const ItDetail = require("../../models/itDetails");
 
 async function createUser(req, res) {
     try {
@@ -30,7 +29,7 @@ async function createUser(req, res) {
         // res.status(201).render("internal/internal", { success: true })
         // res.redirect('/user/createUserPage');
         // res.status(202).send(register)
-        res.status(201).render("/user/createUserPage", { success: true });
+        res.status(201).render("pages/createUserPage", { success: true });
     } catch (error) {
         res.status(401).send(error)
     }
@@ -38,7 +37,16 @@ async function createUser(req, res) {
 
 async function itDetails(req, res) {
     try {
-        res.status(201).render("login/loginPage");
+
+        const itDetail = new ItDetail({
+            companyName: req.body.companyName,
+            personName: req.body.person,
+            contact: req.body.contact,
+        })
+        const itStatus = await itDetail.save();
+        console.log(itStatus);
+        // res.status(201).render("pages/reception", { success: true });
+        res.status(201).render("data/itDetailsCount");
 
     } catch (error) {
         res.status(401).send(error)
@@ -135,7 +143,8 @@ async function invoiceDetailsRes(req, res) {
 };
 async function itDetailsRes(req, res) {
     try {
-        res.json(res.paginatedResult)
+        // res.json(res.paginatedResult)
+        console.log(res.paginatedResult);
     } catch (error) {
         res.status(500).send(error)
     }
