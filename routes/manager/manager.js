@@ -31,7 +31,7 @@ async function receptionPage(req, res) {
 
 async function financePage(req, res) {
     try {
-        res.status(201).render("pages/fina");
+        res.status(201).render("pages/finance");
 
     } catch (error) {
         res.status(401).send(error)
@@ -40,7 +40,7 @@ async function financePage(req, res) {
 
 async function testerPage(req, res) {
     try {
-        res.status(201).render("pages/labtester");
+        res.status(201).render("pages/tester");
 
     } catch (error) {
         res.status(401).send(error)
@@ -49,7 +49,7 @@ async function testerPage(req, res) {
 
 async function createUser(req, res) {
     try {
-        res.status(201).render("pages/createUser");
+        res.status(201).render("pages/createUserPage");
 
     } catch (error) {
         res.status(401).send(error)
