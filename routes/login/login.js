@@ -62,7 +62,7 @@ async function loginUser(req, res) {
         }
 
     } catch (error) {
-        res.status(400).send("Error occureed plz try again!!")
+        res.status(400).send("Error occurred...please try again!!")
     }
 };
 
@@ -76,7 +76,7 @@ async function logoutUser(req, res) {
 
         res.clearCookie("sop")
 
-        console.log("Logout Successfully!!");
+        console.log("Logout Successful!!");
 
         await req.user.save()
         res.redirect("/")
