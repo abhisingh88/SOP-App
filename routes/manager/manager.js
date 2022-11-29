@@ -1,5 +1,6 @@
 const express = require("express");
 
+const ItDetails= require("../../models/itDetails")
 async function directorPage(req, res) {
     try {
         res.status(201).render("pages/director");
@@ -41,6 +42,19 @@ async function receptionDataMiddleware(req, res) {
     }
 };
 
+async function receptionToLabHead(req, res) {
+    try {
+        let it=req.query.itNo
+        // console.log("it no: ",it);
+        let data=await ItDetails.findOne({itNumber:it})
+        // console.log(data);
+        res.status(201).render("pages/receptionToLabHead",{data:data});
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
 
 
 async function financePage(req, res) {
@@ -73,10 +87,11 @@ async function createUser(req, res) {
 
 module.exports = {
     director: directorPage,
-    labhead: labheadPage,
+    createUserPage:createUser,
     reception: receptionPage,
+    receptionDataMiddleware:receptionDataMiddleware,
+    receptionToLabHead:receptionToLabHead,
+    labhead: labheadPage,
     finance: financePage,
     tester: testerPage,
-    createUserPage:createUser,
-    receptionDataMiddleware:receptionDataMiddleware
 }

@@ -168,8 +168,12 @@ async function itDetailsRes(req, res) {
     try {
         // res.json(res.paginatedResult)
         // console.log(res.paginatedResult);
-        console.log("from it: ", res.paginatedResult.results);
-        res.status(201).render("pages/receptionItRecords", {data:res.paginatedResult.results});
+        // console.log("from it: ", res.paginatedResult);
+        // console.log("from next: ", res.paginatedResult.next);
+        // console.log("from prev: ", res.paginatedResult.previous);
+
+        res.status(201).render("pages/receptionItRecords", {data:res.paginatedResult.results,next:res.paginatedResult.next, prev:res.paginatedResult.previous});
+        
     } catch (error) {
         res.status(500).send(error)
     }
@@ -189,6 +193,21 @@ async function trDetailssRes(req, res) {
     }
 };
 
+async function updateItStatus(req, res) {
+    try {
+        let it=req.query.itNo
+        // console.log(it);
+        let data = await ItDetail.findOneAndUpdate({itNumber:it},{
+            submittedToLabHead:"Yes"
+        })
+        console.log(data);
+        res.status(201).render("pages/receptionToLabHead", {data:data, success: true });
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
 module.exports = {
     itDetails: itDetails,
     trDetails: trDetails,
@@ -198,5 +217,6 @@ module.exports = {
     invoiceDetailsRes:invoiceDetailsRes,
     trDetailssRes:trDetailssRes,
     piDetailsRes:piDetailsRes,
-    itDetailsRes:itDetailsRes
+    itDetailsRes:itDetailsRes,
+    updateItStatus:updateItStatus,
 }

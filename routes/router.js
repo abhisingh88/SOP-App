@@ -28,16 +28,9 @@ router.post("/user/login", CredManager.loginUser)
 router.get("/error", CredManager.errorPage)
 
 
-// Render Page for diff users
-router.get("/user/director",auth, Manager.director)
-router.get("/user/labhead",auth, Manager.labhead)
-router.get("/user/reception",auth, Manager.reception)
-router.get("/user/finance",auth, Manager.finance)
-router.get("/user/tester",auth, Manager.tester)
-router.get("/user/createUserPage",auth, Manager.createUserPage)
-
 // Data middle endpoint
 router.get("/user/data",auth, Manager.receptionDataMiddleware)
+
 
 // data/files uploader
 router.post("/data/itDetails", Details.itDetails)
@@ -45,13 +38,38 @@ router.post("/data/trDetails", Details.trDetails)
 router.post("/data/piDetails", Details.piDetails)
 router.post("/data/invoiceDetails", Details.invoiceDetails)
 router.post("/user/createUser", Details.createUser)
+router.get("/user/updateItStatus",auth, Details.updateItStatus)
+
 
 // paginated file details
 router.get("/data/itDetailsCount",[auth,paginatedResult(ItDetail)], Details.itDetailsRes)
+// /data/itDetailsCount?page=1&limit=8 set this link in sidebar
+
 router.get("/data/piDetailsCount",[auth,paginatedResult(UserDetail)], Details.piDetailsRes)
 router.get("/data/trDetailsCount",[auth,paginatedResult(UserDetail)], Details.trDetailssRes)
 router.get("/data/invoiceDetailsCount",[auth,paginatedResult(UserDetail)], Details.invoiceDetailsRes)
 
+
+// Director
+router.get("/user/director",auth, Manager.director)
+router.get("/user/createUserPage",auth, Manager.createUserPage)
+
+
+// Reception
+router.get("/user/reception",auth, Manager.reception)
+router.get("/user/receptionToLabHead",auth, Manager.receptionToLabHead)
+
+
+// Lab Head
+router.get("/user/labhead",auth, Manager.labhead)
+
+
+// Lab Tester
+router.get("/user/tester",auth, Manager.tester)
+
+
+// Financial
+router.get("/user/finance",auth, Manager.finance)
 
 // Test-List Update API
 
@@ -82,14 +100,12 @@ function paginatedResult(model){
                 limit:limit
             }
         }
-        // console.log("done");
-        // results.results = model.slice(startIndex, endIndex)
+
         try {
-            results.results = await model.find().sort({itNumber: 'desc'}).limit(limit).skip(startIndex)
-            // results.results = model.find().sort({Reqdate: 'desc'}).slice(startIndex, endIndex)
-            console.log(results);
-            res.paginatedResult = results
+            // results.results = await model.find().sort({itNumber: 'desc'}).limit(limit).skip(startIndex)
+            results.results = await model.find().sort({Reqdate: 'desc', itNumber:'desc'}).limit(limit).skip(startIndex)
             // console.log(results);
+            res.paginatedResult = results
             next()
         } catch (error) {
             res.status(500).json({message:error.message})
