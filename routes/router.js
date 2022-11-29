@@ -2,18 +2,41 @@ const express = require("express")
 const hbs = require("hbs");
 const router = new express.Router()
 const CredManager = require("./login/login")
+const multer = require("multer")
 const Manager = require("./manager/manager")
 const Details = require("./api/api")
-
+const path = require('path')
 const auth= require("../middleware/auth");
 
 const UserDetail = require("../models/userModel");
 const ItDetail = require("../models/itDetails");
 
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/userData')
+    },
+    filename: (req, file, cb) => {
+        console.log(file);
+        cb(null, Date.now()+"-" + path.extname(file.originalname))
+    }
+})
+
+const uploadUser = multer({
+    storage: storage,
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(png|jpg)$/)) {
+            return cb(new Error('Please upload a Image'))
+        }
+        cb(undefined, true)
+    }
+})
+
+
+
 router.get("/", async (req, res) => {
     try {
         // res.status(201).render("pages/getLoginPage");
-
         res.status(201).render("index");
     } catch (error) {
         res.status(401).send(error)
@@ -37,7 +60,7 @@ router.post("/data/itDetails", Details.itDetails)
 router.post("/data/trDetails", Details.trDetails)
 router.post("/data/piDetails", Details.piDetails)
 router.post("/data/invoiceDetails", Details.invoiceDetails)
-router.post("/user/createUser", Details.createUser)
+router.post("/user/createUser", uploadUser.single('profile_photo') ,Details.createUser)
 router.get("/user/updateItStatus",auth, Details.updateItStatus)
 
 

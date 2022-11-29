@@ -1,20 +1,21 @@
 // const express = require("express");
 const conn = require("../../db/conn");
-const multer = require("multer")
 var format = require('date-format');
-
 
 const UserDetail = require("../../models/userModel");
 const ItDetail = require("../../models/itDetails");
 
+
+
 async function createUser(req, res) {
     try {
-
+        // user_img = req.file
         const registerUser = new UserDetail({
             username: req.body.username,
             email: req.body.email,
             password: req.body.password,
-            role:req.body.role
+            role: req.body.role,
+            userImage:req.file.filename
         })
         // console.log(registerUser.username)
         const token = await registerUser.generateAuthToken();
@@ -41,33 +42,33 @@ async function createUser(req, res) {
 async function itDetails(req, res) {
     try {
 
-        let it="IT-"
-        it+=format.asString('yy-MM-dd', new Date());
+        let it = "IT-"
+        it += format.asString('yy-MM-dd', new Date());
         // let dated=format('yy-MM-dd', new Date());
-        let year=format('yy', new Date());;
-        var count = await ItDetail.count({year:year})
-        if(count==0){
-            count=1;
-        }else{
-            count+=1
+        let year = format('yy', new Date());;
+        var count = await ItDetail.count({ year: year })
+        if (count == 0) {
+            count = 1;
+        } else {
+            count += 1
         }
-        it+="-";
+        it += "-";
         count = count.toString();
         // console.log(typeof(count));
         // console.log(count);
-        it+=count;
+        it += count;
 
         console.log(it);
 
         const itDetail = new ItDetail({
-            itNumber:it,
+            itNumber: it,
             companyName: req.body.companyName,
             personName: req.body.person,
             contact: req.body.contact,
         })
         const itStatus = await itDetail.save();
         console.log(itStatus);
-        res.redirect('/user/data?success='+true+"&itNo="+it);
+        res.redirect('/user/data?success=' + true + "&itNo=" + it);
         // res.status(201).render("pages/reception", { success: true, itNo:it });
         // res.status(201).render("data/itDetailsCount");
 
@@ -172,8 +173,8 @@ async function itDetailsRes(req, res) {
         // console.log("from next: ", res.paginatedResult.next);
         // console.log("from prev: ", res.paginatedResult.previous);
 
-        res.status(201).render("pages/receptionItRecords", {data:res.paginatedResult.results,next:res.paginatedResult.next, prev:res.paginatedResult.previous});
-        
+        res.status(201).render("pages/receptionItRecords", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+
     } catch (error) {
         res.status(500).send(error)
     }
@@ -195,13 +196,13 @@ async function trDetailssRes(req, res) {
 
 async function updateItStatus(req, res) {
     try {
-        let it=req.query.itNo
+        let it = req.query.itNo
         // console.log(it);
-        let data = await ItDetail.findOneAndUpdate({itNumber:it},{
-            submittedToLabHead:"Yes"
+        let data = await ItDetail.findOneAndUpdate({ itNumber: it }, {
+            submittedToLabHead: "Yes"
         })
         console.log(data);
-        res.status(201).render("pages/receptionToLabHead", {data:data, success: true });
+        res.status(201).render("pages/receptionToLabHead", { data: data, success: true });
 
     } catch (error) {
         res.status(500).send(error)
@@ -214,9 +215,9 @@ module.exports = {
     createUser: createUser,
     piDetails: piDetails,
     invoiceDetails: invoiceDetails,
-    invoiceDetailsRes:invoiceDetailsRes,
-    trDetailssRes:trDetailssRes,
-    piDetailsRes:piDetailsRes,
-    itDetailsRes:itDetailsRes,
-    updateItStatus:updateItStatus,
+    invoiceDetailsRes: invoiceDetailsRes,
+    trDetailssRes: trDetailssRes,
+    piDetailsRes: piDetailsRes,
+    itDetailsRes: itDetailsRes,
+    updateItStatus: updateItStatus,
 }

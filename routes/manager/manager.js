@@ -1,6 +1,7 @@
 const express = require("express");
 
-const ItDetails= require("../../models/itDetails")
+const ItDetails= require("../../models/itDetails");
+const UserDetail = require("../../models/userModel");
 async function directorPage(req, res) {
     try {
         res.status(201).render("pages/director");
@@ -14,7 +15,10 @@ async function directorPage(req, res) {
 
 async function labheadPage(req, res) {
     try {
-        res.status(201).render("pages/labhead");
+        id=req.query.id;
+        let data= await UserDetail.findOne({_id:id})
+        console.log(data);
+        res.status(201).render("pages/labhead",{data:data});
 
     } catch (error) {
         res.status(401).send(error)

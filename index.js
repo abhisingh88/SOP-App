@@ -18,6 +18,8 @@ app.set("view engine", "hbs");
 const static_path = path.join(__dirname, "./public")
 app.use(express.static(static_path))
 
+app.use("/userImages",express.static("./uploads/userData/"))
+
 const template_path = path.join(__dirname, "./templates/views")
 const parials_path = path.join(__dirname, "./templates/partials")
 app.set("views", template_path)

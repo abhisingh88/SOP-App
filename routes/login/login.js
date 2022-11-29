@@ -32,7 +32,6 @@ async function loginUser(req, res) {
 
         const user = await UserDetail.findOne({ email: email })
         const isMatch = await bcrypt.compare(password, user.password)
-        
         if (isMatch) {
             const token = await user.generateAuthToken();
 
@@ -41,20 +40,22 @@ async function loginUser(req, res) {
                 httpOnly: true,
                 // secure:true   //works on https only
             })
+
+
             if (user.role == "Director") {
-                res.redirect('/user/director');
+                res.redirect('/user/director?id='+user._id);
             }
             if (user.role == "Reception") {
-                res.redirect('/user/reception');
+                res.redirect('/user/reception?id='+user._id);
             }
             if (user.role == "LabHead") {
-                res.redirect('/user/labhead');
+                res.redirect('/user/labhead?id='+user._id);
             }
             if (user.role == "Tester") {
-                res.redirect('/user/tester');
+                res.redirect('/user/tester?id='+user._id);
             }
             if (user.role == "Finance") {
-                res.redirect('/user/finance');
+                res.redirect('/user/finance?id='+user._id);
             }
         } else {
             // res.send("Invalid email or passwords")
@@ -100,5 +101,5 @@ module.exports = {
     getLoginPage: getLoginPage,
     loginUser: loginUser,
     logoutUser: logoutUser,
-    errorPage:geterrorPage
+    errorPage: geterrorPage
 }
