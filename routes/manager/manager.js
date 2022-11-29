@@ -29,6 +29,20 @@ async function receptionPage(req, res) {
     }
 };
 
+async function receptionDataMiddleware(req, res) {
+    try {
+        let success=req.query.success
+        let it=req.query.itNo
+        // console.log("reached");
+        res.status(201).render("pages/reception", { success: success, itNo:it });
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+
+
 async function financePage(req, res) {
     try {
         res.status(201).render("pages/finance");
@@ -63,5 +77,6 @@ module.exports = {
     reception: receptionPage,
     finance: financePage,
     tester: testerPage,
-    createUserPage:createUser
+    createUserPage:createUser,
+    receptionDataMiddleware:receptionDataMiddleware
 }

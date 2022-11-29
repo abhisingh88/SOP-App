@@ -29,36 +29,36 @@ async function loginUser(req, res) {
     try {
         const email = req.body.email
         const password = req.body.password
-        
+
         const user = await UserDetail.findOne({ email: email })
-        const token = await user.generateAuthToken();
-
-        res.cookie("sop", token, {
-            expires: new Date(Date.now() + 72000000),
-            httpOnly: true,
-            // secure:true   //works on https only
-        })
-
-        const isMatch = bcrypt.compare(password, user.password)
-
+        const isMatch = await bcrypt.compare(password, user.password)
+        
         if (isMatch) {
-            if(user.role=="Director"){
+            const token = await user.generateAuthToken();
+
+            res.cookie("sop", token, {
+                expires: new Date(Date.now() + 72000000),
+                httpOnly: true,
+                // secure:true   //works on https only
+            })
+            if (user.role == "Director") {
                 res.redirect('/user/director');
             }
-            if(user.role=="Reception"){
+            if (user.role == "Reception") {
                 res.redirect('/user/reception');
             }
-            if(user.role=="LabHead"){
+            if (user.role == "LabHead") {
                 res.redirect('/user/labhead');
             }
-            if(user.role=="Tester"){
+            if (user.role == "Tester") {
                 res.redirect('/user/tester');
             }
-            if(user.role=="Finance"){
+            if (user.role == "Finance") {
                 res.redirect('/user/finance');
             }
         } else {
-            res.send("Invalid email or passwords")
+            // res.send("Invalid email or passwords")
+            res.redirect('/error');
         }
 
     } catch (error) {
@@ -86,11 +86,19 @@ async function logoutUser(req, res) {
     }
 };
 
+async function geterrorPage(req, res) {
+    try {
+        res.status(201).render("pages/error");
 
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
 
 module.exports = {
     // getSignUpPage: getSignUpPage,
     getLoginPage: getLoginPage,
     loginUser: loginUser,
-    logoutUser: logoutUser
+    logoutUser: logoutUser,
+    errorPage:geterrorPage
 }

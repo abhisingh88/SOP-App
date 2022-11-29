@@ -36,6 +36,18 @@
         <div>
           <form action="/data/itDetails" method="post">
             <div class="container">
+
+              {{#if success}}
+
+
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Thank You!!</strong> We have Intilized the request for testing
+                <h3>Your IT No is: {{itNo}}</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+
+              {{/if}}
+
               <h1>Generate IT No.</h1>
               <hr>
 

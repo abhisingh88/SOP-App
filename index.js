@@ -23,6 +23,11 @@ const parials_path = path.join(__dirname, "./templates/partials")
 app.set("views", template_path)
 hbs.registerPartials(parials_path)
 
+hbs.registerHelper('trimString', function(passedString) {
+    var theString = passedString.substring(0,8);
+    return new hbs.SafeString(theString)
+});
+
 const router = require("./routes/router")
 app.use(router)
 

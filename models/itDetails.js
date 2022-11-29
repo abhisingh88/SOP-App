@@ -1,10 +1,16 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-// var format = require('date-format');
+var format = require('date-format');
+// const dateFor = require('date-and-time')
 
 // Defining Schema
 const itSchema = new mongoose.Schema({
+    itNumber:{
+        type: String,
+        required: true,
+        unique: true
+    },
     companyName: {
         type: String,
         required: true
@@ -12,24 +18,26 @@ const itSchema = new mongoose.Schema({
     personName: {
         type: String,
         required: true,
-        unique: true
     },
     contact: {
         type: String,
         required: true
     },
-    date: {
-        type: Date,
-        // default:format(Date.now(),"dd-mm-yyyy"),
-        // required: true,
+    Reqdate: {
+        type: String,
+        default: format('yy-MM-dd hh:mm:ss.SSS',new Date()),
+        required: true,
+    },
+    year:{
+        type: String,
+        default: format('yy',new Date()),
+        required: true,
     },
     submittedToLabHead:{
         type: String,
+        default:"NO",
     },
     testType:{
-        type: String,
-    },
-    status:{
         type: String,
     }
 })

@@ -1,6 +1,9 @@
 // const express = require("express");
 const conn = require("../../db/conn");
 const multer = require("multer")
+var format = require('date-format');
+
+
 const UserDetail = require("../../models/userModel");
 const ItDetail = require("../../models/itDetails");
 
@@ -38,15 +41,35 @@ async function createUser(req, res) {
 async function itDetails(req, res) {
     try {
 
+        let it="IT-"
+        it+=format.asString('yy-MM-dd', new Date());
+        // let dated=format('yy-MM-dd', new Date());
+        let year=format('yy', new Date());;
+        var count = await ItDetail.count({year:year})
+        if(count==0){
+            count=1;
+        }else{
+            count+=1
+        }
+        it+="-";
+        count = count.toString();
+        // console.log(typeof(count));
+        // console.log(count);
+        it+=count;
+
+        console.log(it);
+
         const itDetail = new ItDetail({
+            itNumber:it,
             companyName: req.body.companyName,
             personName: req.body.person,
             contact: req.body.contact,
         })
         const itStatus = await itDetail.save();
         console.log(itStatus);
-        // res.status(201).render("pages/reception", { success: true });
-        res.status(201).render("data/itDetailsCount");
+        res.redirect('/user/data?success='+true+"&itNo="+it);
+        // res.status(201).render("pages/reception", { success: true, itNo:it });
+        // res.status(201).render("data/itDetailsCount");
 
     } catch (error) {
         res.status(401).send(error)
@@ -144,7 +167,9 @@ async function invoiceDetailsRes(req, res) {
 async function itDetailsRes(req, res) {
     try {
         // res.json(res.paginatedResult)
-        console.log(res.paginatedResult);
+        // console.log(res.paginatedResult);
+        console.log("from it: ", res.paginatedResult.results);
+        res.status(201).render("pages/receptionItRecords", {data:res.paginatedResult.results});
     } catch (error) {
         res.status(500).send(error)
     }
