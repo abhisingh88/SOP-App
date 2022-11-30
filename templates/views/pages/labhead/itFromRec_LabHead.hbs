@@ -32,18 +32,6 @@
       </div>
 
       <div class="col-8 mx-0">
-
-        {{#if success}}
-
-
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Thank You!!</strong> We have Intilized the request for testing
-          <h3>Your TR No is: {{tr}}</h3>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
-        {{/if}}
-
         <h1>Test Report List</h1>
         <hr>
         <div class="row">
@@ -64,28 +52,23 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">T.R. No.</th>
+                <th scope="col">I.T. No.</th>
                 <th scope="col">Company</th>
-                <th scope="col">Test Type</th>
-                <th scope="col">Company Contact</th>
-                <th scope="col">Allocation Date</th>
-                {{!-- <th scope="col">Test Report</th>
-                <th scope="col">Report Corrections</th>
-                <th scope="col">Status</th> --}}
+                <th scope="col">Date of Generation</th>
+                <th scope="col">Contact Person</th>
+                <th scope="col">Contact No.</th>
+                <th scope="col">Generate TR</th>
               </tr>
             </thead>
             <tbody>
               {{#each data}}
               <tr>
-                <td>{{trNumber}}</td>
+                <td>{{itNumber}}</td>
                 <td>{{companyName}}</td>
-                <td>{{testType}}</td>
+                <td>{{trimString Reqdate}}</td>
+                <td>{{personName}}</td>
                 <td>{{contact}}</td>
-                <td>{{date}}</td>
-                {{!-- <td>{{submittedToLabHead}}</td>
-                <td><a href="/user/receptionToLabHead?itNo={{itNumber}}"><button
-                      class="btn btn-primary">Forward</button></a></td>
-                <td>Pending</td> --}}
+                <td><a href="/user/generateTrLabhead?itNo={{itNumber}}"><button class="btn btn-primary">Generate</button></a></td>
               </tr>
               {{/each}}
             </tbody>

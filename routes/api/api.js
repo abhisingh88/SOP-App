@@ -102,11 +102,13 @@ async function trDetails(req, res) {
         console.log(tr);
 
         const trDetail = new TrDetail({
-            itNumber: it,
+            trNumber:tr,
+            itNumber: req.body.itNumber,
             companyName: req.body.companyName,
-            personName: req.body.person,
-            contact: req.body.contact,
+            noOfSample: req.body.noOfSample,
+            testType: req.body.testType,
             receivedBy: req.body.receivedBy,
+            contact: req.body.contact,
         })
         const trStatus = await trDetail.save();
         console.log(trStatus);

@@ -89,7 +89,11 @@ router.get("/user/receptionToLabHead",auth, Manager.receptionToLabHead)
 
 
 // Lab Head
-router.get("/user/labhead",auth, Manager.labhead)
+router.get("/user/dataOfItLab",auth, Manager.dataFromreceptionToLabHead)
+router.get("/user/labheadRecords",auth, Manager.getlabheadTrRecords)
+
+// Secure EndPoint
+router.get("/user/generateTrLabhead",auth, Manager.labhead)
 
 
 // Lab Tester

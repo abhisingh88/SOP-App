@@ -35,23 +35,34 @@
       </div>
 
       <div class="col-9">
-        <form action="">
+        <form action="/data/trDetails" method="post">
           <div class="container">
             <h1>Test Request Form</h1>
             <hr>
 
-            <input type="text" placeholder="Company Name" name="companyName" id="comp" required>
+            <input type="hidden" id="itNum" name="itNumber" value="{{data.itNumber}}">
+            <input type="text" placeholder="Company Name" value="{{data.companyName}}" name="companyName" id="comp"
+              required>
+
+            <br>
 
             <input type="text" placeholder="Test Type" name="testType" id="test" required>
 
+            <br>
+
             <input type="number" placeholder="Number of Sample" name="noOfSample" id="no" required>
+            {{!-- <button type="submit" class="addbtn">Add</button> --}}
+            <br>
+
 
             <input type="date" placeholder="Date" name="date" id="date" required>
+            <br>
 
             <input type="text" placeholder="Received By" name="receivedBy" id="rcvd" required>
+            <br>
+            <input type="text" placeholder="Contact Persom" name="contact" value="{{data.contact}}" id="contactPerson" required>
 
-            {{!-- <button type="submit" class="addbtn">Add</button> --}}
-    
+
             <hr>
 
             {{!-- <div id="file-container">
@@ -60,7 +71,7 @@
             <input id="fileUpload" type="file" name="file" placeholder="Upload File" required capture>
             <hr> --}}
 
-            <button type="submit" class="subbtn">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
       </div>

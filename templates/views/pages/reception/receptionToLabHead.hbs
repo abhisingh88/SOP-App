@@ -38,12 +38,12 @@
         {{#if success}}
 
 
-              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Thank You!!</strong> We have Forwarded it to Lab Head
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Thank You!!</strong> We have Forwarded it to Lab Head
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 
-              {{/if}}
+        {{/if}}
 
         <h1 class="my-4">I.T. No. -: {{data.itNumber}}</h1>
         <hr>
@@ -71,30 +71,31 @@
                 <td>{{data.personName}}</td>
                 <td>{{data.contact}}</td>
                 <td>{{data.submittedToLabHead}}</td>
-                {{!-- <td><a href="/user/recptionToLabHead?itNo={{itNumber}}"><button class="btn btn-primary">Forward</button></a></td> --}}
+                {{!-- <td><a href="/user/recptionToLabHead?itNo={{itNumber}}"><button
+                      class="btn btn-primary">Forward</button></a></td> --}}
                 {{!-- <td>Pending</td> --}}
               </tr>
               {{/if}}
             </tbody>
           </table>
-          
+
           <a href="/user/updateItStatus?itNo={{data.itNumber}}"><button class="btn btn-primary">Forward</button></a>
         </div>
         <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-end">
 
             {{#if prev}}
-              <li class="page-item">
-                <a class="page-link" href="/data/itDetailsCount?page={{prev.page}}&limit={{prev.limit}}">Previous</a>
-              </li>
+            <li class="page-item">
+              <a class="page-link" href="/data/itDetailsCount?page={{prev.page}}&limit={{prev.limit}}">Previous</a>
+            </li>
             {{/if}}
             {{!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
             <li class="page-item"><a class="page-link" href="#">3</a></li> --}}
             {{#if next}}
-              <li class="page-item">
-                <a class="page-link" href="/data/itDetailsCount?page={{next.page}}&limit={{next.limit}}">Next</a>
-              </li>
+            <li class="page-item">
+              <a class="page-link" href="/data/itDetailsCount?page={{next.page}}&limit={{next.limit}}">Next</a>
+            </li>
             {{/if}}
           </ul>
         </nav>
