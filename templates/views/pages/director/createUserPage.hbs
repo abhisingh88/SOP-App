@@ -34,6 +34,15 @@
         {{> sidebar }}
       </div>
       <div class="col-9">
+        {{#if success}}
+
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Thank You!!</strong> User Created
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        {{/if}}
         <form action="/user/createUser" method="post" enctype='multipart/form-data'>
           <div class="container my-4">
             <h1>New User Details</h1>

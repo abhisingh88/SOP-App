@@ -3,20 +3,9 @@ const conn = require("../../db/conn");
 const UserDetail = require("../../models/userModel")
 const bcrypt = require("bcryptjs")
 
-// async function getSignUpPage(req, res) {
-//     try {
-//         res.status(201).render("login/signUpPage");
-
-//     } catch (error) {
-//         res.status(401).send(error)
-//     }
-// };
-
-
-
 async function getLoginPage(req, res) {
     try {
-        res.status(201).render("login/loginPage");
+        res.status(201).render("getLoginPage");
 
     } catch (error) {
         res.status(401).send(error)
@@ -97,7 +86,6 @@ async function geterrorPage(req, res) {
 };
 
 module.exports = {
-    // getSignUpPage: getSignUpPage,
     getLoginPage: getLoginPage,
     loginUser: loginUser,
     logoutUser: logoutUser,

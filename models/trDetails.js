@@ -5,6 +5,11 @@ var format = require("date-format");
 
 // Defining Schema
 const trSchema = new mongoose.Schema({
+    trNumber: {
+        type: String,
+        required: true,
+        unique: true
+    },
     companyName: {
         type: String,
         required: true,
@@ -13,39 +18,47 @@ const trSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    testType: [
-        {
-            type: String,
-            required: true,
-        },
-    ],
+    // testType: [
+    //     {
+    //         type: String,
+    //         required: true,
+    //     },
+    // ],
+    testType: {
+        type: String,
+        required: true,
+    },
     date: {
         type: Date,
-        default: format(Date.now(), "dd-mm-yyyy"),
+        // default: format(Date.now(), "dd-mm-yyyy"),
+        default: format('yy-MM-dd hh:mm:ss.SSS', new Date()),
+        null:false,
+    },
+    year: {
+        type: String,
+        default: format('yy', new Date()),
+        required: true,
     },
     receivedBy: {
-        type: String,
-    },
-    time: {
         type: String,
     },
     filename: {
         type: String,
     },
-    parentTr:{
-        type:String,
+    parentTr: {
+        type: String,
     },
-    status:{
-        type:string
+    status: {
+        type: String
     },
-    suggestion:{
-        type:string
+    suggestion: {
+        type: String
     },
-    remark:{
-        type:string
+    remark: {
+        type: String
     },
-    isAuthorized:{
-        type:string
+    isAuthorized: {
+        type: String
     }
 });
 

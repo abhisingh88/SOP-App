@@ -1,8 +1,8 @@
 const express = require("express")
 const hbs = require("hbs");
 const router = new express.Router()
-const CredManager = require("./login/login")
 const multer = require("multer")
+const CredManager = require("./login/login")
 const Manager = require("./manager/manager")
 const Details = require("./api/api")
 const path = require('path')
@@ -10,7 +10,9 @@ const auth= require("../middleware/auth");
 
 const UserDetail = require("../models/userModel");
 const ItDetail = require("../models/itDetails");
+const TrDetail = require("../models/trDetails");
 
+const DataMiddleware = require("./datamiddleware/datamiddleware")
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -44,7 +46,6 @@ router.get("/", async (req, res) => {
 });
 
 // Login routes
-// router.get("/user/signupPage", CredManager.getSignUpPage)
 router.get("/user/loginPage", CredManager.getLoginPage)
 router.get("/user/logout",auth, CredManager.logoutUser)
 router.post("/user/login", CredManager.loginUser)
@@ -52,7 +53,10 @@ router.get("/error", CredManager.errorPage)
 
 
 // Data middle endpoint
-router.get("/user/data",auth, Manager.receptionDataMiddleware)
+router.get("/user/itdata",auth, DataMiddleware.receptionDataMiddleware)
+router.get("/user/trdata",auth, DataMiddleware.labHeadDataMiddleware)
+router.get("/user/prdata",auth, DataMiddleware.labHeadDataMiddleware)
+router.get("/user/invoicedata",auth, DataMiddleware.labHeadDataMiddleware)
 
 
 // data/files uploader
@@ -68,8 +72,9 @@ router.get("/user/updateItStatus",auth, Details.updateItStatus)
 router.get("/data/itDetailsCount",[auth,paginatedResult(ItDetail)], Details.itDetailsRes)
 // /data/itDetailsCount?page=1&limit=8 set this link in sidebar
 
+router.get("/data/trDetailsCount",[auth,paginatedResult(TrDetail)], Details.trDetailssRes)
+
 router.get("/data/piDetailsCount",[auth,paginatedResult(UserDetail)], Details.piDetailsRes)
-router.get("/data/trDetailsCount",[auth,paginatedResult(UserDetail)], Details.trDetailssRes)
 router.get("/data/invoiceDetailsCount",[auth,paginatedResult(UserDetail)], Details.invoiceDetailsRes)
 
 
