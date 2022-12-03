@@ -10,28 +10,26 @@ const trSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    itNumber:{
-        type:String,
-        required:true,
+    itNumber: {
+        type: String,
+        required: true,
     },
     companyName: {
         type: String,
         required: true,
     },
-    noOfSample: {
-        type: String,
-        required: true,
-    },
-    // testType: [
-    //     {
-    //         type: String,
-    //         required: true,
-    //     },
-    // ],
-    testType: {
-        type: String,
-        required: true,
-    },
+    testData: [
+        {
+            testType: {
+                type: String,
+                required: true
+            },
+            noOfSample: {
+                type: String,
+                required: true
+            }
+        }
+    ],
     contact: {
         type: String,
         required: true,
@@ -40,7 +38,7 @@ const trSchema = new mongoose.Schema({
         type: String,
         // default: format(Date.now(), "dd-mm-yyyy"),
         default: format('yy-MM-dd hh:mm:ss.SSS', new Date()),
-        null:false,
+        null: false,
     },
     year: {
         type: String,
@@ -52,6 +50,9 @@ const trSchema = new mongoose.Schema({
     },
     filename: {
         type: String,
+    },
+    allocatedTo: {
+        type: String
     },
     parentTr: {
         type: String,

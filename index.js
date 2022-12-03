@@ -30,6 +30,20 @@ hbs.registerHelper('trimString', function(passedString) {
     return new hbs.SafeString(theString)
 });
 
+hbs.registerHelper('eq', function( a, b ){
+	var next =  arguments[arguments.length-1];
+	return (a === b) ? next.fn(this) : next.inverse(this);
+});
+
+hbs.registerHelper('eachProperty', function(context, options) {
+    var ret = "";
+    for(var prop in context)
+    {
+        ret = ret + options.fn({property:prop,value:context[prop]});
+    }
+    return ret;
+});
+
 const router = require("./routes/router")
 app.use(router)
 

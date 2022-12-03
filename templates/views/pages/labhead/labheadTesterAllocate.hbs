@@ -35,11 +35,20 @@
   <div class="container-flex">
     <div class="row">
       <div class="col-3">
-        {{> sidebar }}
+        {{> labheadSidebar }}
       </div>
 
       <div class="col-8 mx-0">
+        {{#if success}}
 
+
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Thank You!!</strong> We have Intilized the request for testing
+                <h3>Your IT No is: {{itNo}}</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+
+              {{/if}}
         <h1>Lab Assisstant Allocation</h1>
         <hr>
         <div class="row">
@@ -55,61 +64,51 @@
             </div>
           </div>
         </div>
-
         <div class="table-responsive">
+          <form action="/user/labheadAllocateToTester" method="post">
           <table class="table table-bordered">
             <thead>
               <tr>
                 <th scope="col">T.R. No.</th>
                 <th scope="col">Company</th>
                 <th scope="col">Assign to</th>
-                <th scope="col">Proforma Invoice</th>
-                <th scope="col">Payment Status</th>
-                <th scope="col">PO/DO</th>
+                <th scope="col">Test Type</th>
+                <th scope="col">No Of Sample</th>
+                <th scope="col">Date</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>SOP-TR-2021_11_01</td>
-                <td>HU</td>
-                <td><select class="form-select" aria-label="Default select example">
-                    <option selected>Lab Assistant</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select></td>
-                <td>Proforma No</td>
-                <td>Received</td>
-                <td><a href="#">View</a></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td><select class="form-select" aria-label="Default select example">
-                    <option selected>Lab Assistant</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select></td>
-                <td></td>
-                <td></td>
-                <td><a href="#">View</a></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td><select class="form-select" aria-label="Default select example">
-                    <option selected>Lab Assistant</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select></td>
-                <td></td>
-                <td></td>
-                <td><a href="#">View</a></td>
+
+              <td><input type="text" name="trNo" value="{{data.trNumber}}" readonly></td>
+              <td>{{data.companyName}}</td>
+              <td>
+                <select class="form-select" name="testerId" aria-label="Default select example">
+                  <option selected disabled="disabled">Select Lab Assistant</option>
+                  {{#eachProperty tester}}
+                  <option value="{{value._id}}">{{value.username}}</option>
+                  {{/eachProperty }}
+                </select>
+              </td>
+              <td>
+                <ol>
+                  {{#eachProperty data.testData}}
+                  <li>{{value.testType}}</li>
+                  {{/eachProperty }}
+                </ol>
+              </td>
+              <td>
+                <ul>
+                  {{#eachProperty data.testData}}
+                  <li>{{value.noOfSample}}</li>
+                  {{/eachProperty }}
+                </ul>
+              </td>
+              <td>{{ trimString data.date}}</td>
               </tr>
             </tbody>
           </table>
+          <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+        </form>
         </div>
       </div>
     </div>

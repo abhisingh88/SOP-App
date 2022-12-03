@@ -38,7 +38,8 @@ async function loginUser(req, res) {
                 res.redirect('/user/reception?id='+user._id);
             }
             if (user.role == "LabHead") {
-                res.redirect('/user/labhead?id='+user._id);
+                // res.redirect('/user/labhead?id='+user._id);
+                res.redirect('/user/dataOfItLab?id='+user._id+"&page=1&limit=4");
             }
             if (user.role == "Tester") {
                 res.redirect('/user/tester?id='+user._id);

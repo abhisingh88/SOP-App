@@ -5,7 +5,7 @@ async function receptionDataMiddleware(req, res) {
         let success=req.query.success
         let it=req.query.itNo
         // console.log("reached");
-        res.status(201).render("pages/reception/reception", { success: success, itNo:it });
+        res.status(201).render("pages/reception/reception", { success: success, itNo:it, homeActive:true });
 
     } catch (error) {
         res.status(401).send(error)
@@ -19,7 +19,7 @@ async function labHeadDataMiddleware(req, res) {
         let data= await TrDetail.findOne({trNumber:tr})
         // console.log("reached");
         console.log(data);
-        res.status(201).render("pages/labhead/labheadRecords", { success: success,tr:tr, data:data });
+        res.status(201).render("pages/labhead/successTrPage", { success: success,tr:tr, data:data });
 
     } catch (error) {
         res.status(401).send(error)

@@ -30,7 +30,7 @@
   <div class="container-flex">
     <div class="row">
       <div class="col-3">
-        {{> sidebar }}
+        {{> receptionSidebar }}
       </div>
 
       <div class="col-8 mx-0">
@@ -61,7 +61,7 @@
                 <th scope="col">Contact No.</th>
                 <th scope="col">Submission to Lab Head</th>
                 <th scope="col">Forward to Lab Head</th>
-                <th scope="col">Record Status</th>
+                <th scope="col">Status Of TR</th>
               </tr>
             </thead>
             <tbody>
@@ -73,8 +73,13 @@
                 <td>{{personName}}</td>
                 <td>{{contact}}</td>
                 <td>{{submittedToLabHead}}</td>
-                <td><a href="/user/receptionToLabHead?itNo={{itNumber}}"><button class="btn btn-primary">Forward</button></a></td>
-                <td>Pending</td>
+                <td>
+                  <a href="/user/receptionToLabHead?itNo={{itNumber}}" role="button" {{#eq
+                      submittedToLabHead "Yes" }} aria-disabled="true" {{/eq}}>
+                    <button type="button"  class="btn btn-primary {{#eq  submittedToLabHead "Yes" }} disabled {{/eq}}" >Forward</button>
+                  </a>
+                </td>
+                <td>{{statusOfTr}}</td>
               </tr>
               {{/each}}
             </tbody>
@@ -84,17 +89,17 @@
           <ul class="pagination justify-content-end">
 
             {{#if prev}}
-              <li class="page-item">
-                <a class="page-link" href="/data/itDetailsCount?page={{prev.page}}&limit={{prev.limit}}">Previous</a>
-              </li>
+            <li class="page-item">
+              <a class="page-link" href="/data/itDetailsCount?page={{prev.page}}&limit={{prev.limit}}">Previous</a>
+            </li>
             {{/if}}
             {{!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
             <li class="page-item"><a class="page-link" href="#">3</a></li> --}}
             {{#if next}}
-              <li class="page-item">
-                <a class="page-link" href="/data/itDetailsCount?page={{next.page}}&limit={{next.limit}}">Next</a>
-              </li>
+            <li class="page-item">
+              <a class="page-link" href="/data/itDetailsCount?page={{next.page}}&limit={{next.limit}}">Next</a>
+            </li>
             {{/if}}
           </ul>
         </nav>

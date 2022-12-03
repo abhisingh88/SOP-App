@@ -91,6 +91,8 @@ router.get("/user/receptionToLabHead",auth, Manager.receptionToLabHead)
 // Lab Head
 router.get("/user/dataOfItLab",auth, Manager.dataFromreceptionToLabHead)
 router.get("/user/labheadRecords",auth, Manager.getlabheadTrRecords)
+router.get("/user/labheadAllocateToTester",auth, Manager.labheadAllocateToTesterPage)
+router.post("/user/labheadAllocateToTester",auth, Manager.labheadAllocateToTester)
 
 // Secure EndPoint
 router.get("/user/generateTrLabhead",auth, Manager.labhead)
@@ -144,5 +146,7 @@ function paginatedResult(model){
         }
     }
 }
+
+
 
 module.exports = router;

@@ -70,59 +70,36 @@
                 <th scope="col">No Of Sample</th>
                 <th scope="col">Company Contact</th>
                 <th scope="col">Date Generated</th>
-                <th scope="col">Allocate</th>
-                {{!-- <th scope="col">Report Corrections</th>
-                <th scope="col">Status</th> --}}
-              </tr>
+                <th scope="col">Allocation Status</th>
+                </tr>
             </thead>
             <tbody>
-              {{#each data}}
+              {{#if data}}
               <tr>
-                <td>{{trNumber}}</td>
-                <td>{{companyName}}</td>
+                <td>{{data.trNumber}}</td>
+                <td>{{data.companyName}}</td>
                 <td>
                   <ol>
-                    {{#eachProperty testData}}
+                    {{#eachProperty data.testData}}
                       <li>{{value.testType}}</li>
                     {{/eachProperty }}
                   </ol>
                 </td>
                 <td>
                   <ul>
-                    {{#eachProperty testData}}
+                    {{#eachProperty data.testData}}
                       <li>{{value.noOfSample}}</li>
                     {{/eachProperty }}
                   </ul>
                 </td>
-                <td>{{contact}}</td>
-                <td>{{trimString date}}</td>
-                <td><a href="/user/labheadAllocateToTester?trNo={{trNumber}}"><button
-                      class="btn btn-primary">Allocate</button></a></td>
-                {{!-- <td>{{submittedToLabHead}}</td>
-                <td>Pending</td> --}}
+                <td>{{data.contact}}</td>
+                <td>{{trimString data.date}}</td>
+                <td>Allocated</td>
               </tr>
-              {{/each}}
+              {{/if}}
             </tbody>
           </table>
         </div>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-end">
-
-            {{#if prev}}
-            <li class="page-item">
-              <a class="page-link" href="/user/dataOfItLab?page={{prev.page}}&limit={{prev.limit}}">Previous</a>
-            </li>
-            {{/if}}
-            {{!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li> --}}
-            {{#if next}}
-            <li class="page-item">
-              <a class="page-link" href="/user/dataOfItLab?page={{next.page}}&limit={{next.limit}}">Next</a>
-            </li>
-            {{/if}}
-          </ul>
-        </nav>
       </div>
     </div>
   </div>

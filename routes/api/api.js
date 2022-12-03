@@ -85,7 +85,6 @@ async function trDetails(req, res) {
 
         let tr = "TR-"
         tr += format.asString('yy-MM-dd', new Date());
-        // let dated=format('yy-MM-dd', new Date());
         let year = format('yy', new Date());;
         var count = await TrDetail.count({ year: year })
         if (count == 0) {
@@ -95,24 +94,38 @@ async function trDetails(req, res) {
         }
         tr += "-";
         count = count.toString();
-        // console.log(typeof(count));
-        // console.log(count);
         tr += count;
 
-        console.log(tr);
+
+        let counter=parseInt(req.body.counter)
+        let testData=[]
+        for (let i = 0; i < counter; i++) {
+            let obj={
+                testType:req.body.testType[i],
+                noOfSample:req.body.noOfSample[i]
+            }
+            testData.push(obj);
+        }
+
 
         const trDetail = new TrDetail({
             trNumber:tr,
             itNumber: req.body.itNumber,
             companyName: req.body.companyName,
-            noOfSample: req.body.noOfSample,
-            testType: req.body.testType,
+            testData:testData,
             receivedBy: req.body.receivedBy,
             contact: req.body.contact,
         })
         const trStatus = await trDetail.save();
+
+        let data = await ItDetail.findOneAndUpdate({ itNumber: it }, {
+            statusOfTr: "Generated"
+        })
+
         console.log(trStatus);
         res.redirect('/user/trdata?success=' + true + "&trNo=" + tr);
+
+
         // res.status(201).render("pages/reception", { success: true, itNo:it });
         // res.status(201).render("data/itDetailsCount");
 
@@ -177,7 +190,7 @@ async function updateItStatus(req, res) {
             submittedToLabHead: "Yes"
         })
         console.log(data);
-        res.status(201).render("pages/reception/receptionToLabHead", { data: data, success: true });
+        res.status(201).render("pages/reception/receptionToLabHead", { data: data, success: true , activeITtab:true});
 
     } catch (error) {
         res.status(500).send(error)
@@ -208,7 +221,7 @@ async function itDetailsRes(req, res) {
         // console.log("from next: ", res.paginatedResult.next);
         // console.log("from prev: ", res.paginatedResult.previous);
 
-        res.status(201).render("pages/reception/receptionItRecords", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+        res.status(201).render("pages/reception/receptionItRecords", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous , activeITtab:true});
 
     } catch (error) {
         res.status(500).send(error)

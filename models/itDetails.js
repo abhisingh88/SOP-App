@@ -37,8 +37,9 @@ const itSchema = new mongoose.Schema({
         type: String,
         default:"NO",
     },
-    testType:{
+    statusOfTr:{
         type: String,
+        default:"NotGenerated"
     }
 })
 
