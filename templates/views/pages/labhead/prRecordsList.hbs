@@ -64,13 +64,17 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">T.R. No.</th>
+                <th scope="col">P.I. No.</th>
                 <th scope="col">Company Name</th>
+                <th scope="col">Company Contact</th>
                 <th scope="col">Test Type</th>
                 <th scope="col">No Of Sample</th>
-                <th scope="col">Company Contact</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Total Cost</th>
+                <th scope="col">Advance Payment</th>
                 <th scope="col">Date Generated</th>
-                <th scope="col">Allocate</th>
+                <th scope="col">Generate TR</th>
+                <th scope="col">Status</th>
                 {{!-- <th scope="col">Report Corrections</th>
                 <th scope="col">Status</th> --}}
               </tr>
@@ -78,8 +82,9 @@
             <tbody>
               {{#each data}}
               <tr>
-                <td>{{trNumber}}</td>
+                <td>{{piNumber}}</td>
                 <td>{{companyName}}</td>
+                <td>{{contact}}</td>
                 <td>
                   <ol>
                     {{#eachProperty testData}}
@@ -94,19 +99,27 @@
                     {{/eachProperty }}
                   </ul>
                 </td>
-                <td>{{contact}}</td>
+                <td>
+                  <ul>
+                    {{#eachProperty testData}}
+                    <li>{{value.cost}}</li>
+                    {{/eachProperty }}
+                  </ul>
+                </td>
+                <td>{{totalCost}}</td>
+                <td>{{advancePayment}}</td>
                 <td>{{trimString date}}</td>
-                {{#eq allocatedTo "null"}}
-                <td><a href="/user/labheadAllocateToTester?trNo={{trNumber}}"><button
-                      class="btn btn-primary">Allocate</button></a>
+
+                {{#eq statusOfTr "Not Generated"}}
+                <td><a href="/user/generateTrLabhead?piNo={{piNumber}}"><button
+                      class="btn btn-primary">Generate</button></a>
                 </td>
                 {{/eq}}
-                {{#ifnoteq allocatedTo "null"}}
-                  <td>{{allocatedTo}}</td>
+                {{#ifnoteq statusOfTr "Not Generated"}}
+                  <td>{{statusOfTr}}</td>
                 {{/ifnoteq}}
 
-                {{!-- <td>{{submittedToLabHead}}</td>
-                <td>Pending</td> --}}
+                <td>{{status}}</td>
               </tr>
               {{/each}}
             </tbody>
@@ -117,7 +130,7 @@
 
             {{#if prev}}
             <li class="page-item">
-              <a class="page-link" href="/user/labheadRecords?page={{prev.page}}&limit={{prev.limit}}">Previous</a>
+              <a class="page-link" href="/user/pilabheadRecords?page={{prev.page}}&limit={{prev.limit}}">Previous</a>
             </li>
             {{/if}}
             {{!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -125,7 +138,7 @@
             <li class="page-item"><a class="page-link" href="#">3</a></li> --}}
             {{#if next}}
             <li class="page-item">
-              <a class="page-link" href="/user/labheadRecords?page={{next.page}}&limit={{next.limit}}">Next</a>
+              <a class="page-link" href="/user/pilabheadRecords?page={{next.page}}&limit={{next.limit}}">Next</a>
             </li>
             {{/if}}
           </ul>

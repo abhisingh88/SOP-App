@@ -3,6 +3,7 @@ const express = require("express");
 const ItDetails = require("../../models/itDetails");
 const TrDetail = require("../../models/trDetails");
 const UserDetail = require("../../models/userModel");
+const PiDetail = require("../../models/piDetails");
 async function directorPage(req, res) {
     try {
         res.status(201).render("pages/director/director");
@@ -14,13 +15,40 @@ async function directorPage(req, res) {
 
 
 
-async function labheadPage(req, res) {
+async function TrlabheadPage(req, res) {
     try {
+
+        userId=req.cookies.userId;
+        userData=await UserDetail.findOne({_id:userId})
+        userImg=userData.userImage
+
+        pi = req.query.piNo;
+        let data = await PiDetail.findOne({ piNumber: pi })
+
+        data.userImage=userImg
+
+        data.counter=data.testData.length
+
+        console.log(data);
+        res.status(201).render("pages/labhead/labhead", { data: data });
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+async function PilabheadPage(req, res) {
+    try {
+
+        userId=req.cookies.userId;
+        userData=await UserDetail.findOne({_id:userId})
+        userImg=userData.userImage
+
         it = req.query.itNo;
         let data = await ItDetails.findOne({ itNumber: it })
-        // console.log(data);
-        // res.status(201).render("pages/labhead/labheadTesterAllocate",{data:data});
-        res.status(201).render("pages/labhead/labhead", { data: data });
+
+        data.userImage=userImg
+        res.status(201).render("pages/labhead/generatePr", { data: data });
 
     } catch (error) {
         res.status(401).send(error)
@@ -48,7 +76,10 @@ async function financePage(req, res) {
 
 async function testerPage(req, res) {
     try {
-        res.status(201).render("pages/tester/tester");
+        let userId=req.cookies.userId
+        let data=await TrDetail.find({allocatedTo:userId,suggestion:"null"})
+        // console.log(data);
+        res.status(201).render("pages/tester/tester",{data:data});
 
     } catch (error) {
         res.status(401).send(error)
@@ -78,6 +109,11 @@ async function receptionToLabHead(req, res) {
 
 async function dataFromreceptionToLabHead(req, res) {
     try {
+
+        userId=req.cookies.userId;
+        userData=await UserDetail.findOne({_id:userId})
+        userImg=userData.userImage
+
         const page = parseInt(req.query.page)
         const limit = parseInt(req.query.limit)
         // const limit=2
@@ -87,7 +123,47 @@ async function dataFromreceptionToLabHead(req, res) {
 
         const results = {}
 
-        if (endIndex < await ItDetails.count()) {
+        if (endIndex < await ItDetails.find({submittedToLabHead: "Yes", statusOfPi: "Not Generated" }).count()) {
+            results.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+        let data = await ItDetails.find({submittedToLabHead: "Yes", statusOfPi: "Not Generated" }).sort({Reqdate:"desc",itNumber:"desc"}).limit(limit).skip(startIndex)
+
+        console.log(data);
+
+        data.userImage=userImg
+        res.status(201).render("pages/labhead/itFromRec_LabHead", { data: data, next: results.next, prev: results.previous });
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+
+async function getlabheadTrRecords(req, res) {
+    try {
+        userId=req.cookies.userId;
+        userData=await UserDetail.findOne({_id:userId})
+        userImg=userData.userImage
+        // let data = await TrDetail.find({})
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+
+        const results = {}
+
+        if (endIndex < await TrDetail.count()) {
             results.next = {
                 page: page + 1,
                 limit: limit
@@ -101,19 +177,54 @@ async function dataFromreceptionToLabHead(req, res) {
             }
         }
 
-        let data = await ItDetails.find({ submittedToLabHead: "Yes", statusOfTr: "NotGenerated" }).limit(limit).skip(startIndex)
-        res.status(201).render("pages/labhead/itFromRec_LabHead", { data: data, next: results.next, prev: results.previous });
+        let data = await TrDetail.find({}).sort({date:"desc", trNumber:"desc"}).limit(limit).skip(startIndex)
+        data.userImage=userImg
+        console.log(data);
+        // console.log(data);
+
+        let testerData = await UserDetail.find({role:"Tester"})
+        console.log(testerData);
+        res.status(201).render("pages/labhead/labheadRecords", { data: data,testerData:testerData, next: results.next, prev: results.previous });
+        // res.status(201).render("pages/labhead/labheadRecords", { data: data });
 
     } catch (error) {
         res.status(401).send(error)
     }
 };
 
-
-async function getlabheadTrRecords(req, res) {
+async function getlabheadPiRecords(req, res) {
     try {
-        let data = await TrDetail.find({})
-        res.status(201).render("pages/labhead/labheadRecords", { data: data });
+        userId=req.cookies.userId;
+        userData=await UserDetail.findOne({_id:userId})
+        userImg=userData.userImage
+        // let data = await TrDetail.find({})
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+
+        const results = {}
+
+        if (endIndex < await PiDetail.count()) {
+            results.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+
+        let data = await PiDetail.find({}).sort({date:"desc", piNumber:"desc"}).limit(limit).skip(startIndex)
+        data.userImage=userImg
+        // console.log(data);
+        res.status(201).render("pages/labhead/prRecordsList", { data: data, next: results.next, prev: results.previous });
+        // res.status(201).render("pages/labhead/labheadRecords", { data: data });
 
     } catch (error) {
         res.status(401).send(error)
@@ -123,9 +234,14 @@ async function getlabheadTrRecords(req, res) {
 
 async function labheadAllocateToTesterPage(req, res) {
     try {
+        userId=req.cookies.userId;
+        userData=await UserDetail.findOne({_id:userId})
+        userImg=userData.userImage
+        
         let tr = req.query.trNo
-        let data = await TrDetail.findOne({trNo:tr})
+        let data = await TrDetail.findOne({trNumber:tr})
         let testerData = await UserDetail.find({role:"Tester"})
+        data.userImage=userImg
         res.status(201).render("pages/labhead/labheadTesterAllocate", { data: data, tester:testerData });
 
     } catch (error) {
@@ -135,13 +251,91 @@ async function labheadAllocateToTesterPage(req, res) {
 
 
 async function labheadAllocateToTester(req, res) {
-    try {
+    try {        
         let tr=req.body.trNo
         let data = await TrDetail.findOneAndUpdate({ trNumber: tr }, {
             allocatedTo:req.body.testerId
         })
-        console.log(data);
-        res.status(200).render("pages/labhead/labheadTesterAllocate",{success:true})
+        // console.log(data);
+        res.status(200).render("pages/labhead/labheadTesterAllocate",{success:true, data:data})
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+
+async function getTestViewSubmission(req, res) {
+    try {        
+        let tr=req.query.trNo
+        let data = await TrDetail.findOne({ trNumber: tr })
+        // console.log(data);
+        res.status(200).render("pages/tester/testerReport",{data:data})
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+async function getTestViewSubmissionUpdate(req, res) {
+    try {        
+        let tr=req.query.trNo
+        let data = await TrDetail.findOne({ trNumber: tr })
+        // console.log(data);
+        res.status(200).render("pages/tester/testerReportUpdate",{data:data})
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+
+async function testViewSubmission(req, res) {
+    try {        
+        let tr=req.body.trNo
+        
+        // console.log(req.body.comment);
+
+        let data = await TrDetail.findOneAndUpdate({ trNumber:tr }, {
+            filename:req.file.filename,
+            status:"Uploaded",
+            commentFromTester:req.body.comment,
+        })
+        // console.log(data);
+        res.status(200).render("pages/tester/testerReport",{success:true, data:data})
+        
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+async function testViewSubmissionUpdate(req, res) {
+    try {        
+        let tr=req.body.trNo
+        
+        // console.log(req.body.comment);
+
+        let data = await TrDetail.findOneAndUpdate({ trNumber:tr }, {
+            filename:req.file.filename,
+            status:"Uploaded",
+            commentFromTester:req.body.comment,
+            suggestion:"null",
+        })
+        // console.log(data);
+        res.status(200).render("pages/tester/testerReport",{success:true, data:data})
+        
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+
+async function reissuedTrDataToTester(req, res) {
+    try {        
+        // let tr=req.query.trNo
+
+        let data = await TrDetail.find({ allocatedTo:req.cookies.userId,suggestion:{$ne:"null"} })
+        // console.log(data);
+        res.status(200).render("pages/tester/reissuedTR",{data:data})
 
     } catch (error) {
         res.status(401).send(error)
@@ -152,12 +346,19 @@ module.exports = {
     director: directorPage,
     createUserPage: createUser,
     reception: receptionPage,
-    labhead: labheadPage,
+    Trlabhead: TrlabheadPage,
+    Pilabhead: PilabheadPage,
     finance: financePage,
     tester: testerPage,
     receptionToLabHead: receptionToLabHead,
     dataFromreceptionToLabHead: dataFromreceptionToLabHead,
     getlabheadTrRecords: getlabheadTrRecords,
+    getlabheadPiRecords: getlabheadPiRecords,
     labheadAllocateToTesterPage:labheadAllocateToTesterPage,
     labheadAllocateToTester:labheadAllocateToTester,
+    getTestViewSubmission:getTestViewSubmission,
+    getTestViewSubmissionUpdate:getTestViewSubmissionUpdate,
+    testViewSubmission:testViewSubmission,
+    testViewSubmissionUpdate:testViewSubmissionUpdate,
+    reissuedTrDataToTester:reissuedTrDataToTester,
 }

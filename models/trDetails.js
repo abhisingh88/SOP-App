@@ -10,9 +10,10 @@ const trSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    itNumber: {
+    piNumber: {
         type: String,
         required: true,
+        unique:true,
     },
     companyName: {
         type: String,
@@ -47,27 +48,43 @@ const trSchema = new mongoose.Schema({
     },
     receivedBy: {
         type: String,
+        default:"null",
     },
     filename: {
         type: String,
+        default:"null"
     },
     allocatedTo: {
-        type: String
+        type: String,
+        default:"null"
     },
     parentTr: {
         type: String,
+        default:"null",
     },
     status: {
-        type: String
+        type: String,
+        default:"null"
     },
     suggestion: {
-        type: String
+        type: String,
+        default:"null"
     },
     remark: {
-        type: String
+        type: String,
+        default:"null"
+    },
+    commentFromTester:{
+        type: String,
+        default:"null"
+    },
+    toDirector: {
+        type: String,
+        default:"null"
     },
     isAuthorized: {
-        type: String
+        type: String,
+        default:"null"
     }
 });
 

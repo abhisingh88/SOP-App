@@ -5,6 +5,7 @@ var format = require('date-format');
 const UserDetail = require("../../models/userModel");
 const ItDetail = require("../../models/itDetails");
 const TrDetail = require("../../models/trDetails");
+const PiDetails = require("../../models/piDetails");
 
 
 
@@ -110,7 +111,7 @@ async function trDetails(req, res) {
 
         const trDetail = new TrDetail({
             trNumber:tr,
-            itNumber: req.body.itNumber,
+            piNumber: req.body.piNumber,
             companyName: req.body.companyName,
             testData:testData,
             receivedBy: req.body.receivedBy,
@@ -118,7 +119,7 @@ async function trDetails(req, res) {
         })
         const trStatus = await trDetail.save();
 
-        let data = await ItDetail.findOneAndUpdate({ itNumber: it }, {
+        let data = await PiDetails.findOneAndUpdate({ piNumber: req.body.piNumber }, {
             statusOfTr: "Generated"
         })
 
@@ -138,24 +139,53 @@ async function trDetails(req, res) {
 async function piDetails(req, res) {
     try {
 
-        const email = req.body.email
-        const password = req.body.password
-        const useremail = await Internal.findOne({ email: email })
-        const token = await useremail.generateAuthToken();
-
-        res.cookie("internal", token, {
-            expires: new Date(Date.now() + 600000),
-            httpOnly: true,
-            // secure:true   //works on https only
-        })
-        const isMatch = bcrypt.compare(password, useremail.password)
-
-        if (isMatch) {
-            // res.status(201).render("internal/internal")
-            res.redirect('/internal');
+        let pi = "Pi-"
+        pi += format.asString('yy-MM-dd', new Date());
+        let year = format('yy', new Date());;
+        var count = await PiDetails.count({ year: year })
+        if (count == 0) {
+            count = 1;
         } else {
-            res.send("Invalid email or passwords")
+            count += 1
         }
+        pi += "-";
+        count = count.toString();
+        pi += count;
+
+        
+        let counter=parseInt(req.body.counter)
+        let testData=[]
+
+        for (let i = 0; i < counter; i++) {
+            let obj={
+                testType:req.body.testType[i],
+                noOfSample:req.body.noOfSample[i],
+                cost:req.body.cost[i]
+            }
+            testData.push(obj);
+        }
+
+        // console.log(testData);
+        // console.log(req.body.itNumber);
+        const piDetail = new PiDetails({
+            piNumber:pi,
+            itNumber: req.body.itNumber,
+            companyName: req.body.companyName,
+            contact: req.body.contact,
+            testData:testData,
+            totalCost:req.body.totalCost,
+            advancePayment:req.body.advancePayment,
+        })
+        const piStatus = await piDetail.save();
+        // console.log(piStatus);
+        let data = await ItDetail.findOneAndUpdate({ itNumber: req.body.itNumber }, {
+            statusOfPi: "Generated"
+        })
+
+        // console.log(data);
+        res.redirect('/user/pidata?success=' + true + "&piNo=" + pi);
+
+
 
     } catch (error) {
         res.status(400).send("Error occureed plz try again!!")
@@ -228,10 +258,106 @@ async function itDetailsRes(req, res) {
     }
 };
 
+async function itDetailsRes(req, res) {
+    try {
+        // res.json(res.paginatedResult)
+        // console.log(res.paginatedResult);
+        // console.log("from it: ", res.paginatedResult);
+        // console.log("from next: ", res.paginatedResult.next);
+        // console.log("from prev: ", res.paginatedResult.previous);
+
+        res.status(201).render("pages/reception/receptionItRecords", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous , activeITtab:true});
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
+async function submittedItDetailsRes(req, res) {
+    try {
+        res.status(201).render("pages/reception/submittedReceptionItRecords", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous , activeSubmittedITtab:true});
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
 async function trDetailssRes(req, res) {
     try {
         // res.json(res.paginatedResult)
         res.status(201).render("pages/labhead/labheadRecords", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
+async function completedTestReports(req, res) {
+    try {
+        // res.json(res.paginatedResult)
+
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+
+        const results = {}
+
+        if (endIndex < await TrDetail.find({status:"Uploaded"}).count()) {
+            results.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+
+        let data = await TrDetail.find({status:"Uploaded", $and:[{toDirector:"null"},{suggestion:"null"}]}).sort({trNumber:"desc"}).limit(limit).skip(startIndex)
+
+        res.status(201).render("pages/labhead/submittedTestReport", { data: data, next: results.next, prev: results.previous });
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
+
+async function getVerifyReportPage(req, res) {
+    try {
+        // res.json(res.paginatedResult)
+        let tr= req.query.trNo
+        let data= await TrDetail.findOne({trNumber:tr})
+        res.status(201).render("pages/labhead/labheadVerifyReport", {data:data});
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
+async function retestToLabTester(req, res) {
+    try {
+        let tr= req.body.trNo
+        let data= await TrDetail.findOneAndUpdate({trNumber:tr},{
+            suggestion:req.body.suggestion
+        })
+        console.log(data);
+        res.redirect("/user/completedTestReports?page=1&limit=7")
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
+async function sendToDiretor(req, res) {
+    try {
+        let tr= req.body.trNo
+        let data= await TrDetail.findOneAndUpdate({trNumber:tr},{
+            toDirector:"Yes"
+        })
+        // res.status(201).render("pages/labhead/labheadVerifyReport", {data:data});
+        res.redirect("/user/completedTestReports?page=1&limit=7")
     } catch (error) {
         res.status(500).send(error)
     }
@@ -249,4 +375,9 @@ module.exports = {
     trDetailssRes: trDetailssRes,
     piDetailsRes: piDetailsRes,
     itDetailsRes: itDetailsRes,
+    submittedItDetailsRes:submittedItDetailsRes,
+    completedTestReports:completedTestReports,
+    getVerifyReportPage:getVerifyReportPage,
+    sendToDiretor:sendToDiretor,
+    retestToLabTester:retestToLabTester,
 }

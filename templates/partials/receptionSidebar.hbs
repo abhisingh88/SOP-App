@@ -10,12 +10,20 @@
             Home
           </a>
         </li>
-        <li>
-          <a href="/data/itDetailsCount?page=1&limit=8" class="nav-link text-white {{#if activeITtab }} active {{/if}}">
+        <li class="nav-item">
+          <a href="/data/itDetailsCount?page=1&limit=6" class="nav-link text-white {{#if activeITtab }} active {{/if}}">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2"></use>
             </svg>
             Get IT Records
+          </a>
+        </li>
+        <li class="nav-item my-2">
+          <a href="/data/submittedItDetailsCount?page=1&limit=6" class="nav-link text-white {{#if activeSubmittedITtab }} active {{/if}}">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#speedometer2"></use>
+            </svg>
+            Get Submitted IT Records
           </a>
         </li>
       </ul>

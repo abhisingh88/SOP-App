@@ -19,6 +19,7 @@ const static_path = path.join(__dirname, "./public")
 app.use(express.static(static_path))
 
 app.use("/userImages",express.static("./uploads/userData/"))
+app.use("/trDocs",express.static("./uploads/trFiles/"))
 
 const template_path = path.join(__dirname, "./templates/views")
 const parials_path = path.join(__dirname, "./templates/partials")
@@ -42,6 +43,11 @@ hbs.registerHelper('eachProperty', function(context, options) {
         ret = ret + options.fn({property:prop,value:context[prop]});
     }
     return ret;
+});
+
+hbs.registerHelper('ifnoteq', function (a, b, options) {
+    if (a != b) { return options.fn(this); }
+    return options.inverse(this);
 });
 
 const router = require("./routes/router")

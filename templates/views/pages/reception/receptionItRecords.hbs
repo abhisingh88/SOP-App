@@ -61,7 +61,7 @@
                 <th scope="col">Contact No.</th>
                 <th scope="col">Submission to Lab Head</th>
                 <th scope="col">Forward to Lab Head</th>
-                <th scope="col">Status Of TR</th>
+                <th scope="col">Forward to Lab Head</th>
               </tr>
             </thead>
             <tbody>
@@ -79,7 +79,7 @@
                     <button type="button"  class="btn btn-primary {{#eq  submittedToLabHead "Yes" }} disabled {{/eq}}" >Forward</button>
                   </a>
                 </td>
-                <td>{{statusOfTr}}</td>
+                <td>{{submittedToLabHead}}</td>
               </tr>
               {{/each}}
             </tbody>

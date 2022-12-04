@@ -19,13 +19,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    var counter = document.getElementById("counterVal").value;
-    counter=parseInt(counter)
+    var counter = 1;
     let testData = []
     function add_TestField() {
       html = `<div><input type="text" placeholder="Test Type" name="testType" id="test${counter}" required>
               {{!-- <br> --}}
-              <input type="text" placeholder="Number of Sample" name="noOfSample" id="no${counter}" required></div>`
+              <input type="text" placeholder="Number of Sample" name="noOfSample" id="no${counter}" required>
+              <input type="text" placeholder="Cost" name="cost" id="cost" required>
+              </div>`
       var testData = document.getElementById("testCollection")
       testData.innerHTML += html
       counter++;
@@ -64,38 +65,45 @@
 
       <div class="col-9 mx-0">
       
-        <form action="/data/trDetails" method="post">
+        <form action="/data/piDetails" method="post">
           <h1>Test Request Form</h1>
           <hr>
 
-          <input type="hidden" id="piNum" name="piNumber" value="{{data.piNumber}}">
-          <input type="hidden" id="counterVal" name="counter" value='{{data.counter}}'>
+          <input type="hidden" id="itNum" name="itNumber" value="{{data.itNumber}}">
+          <input type="hidden" id="counterVal" name="counter" value='1'>
 
+          <label for="companyName">companyName :</label>
+          <br>
           <input type="text" placeholder="Company Name" value="{{data.companyName}}" name="companyName" id="comp"
             required>
+            <br>
 
+          <label for="Contact">Contact :</label>
           <br>
-
-          {{#eachProperty data.testData}}
-            <div id="testCollection">
-                <input type="text" placeholder="Test Type" value="{{value.testType}}" name="testType" id="test" required>
-                <input type="text" placeholder="Number of Sample" value="{{value.noOfSample}}" name="noOfSample" id="no" required>
-            </di>
-          {{/eachProperty }}
-
-          {{!-- <button type="submit" class="addbtn" id="testAddBtn" onclick="add_TestField()">Add</button>
-          <button type="submit" class="rembtn" id="testRemBtn" onclick="remove_TestField()">Remove</button>
-          <br> --}}
-
-          <br>
-          <input type="date" placeholder="Date" name="date" id="date" required>
-          <br>
-
-          <input type="text" placeholder="Received By" name="receivedBy" id="rcvd" required>
-          <br>
-          <input type="text" placeholder="Contact Persom" name="contact" value="{{data.contact}}" id="contactPerson"
+          <input type="text" placeholder="Contact" value="{{data.contact}}" name="contact" id="contact"
             required>
 
+          <br>
+          <label for="reqDate">Req Date :</label>
+          <br>
+          <input type="date" placeholder="Date" name="date" id="date" >
+          <br>
+
+          <div id="testCollection">
+              <input type="text" placeholder="Test Type" name="testType" id="test" required>
+              <input type="text" placeholder="Number of Sample" name="noOfSample" id="no" required>
+              <input type="text" placeholder="Cost" name="cost" id="cost" required>
+          </div>
+
+          <button type="submit" class="addbtn" id="testAddBtn" onclick="add_TestField()">Add</button>
+          <button type="submit" class="rembtn" id="testRemBtn" onclick="remove_TestField()">Remove</button>
+          <br>
+
+          <input type="text" placeholder="Total Cost" name="totalCost" id="totalCost" required>
+          <br>
+          
+          <input type="text" placeholder="Advance Payment" name="advancePayment" id="advancePayment" required>
+          <br>
 
           <hr>
 

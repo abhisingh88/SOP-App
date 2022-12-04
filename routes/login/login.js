@@ -23,13 +23,13 @@ async function loginUser(req, res) {
         const isMatch = await bcrypt.compare(password, user.password)
         if (isMatch) {
             const token = await user.generateAuthToken();
-
+            
+            res.cookie("userId",user._id)
             res.cookie("sop", token, {
                 expires: new Date(Date.now() + 72000000),
                 httpOnly: true,
                 // secure:true   //works on https only
             })
-
 
             if (user.role == "Director") {
                 res.redirect('/user/director?id='+user._id);
@@ -39,7 +39,7 @@ async function loginUser(req, res) {
             }
             if (user.role == "LabHead") {
                 // res.redirect('/user/labhead?id='+user._id);
-                res.redirect('/user/dataOfItLab?id='+user._id+"&page=1&limit=4");
+                res.redirect('/user/dataOfItLab?id='+user._id+"&page=1&limit=7");
             }
             if (user.role == "Tester") {
                 res.redirect('/user/tester?id='+user._id);

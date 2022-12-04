@@ -22,18 +22,18 @@
 <body>
   {{!-- {{> navigation }} --}}
 
-  {{> navbar }}
+  {{> navbar userImg=data.userImage }}
 
   {{!-- {{> navigation }} --}}
   <div class="container-flex">
     <div class="row">
       <div class="col-3">
-        {{> labheadSidebar }}
+        {{> labheadSidebar userImg=data.userImage }}
       </div>
 
       <div class="col-8 mx-0">
         <div class="container-fluid my-4">
-          <h1>Test Report List</h1>
+          <h1>IT - Test Request List</h1>
           <hr>
           <div class="row">
             <div class="col-md-4 srch-box">
@@ -58,7 +58,7 @@
                   <th scope="col">Date of Generation</th>
                   <th scope="col">Contact Person</th>
                   <th scope="col">Contact No.</th>
-                  <th scope="col">Generate TR</th>
+                  <th scope="col">Generate PI</th>
                 </tr>
               </thead>
               <tbody>
@@ -69,7 +69,7 @@
                   <td>{{trimString Reqdate}}</td>
                   <td>{{personName}}</td>
                   <td>{{contact}}</td>
-                  <td><a href="/user/generateTrLabhead?itNo={{itNumber}}"><button
+                  <td><a href="/user/generatePiLabhead?itNo={{itNumber}}"><button
                         class="btn btn-primary">Generate</button></a></td>
                 </tr>
                 {{/each}}

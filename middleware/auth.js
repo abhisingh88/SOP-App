@@ -5,6 +5,7 @@ const auth = async (req, res, next) => {
     try {
 
         const token = req.cookies.sop
+
         const verifyUser = jwt.verify(token, "secreat key")
         // console.log(verifyUser)
         const user = await User.findOne({ _id: verifyUser._id })

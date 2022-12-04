@@ -6,7 +6,7 @@ const CredManager = require("./login/login")
 const Manager = require("./manager/manager")
 const Details = require("./api/api")
 const path = require('path')
-const auth= require("../middleware/auth");
+const auth = require("../middleware/auth");
 
 const UserDetail = require("../models/userModel");
 const ItDetail = require("../models/itDetails");
@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         console.log(file);
-        cb(null, Date.now()+"-" + path.extname(file.originalname))
+        cb(null, Date.now() + "-" + path.extname(file.originalname))
     }
 })
 
@@ -29,6 +29,26 @@ const uploadUser = multer({
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(png|jpg)$/)) {
             return cb(new Error('Please upload a Image'))
+        }
+        cb(undefined, true)
+    }
+})
+
+const trStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/trFiles')
+    },
+    filename: (req, file, cb) => {
+        // console.log(file);
+        cb(null, "TR" + "-" + Date.now() + path.extname(file.originalname))
+    }
+})
+
+const uploadTr = multer({
+    storage: trStorage,
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(pdf|docx)$/)) {
+            return cb(new Error('Please upload a pdf or docx'))
         }
         cb(undefined, true)
     }
@@ -47,16 +67,16 @@ router.get("/", async (req, res) => {
 
 // Login routes
 router.get("/user/loginPage", CredManager.getLoginPage)
-router.get("/user/logout",auth, CredManager.logoutUser)
+router.get("/user/logout", auth, CredManager.logoutUser)
 router.post("/user/login", CredManager.loginUser)
 router.get("/error", CredManager.errorPage)
 
 
 // Data middle endpoint
-router.get("/user/itdata",auth, DataMiddleware.receptionDataMiddleware)
-router.get("/user/trdata",auth, DataMiddleware.labHeadDataMiddleware)
-router.get("/user/prdata",auth, DataMiddleware.labHeadDataMiddleware)
-router.get("/user/invoicedata",auth, DataMiddleware.labHeadDataMiddleware)
+router.get("/user/itdata", auth, DataMiddleware.receptionDataMiddleware)
+router.get("/user/trdata", auth, DataMiddleware.TrlabHeadDataMiddleware)
+router.get("/user/pidata", auth, DataMiddleware.PilabHeadDataMiddleware)
+// router.get("/user/invoicedata", auth, DataMiddleware.labHeadDataMiddleware)
 
 
 // data/files uploader
@@ -64,85 +84,98 @@ router.post("/data/itDetails", Details.itDetails)
 router.post("/data/trDetails", Details.trDetails)
 router.post("/data/piDetails", Details.piDetails)
 router.post("/data/invoiceDetails", Details.invoiceDetails)
-router.post("/user/createUser", uploadUser.single('profile_photo') ,Details.createUser)
-router.get("/user/updateItStatus",auth, Details.updateItStatus)
+
+
+// Other endpoints
+router.post("/user/createUser", uploadUser.single('profile_photo'), Details.createUser)
+router.get("/user/updateItStatus", auth, Details.updateItStatus)
 
 
 // paginated file details
-router.get("/data/itDetailsCount",[auth,paginatedResult(ItDetail)], Details.itDetailsRes)
-// /data/itDetailsCount?page=1&limit=8 set this link in sidebar
+router.get("/data/itDetailsCount", [auth, paginatedResult(ItDetail,{submittedToLabHead:"NO"},{ Reqdate: 'desc', itNumber: 'desc' })], Details.itDetailsRes)
+router.get("/data/submittedItDetailsCount", [auth, paginatedResult(ItDetail,{submittedToLabHead:"Yes"},{Reqdate: 'desc', itNumber: 'desc' })], Details.submittedItDetailsRes)
 
-router.get("/data/trDetailsCount",[auth,paginatedResult(TrDetail)], Details.trDetailssRes)
-
-router.get("/data/piDetailsCount",[auth,paginatedResult(UserDetail)], Details.piDetailsRes)
-router.get("/data/invoiceDetailsCount",[auth,paginatedResult(UserDetail)], Details.invoiceDetailsRes)
+// router.get("/data/trDetailsCount", [auth, paginatedResult(TrDetail)], Details.trDetailssRes)
+// router.get("/data/piDetailsCount", [auth, paginatedResult(UserDetail)], Details.piDetailsRes)
+// router.get("/data/invoiceDetailsCount", [auth, paginatedResult(UserDetail)], Details.invoiceDetailsRes)
 
 
 // Director
-router.get("/user/director",auth, Manager.director)
-router.get("/user/createUserPage",auth, Manager.createUserPage)
+router.get("/user/director", auth, Manager.director)
+router.get("/user/createUserPage", auth, Manager.createUserPage)
 
 
 // Reception
-router.get("/user/reception",auth, Manager.reception)
-router.get("/user/receptionToLabHead",auth, Manager.receptionToLabHead)
+router.get("/user/reception", auth, Manager.reception)
+router.get("/user/receptionToLabHead", auth, Manager.receptionToLabHead)
 
 
 // Lab Head
-router.get("/user/dataOfItLab",auth, Manager.dataFromreceptionToLabHead)
-router.get("/user/labheadRecords",auth, Manager.getlabheadTrRecords)
-router.get("/user/labheadAllocateToTester",auth, Manager.labheadAllocateToTesterPage)
-router.post("/user/labheadAllocateToTester",auth, Manager.labheadAllocateToTester)
+router.get("/user/dataOfItLab", auth, Manager.dataFromreceptionToLabHead)
+router.get("/user/trlabheadRecords", auth, Manager.getlabheadTrRecords)
+router.get("/user/pilabheadRecords", auth, Manager.getlabheadPiRecords)
+router.get("/user/labheadAllocateToTester", auth, Manager.labheadAllocateToTesterPage)
+router.get("/user/generateTrLabhead", auth, Manager.Trlabhead)
+router.get("/user/generatePiLabhead", auth, Manager.Pilabhead)
+router.get("/user/completedTestReports", auth, Details.completedTestReports)
+router.get("/user/verifyReport", auth, Details.getVerifyReportPage)
+router.post("/user/sendToDiretor", auth, Details.sendToDiretor)
+router.post("/user/retestToLabTester", auth, Details.retestToLabTester)
 
-// Secure EndPoint
-router.get("/user/generateTrLabhead",auth, Manager.labhead)
+
+router.post("/user/labheadAllocateToTester", auth, Manager.labheadAllocateToTester)
 
 
 // Lab Tester
-router.get("/user/tester",auth, Manager.tester)
+router.get("/user/tester", auth, Manager.tester)
+router.get("/user/testViewSubmission", auth, Manager.getTestViewSubmission)
+router.get("/user/testViewSubmissionUpdate", auth, Manager.getTestViewSubmissionUpdate)
+router.get("/user/reissuedTrDataToTester", auth, Manager.reissuedTrDataToTester)
+router.post("/user/testViewSubmission", [auth, uploadTr.single('trfile'),], Manager.testViewSubmission)
+router.post("/user/testViewSubmissionUpdate", [auth, uploadTr.single('trfile'),], Manager.testViewSubmissionUpdate)
 
 
 // Financial
-router.get("/user/finance",auth, Manager.finance)
+router.get("/user/finance", auth, Manager.finance)
 
 // Test-List Update API
 
 
 
 // Function for paginated result
-function paginatedResult(model){
-    return async (req, res, next)=>{
-        const page= parseInt(req.query.page)
-        const limit= parseInt(req.query.limit)
+function paginatedResult(model, param1,param2) {
+    return async (req, res, next) => {
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
         // const limit=2
 
-        const startIndex = (page-1)*limit
-        const endIndex= page*limit
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
 
-        const results={}
+        const results = {}
 
-        if(endIndex < await model.count()){
-            results.next={
-                page:page+1,
-                limit:limit
+        if (endIndex < await model.find(param1).count()) {
+            results.next = {
+                page: page + 1,
+                limit: limit
             }
         }
 
-        if(startIndex>0){
-            results.previous={
-                page:page-1,
-                limit:limit
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
             }
         }
 
         try {
             // results.results = await model.find().sort({itNumber: 'desc'}).limit(limit).skip(startIndex)
-            results.results = await model.find().sort({Reqdate: 'desc', itNumber:'desc'}).limit(limit).skip(startIndex)
+            results.results = await model.find(param1).sort(param2).limit(limit).skip(startIndex)
             // console.log(results);
             res.paginatedResult = results
             next()
         } catch (error) {
-            res.status(500).json({message:error.message})
+            res.status(500).json({ message: error.message })
         }
     }
 }

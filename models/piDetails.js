@@ -5,9 +5,15 @@ var format = require('date-format');
 
 // Defining Schema
 const piSchema = new mongoose.Schema({
-    trNo: {
+    piNumber: {
         type: String,
-        required: true
+        required: true,
+        unique: true
+    },
+    itNumber:{
+        type: String,
+        // required: true,
+        default:"null"
     },
     companyName: {
         type: String,
@@ -16,36 +22,57 @@ const piSchema = new mongoose.Schema({
     },
     contact: {
         type: String,
-        required: true
-    },
-    noOfSample: {
-        type: String,
         required: true,
     },
-    testType: [
+    testData: [
         {
-            type: String,
-            required: true,
-        },
+            testType: {
+                type: String,
+                required: true
+            },
+            noOfSample: {
+                type: String,
+                required: true
+            },
+            cost:{
+                type: String,
+                required: true
+            }
+        }
     ],
-    cost:{
+    totalCost:{
         type:String,
+        default:"null",
+    },
+    year: {
+        type: String,
+        default: format('yy', new Date()),
+        required: true,
     },
     date: {
-        type: Date,
-        default:format(Date.now(),"dd-mm-yyyy")
+        type: String,
+        default: format('yy-MM-dd hh:mm:ss.SSS',new Date()),
+        required: true,
     },
     advancePayment:{
         type: String,
+        default:"No"
     },
     mode:{
-        type:string
+        type:String,
+        default:"null"
     },
     status:{
         type: String,
+        default:"null",
     },
     file:{
         type: String,
+        default:"null",
+    },
+    statusOfTr:{
+        type: String,
+        default:"Not Generated"
     }
 })
 

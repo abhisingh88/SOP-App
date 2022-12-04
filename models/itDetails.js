@@ -39,7 +39,11 @@ const itSchema = new mongoose.Schema({
     },
     statusOfTr:{
         type: String,
-        default:"NotGenerated"
+        default:"Not Generated"
+    },
+    statusOfPi:{
+        type: String,
+        default:"Not Generated"
     }
 })
 

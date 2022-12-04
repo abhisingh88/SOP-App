@@ -35,7 +35,7 @@
       </div>
 
       <div class="col-9 mx-0">
-        <h1>Test Report List</h1>
+        <h1>Re-issued Test Report List</h1>
         <hr>
         <div class="row">
           <div class="col-md-4 srch-box">
@@ -62,7 +62,7 @@
                 <th scope="col">Contact No</th>
                 <th scope="col">Allocation Date</th>
                 <th scope="col">Submit Report</th>
-                <th scope="col">Status</th>
+                <th scope="col">Suggestion</th>
               </tr>
             </thead>
             <tbody>
@@ -87,7 +87,10 @@
                 </td>
                 <td>{{contact}}</td>
                 <td>{{trimString date}}</td>
-                {{#eq status "null"}}
+                <td><a href="/user/testViewSubmissionUpdate?trNo={{trNumber}}"><button
+                      class="btn btn-primary">Update Test Report</button></a>
+                  </td>
+                {{!-- {{#eq status "null"}}
                   <td><a href="/user/testViewSubmission?trNo={{trNumber}}"><button
                       class="btn btn-primary">Upload Test Report</button></a>
                   </td>
@@ -96,12 +99,13 @@
                   <td><a href="/user/testViewSubmission?trNo={{trNumber}}"><button
                       class="btn btn-primary">Update Test Report</button></a>
                   </td>
-                {{/ifnoteq}}
-                {{#if status}}
+                {{/ifnoteq}} --}}
+                <td>{{suggestion}}</td>
+                {{!-- {{#if status}}
                   <td>{{status}}</td>
                 {{else}}
                   <td>Pending</td>
-                {{/if}}
+                {{/if}} --}}
                 
                 {{!-- <td>{{submittedToLabHead}}</td> --}}
               </tr>

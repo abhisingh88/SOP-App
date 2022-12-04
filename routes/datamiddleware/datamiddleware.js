@@ -1,4 +1,5 @@
 const TrDetail = require("../../models/trDetails")
+const PiDetail = require("../../models/piDetails")
 
 async function receptionDataMiddleware(req, res) {
     try {
@@ -11,7 +12,8 @@ async function receptionDataMiddleware(req, res) {
         res.status(401).send(error)
     }
 };
-async function labHeadDataMiddleware(req, res) {
+
+async function TrlabHeadDataMiddleware(req, res) {
     try {
         let success=req.query.success
         let tr=req.query.trNo
@@ -26,7 +28,22 @@ async function labHeadDataMiddleware(req, res) {
     }
 };
 
+async function PilabHeadDataMiddleware(req, res) {
+    try {
+        let success=req.query.success
+        let pi=req.query.piNo
+
+        let data= await PiDetail.findOne({piNumber:pi})
+        // console.log("reached");
+        // console.log(data);
+        res.status(201).render("pages/labhead/successPiPage", { success: success,pi:pi, data:data });
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
 module.exports={
     receptionDataMiddleware:receptionDataMiddleware,
-    labHeadDataMiddleware:labHeadDataMiddleware,
+    TrlabHeadDataMiddleware:TrlabHeadDataMiddleware,
+    PilabHeadDataMiddleware:PilabHeadDataMiddleware,
 }

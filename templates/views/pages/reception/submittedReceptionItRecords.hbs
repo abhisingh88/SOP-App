@@ -5,14 +5,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test Reports</title>
+  <title>IT Records</title>
 
-  <!-- <link rel="stylesheet" href="css/sidemenu.css"> -->
   {{!--
+  <link rel="stylesheet" href="css/sidemenu.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> --}}
+  <link rel="stylesheet" href="css/style.css"> --}}
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -22,35 +23,24 @@
 <body>
   {{!-- {{> navigation }} --}}
 
-  {{> navbar userImg=data.userImage }}
+
+  {{> navbar }}
 
   {{!-- {{> navigation }} --}}
   <div class="container-flex">
     <div class="row">
       <div class="col-3">
-        {{> labheadSidebar userImg=data.userImage }}
+        {{> receptionSidebar }}
       </div>
 
       <div class="col-8 mx-0">
-
-        {{#if success}}
-
-
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Thank You!!</strong> We have Intilized the request for testing
-          <h3>Your TR No is: {{tr}}</h3>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
-        {{/if}}
-
-        <h1>Test Report List</h1>
+        <h1 class="my-4">I.T. No. Records</h1>
         <hr>
         <div class="row">
           <div class="col-md-4 srch-box">
             <div class="input-group">
               <input class="form-control border-1 rounded-0 border-dark" type="search" id="example-search-input"
-                placeholder="Search T.R. no.">
+                placeholder="Search I.T. no.">
               <span class="input-group-append">
                 <button class="btn btn-outline-dark border-1 rounded-0" type="button">
                   <i class="fa fa-search"></i>
@@ -64,49 +54,23 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">T.R. No.</th>
-                <th scope="col">Company Name</th>
-                <th scope="col">Test Type</th>
-                <th scope="col">No Of Sample</th>
-                <th scope="col">Company Contact</th>
-                <th scope="col">Date Generated</th>
-                <th scope="col">Allocate</th>
-                {{!-- <th scope="col">Report Corrections</th>
-                <th scope="col">Status</th> --}}
+                <th scope="col">I.T. No.</th>
+                <th scope="col">Company</th>
+                <th scope="col">Date of Generation</th>
+                <th scope="col">Contact Person</th>
+                <th scope="col">Contact No.</th>
+                <th scope="col">Status Of PI</th>
               </tr>
             </thead>
             <tbody>
               {{#each data}}
               <tr>
-                <td>{{trNumber}}</td>
+                <td>{{itNumber}}</td>
                 <td>{{companyName}}</td>
-                <td>
-                  <ol>
-                    {{#eachProperty testData}}
-                    <li>{{value.testType}}</li>
-                    {{/eachProperty }}
-                  </ol>
-                </td>
-                <td>
-                  <ul>
-                    {{#eachProperty testData}}
-                    <li>{{value.noOfSample}}</li>
-                    {{/eachProperty }}
-                  </ul>
-                </td>
+                <td>{{trimString Reqdate}}</td>
+                <td>{{personName}}</td>
                 <td>{{contact}}</td>
-                <td>{{trimString date}}</td>
-                {{#eq allocatedTo "null"}}
-                <td><a href="/user/labheadAllocateToTester?trNo={{trNumber}}"><button
-                      class="btn btn-primary">Allocate</button></a>
-                </td>
-                {{/eq}}
-                {{#ifnoteq allocatedTo "null"}}
-                  <td>{{allocatedTo}}</td>
-                {{/ifnoteq}}
-
-                {{!-- <td>{{submittedToLabHead}}</td>
-                <td>Pending</td> --}}
+                <td>{{statusOfPi}}</td>
               </tr>
               {{/each}}
             </tbody>
@@ -117,7 +81,7 @@
 
             {{#if prev}}
             <li class="page-item">
-              <a class="page-link" href="/user/labheadRecords?page={{prev.page}}&limit={{prev.limit}}">Previous</a>
+              <a class="page-link" href="/data/submittedItDetailsCount?page={{prev.page}}&limit={{prev.limit}}">Previous</a>
             </li>
             {{/if}}
             {{!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -125,7 +89,7 @@
             <li class="page-item"><a class="page-link" href="#">3</a></li> --}}
             {{#if next}}
             <li class="page-item">
-              <a class="page-link" href="/user/labheadRecords?page={{next.page}}&limit={{next.limit}}">Next</a>
+              <a class="page-link" href="/data/submittedItDetailsCount?page={{next.page}}&limit={{next.limit}}">Next</a>
             </li>
             {{/if}}
           </ul>
