@@ -4,9 +4,69 @@ const ItDetails = require("../../models/itDetails");
 const TrDetail = require("../../models/trDetails");
 const UserDetail = require("../../models/userModel");
 const PiDetail = require("../../models/piDetails");
+const InvoiceDetail = require("../../models/invoiceDetails");
+
+
 async function directorPage(req, res) {
     try {
-        res.status(201).render("pages/director/director");
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+
+        const results = {}
+
+        if (endIndex < await TrDetail.find({toDirector:"Yes",isAuthorized:"null", suggestion:"null"}).count()) {
+            results.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+
+        let data = await TrDetail.find({toDirector:"Yes",isAuthorized:"null", suggestion:"null"}).sort({trNumber:"desc"}).limit(limit).skip(startIndex)
+
+        res.status(201).render("pages/director/director", { data: data, next: results.next, prev: results.previous });
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+async function getdirectorInovoiceRecords(req, res) {
+    try {
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+
+        const results = {}
+
+        if (endIndex < await InvoiceDetail.find({isAuthorized:"null"}).count()) {
+            results.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+
+        let data = await InvoiceDetail.find({isAuthorized:"null"}).sort({trNumber:"desc"}).limit(limit).skip(startIndex)
+
+        res.status(201).render("pages/director/directorFinalAuthorize", { data: data, next: results.next, prev: results.previous });
 
     } catch (error) {
         res.status(401).send(error)
@@ -37,7 +97,7 @@ async function TrlabheadPage(req, res) {
     }
 };
 
-async function PilabheadPage(req, res) {
+async function PiFinancial(req, res) {
     try {
 
         userId=req.cookies.userId;
@@ -48,7 +108,7 @@ async function PilabheadPage(req, res) {
         let data = await ItDetails.findOne({ itNumber: it })
 
         data.userImage=userImg
-        res.status(201).render("pages/labhead/generatePr", { data: data });
+        res.status(201).render("pages/financial/generatePr", { data: data });
 
     } catch (error) {
         res.status(401).send(error)
@@ -67,7 +127,7 @@ async function receptionPage(req, res) {
 
 async function financePage(req, res) {
     try {
-        res.status(201).render("pages/financal/finance");
+        res.status(201).render("pages/financial/finance");
 
     } catch (error) {
         res.status(401).send(error)
@@ -107,7 +167,7 @@ async function receptionToLabHead(req, res) {
 };
 
 
-async function dataFromreceptionToLabHead(req, res) {
+async function dataFromreceptionToFinance(req, res) {
     try {
 
         userId=req.cookies.userId;
@@ -141,7 +201,7 @@ async function dataFromreceptionToLabHead(req, res) {
         console.log(data);
 
         data.userImage=userImg
-        res.status(201).render("pages/labhead/itFromRec_LabHead", { data: data, next: results.next, prev: results.previous });
+        res.status(201).render("pages/financial/itFromRec_LabHead", { data: data, next: results.next, prev: results.previous });
 
     } catch (error) {
         res.status(401).send(error)
@@ -319,6 +379,7 @@ async function testViewSubmissionUpdate(req, res) {
             status:"Uploaded",
             commentFromTester:req.body.comment,
             suggestion:"null",
+            toDirector:"null",
         })
         // console.log(data);
         res.status(200).render("pages/tester/testerReport",{success:true, data:data})
@@ -344,14 +405,15 @@ async function reissuedTrDataToTester(req, res) {
 
 module.exports = {
     director: directorPage,
+    getdirectorInovoiceRecords:getdirectorInovoiceRecords,
     createUserPage: createUser,
     reception: receptionPage,
     Trlabhead: TrlabheadPage,
-    Pilabhead: PilabheadPage,
+    PiFinancial: PiFinancial,
     finance: financePage,
     tester: testerPage,
     receptionToLabHead: receptionToLabHead,
-    dataFromreceptionToLabHead: dataFromreceptionToLabHead,
+    dataFromreceptionToFinance: dataFromreceptionToFinance,
     getlabheadTrRecords: getlabheadTrRecords,
     getlabheadPiRecords: getlabheadPiRecords,
     labheadAllocateToTesterPage:labheadAllocateToTesterPage,

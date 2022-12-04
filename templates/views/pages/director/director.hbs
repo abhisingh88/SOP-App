@@ -53,40 +53,44 @@
                 <th scope="col">T.R. No.</th>
                 <th scope="col">Company</th>
                 <th scope="col">Date</th>
-                <th scope="col">Remark</th>
-                <th scope="col">View</th>
-                <th scope="col">Improvement</th>
-                <th scope="col">Authorized</th>
+                <th scope="col">View Report</th>
+                <th scope="col">Test Type</th>
+                <th scope="col">No Of Sample</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Authorized / Improvement</th>
               </tr>
             </thead>
             <tbody>
+              {{#each data}}
               <tr>
-                <td>SOP-TR-2021_11_01</td>
-                <td>Hindustan Unilever</td>
-                <td>12/05/2021</td>
-                <td>Fast Testing</td>
-                <td><a href="#">Download</a></td>
-                <td><a href="#">Suggest</a></td>
-                <td><button>Approve</button></td>
+                <td>{{trNumber}}</td>
+                <td>{{companyName}}</td>
+                <td>{{trimString date}}</td>
+                <td><a href="http://localhost:3000/trDocs/{{filename}}" target="_blank"><button
+                      class="btn btn-primary">View Report</button></a>
+                </td>
+                <td>
+                  <ol>
+                    {{#eachProperty testData}}
+                    <li>{{value.testType}}</li>
+                    {{/eachProperty }}
+                  </ol>
+                </td>
+                <td>
+                  <ul>
+                    {{#eachProperty testData}}
+                    <li>{{value.noOfSample}}</li>
+                    {{/eachProperty }}
+                  </ul>
+                </td>
+                <td>{{contact}}</td>
+                <td>
+                  <a href="/user/getApprovalReportPage?trNo={{trNumber}}"><button
+                      class="btn btn-primary">Go To</button>
+                  </a>
+                </td>
               </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><a href="#">Download</a></td>
-                <td><a href="#">Suggest</a></td>
-                <td><button>Approve</button></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><a href="#">Download</a></td>
-                <td><a href="#">Suggest</a></td>
-                <td><button>Approve</button></td>
-              </tr>
+              {{/each}}
             </tbody>
           </table>
         </div>

@@ -39,13 +39,13 @@ async function loginUser(req, res) {
             }
             if (user.role == "LabHead") {
                 // res.redirect('/user/labhead?id='+user._id);
-                res.redirect('/user/dataOfItLab?id='+user._id+"&page=1&limit=7");
+                res.redirect('/user/pilabheadRecords?page=1&limit=7&id='+user._id);
             }
             if (user.role == "Tester") {
-                res.redirect('/user/tester?id='+user._id);
+                res.redirect('/user/tester?page=1&limit=7&id='+user._id);
             }
             if (user.role == "Finance") {
-                res.redirect('/user/finance?id='+user._id);
+                res.redirect('/user/dataOfItLab?page=1&limit=7&id='+user._id);
             }
         } else {
             // res.send("Invalid email or passwords")

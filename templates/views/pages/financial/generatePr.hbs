@@ -60,13 +60,13 @@
   <div class="container-flex">
     <div class="row">
       <div class="col-3">
-        {{> labheadSidebar userImg=data.userImage }}
+        {{> financialSidebar userImg=data.userImage }}
       </div>
 
       <div class="col-9 mx-0">
       
         <form action="/data/piDetails" method="post">
-          <h1>Test Request Form</h1>
+          <h1>Proforma Invoice Form</h1>
           <hr>
 
           <input type="hidden" id="itNum" name="itNumber" value="{{data.itNumber}}">

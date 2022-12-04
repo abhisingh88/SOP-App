@@ -75,7 +75,7 @@ router.get("/error", CredManager.errorPage)
 // Data middle endpoint
 router.get("/user/itdata", auth, DataMiddleware.receptionDataMiddleware)
 router.get("/user/trdata", auth, DataMiddleware.TrlabHeadDataMiddleware)
-router.get("/user/pidata", auth, DataMiddleware.PilabHeadDataMiddleware)
+router.get("/user/pidata", auth, DataMiddleware.PiFinancialDataMiddleware)
 // router.get("/user/invoicedata", auth, DataMiddleware.labHeadDataMiddleware)
 
 
@@ -102,7 +102,11 @@ router.get("/data/submittedItDetailsCount", [auth, paginatedResult(ItDetail,{sub
 
 // Director
 router.get("/user/director", auth, Manager.director)
+router.get("/user/finalInvoice", auth, Manager.getdirectorInovoiceRecords)
 router.get("/user/createUserPage", auth, Manager.createUserPage)
+router.get("/user/getApprovalReportPage", auth, Details.getApprovalReportPage)
+router.post("/user/trApproval", auth, Details.trApprovalDirector)
+router.post("/user/retestDirector", auth, Details.retestDirector)
 
 
 // Reception
@@ -111,12 +115,10 @@ router.get("/user/receptionToLabHead", auth, Manager.receptionToLabHead)
 
 
 // Lab Head
-router.get("/user/dataOfItLab", auth, Manager.dataFromreceptionToLabHead)
 router.get("/user/trlabheadRecords", auth, Manager.getlabheadTrRecords)
 router.get("/user/pilabheadRecords", auth, Manager.getlabheadPiRecords)
 router.get("/user/labheadAllocateToTester", auth, Manager.labheadAllocateToTesterPage)
 router.get("/user/generateTrLabhead", auth, Manager.Trlabhead)
-router.get("/user/generatePiLabhead", auth, Manager.Pilabhead)
 router.get("/user/completedTestReports", auth, Details.completedTestReports)
 router.get("/user/verifyReport", auth, Details.getVerifyReportPage)
 router.post("/user/sendToDiretor", auth, Details.sendToDiretor)
@@ -136,6 +138,8 @@ router.post("/user/testViewSubmissionUpdate", [auth, uploadTr.single('trfile'),]
 
 
 // Financial
+router.get("/user/generatePiFinancial", auth, Manager.PiFinancial)
+router.get("/user/dataOfItLab", auth, Manager.dataFromreceptionToFinance)
 router.get("/user/finance", auth, Manager.finance)
 
 // Test-List Update API

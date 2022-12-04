@@ -5,43 +5,76 @@ var format = require('date-format');
 
 // Defining Schema
 const invoiceSchema = new mongoose.Schema({
+    invoiceNumber: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    trNumber: {
+        type: String,
+        required: true,
+        unique: true
+    },
     companyName: {
         type: String,
         required: true,
     },
-    noOfSample: {
-        type: String,
-        required: true,
-    },
-    testType: [
+    testData: [
         {
-            type: String,
-            required: true,
-        },
+            testType: {
+                type: String,
+                required: true
+            },
+            noOfSample: {
+                type: String,
+                required: true
+            },
+            cost: {
+                type: String,
+                required: true
+            }
+        }
     ],
-    cost: {
-        type: string
+    totalCost: {
+        type: String,
+        default: "null"
+    },
+    paymentStatus: {
+        type: String,
+        default: "null"
     },
     date: {
-        type: Date,
-        default: format(Date.now(), "dd-mm-yyyy"),
+        type: String,
+        default: format('yy-MM-dd hh:mm:ss.SSS', new Date()),
+        required: true,
+    },
+    
+    year:{
+        type: String,
+        default: format('yy',new Date()),
+        required: true,
     },
     reportfile: {
         type: String,
+        default:"null"
     },
     PFfile: {
         type: String,
+        default:"null"
     },
     status: {
-        type: string
+        type: String,
+        default:"null"
         // dispatched or not
     },
     remark: {
-        type: string
+        type: String,
+        default:"null"
         // fast , special report
     },
     isAuthorized: {
-        type: string
+        type: String,
+        default:"null"
     }
 })
 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify</title>
+
+  {{!--
+  <link rel="stylesheet" href="css/sidemenu.css">
+  <link rel="stylesheet" href="css/uploads.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script> --}}
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+
+  {{> navbar }}
+
+  <div class="container-flex">
+    <div class="row">
+      <div class="col-3">
+        {{> directorSidebar }}
+      </div>
+
+      <div class="col-8 mx-0">
+
+
+          <div class="container">
+            <h1>Send to Financial/Re-Test</h1>
+            <hr>
+
+            <div id="file-container">
+              <p id="fileImage"><i class="fas fa-file-download"></i></p>
+              <a href="http://localhost:3000/trDocs/{{data.filename}}" target="_blank"><button
+                      class="btn btn-primary">View Report</button></a>
+            </div>
+
+            <hr>
+            <div>
+            <form action="/user/retestDirector" method="post">
+              <input type="hidden" name="trNo" value="{{data.trNumber}}">
+              <textarea rows="10" class="textbox" name="suggestion" placeholder="Suggest Errors or Improvements"></textarea>
+              <br>
+              <button type="submit" class="retestbtn">Send For Retest</button>
+            </form>
+            </div>
+            <div class="my-4">
+            <form action="/user/trApproval" method="post">
+                <input type="hidden" name="trNo" value="{{data.trNumber}}">
+                <button type="submit" class="apprbtn">Approve The Report</button>
+            </form>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

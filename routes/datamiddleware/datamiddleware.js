@@ -28,7 +28,7 @@ async function TrlabHeadDataMiddleware(req, res) {
     }
 };
 
-async function PilabHeadDataMiddleware(req, res) {
+async function PiFinancialDataMiddleware(req, res) {
     try {
         let success=req.query.success
         let pi=req.query.piNo
@@ -36,7 +36,7 @@ async function PilabHeadDataMiddleware(req, res) {
         let data= await PiDetail.findOne({piNumber:pi})
         // console.log("reached");
         // console.log(data);
-        res.status(201).render("pages/labhead/successPiPage", { success: success,pi:pi, data:data });
+        res.status(201).render("pages/financial/successPiPage", { success: success,pi:pi, data:data });
 
     } catch (error) {
         res.status(401).send(error)
@@ -45,5 +45,5 @@ async function PilabHeadDataMiddleware(req, res) {
 module.exports={
     receptionDataMiddleware:receptionDataMiddleware,
     TrlabHeadDataMiddleware:TrlabHeadDataMiddleware,
-    PilabHeadDataMiddleware:PilabHeadDataMiddleware,
+    PiFinancialDataMiddleware:PiFinancialDataMiddleware,
 }

@@ -303,7 +303,7 @@ async function completedTestReports(req, res) {
 
         const results = {}
 
-        if (endIndex < await TrDetail.find({status:"Uploaded"}).count()) {
+        if (endIndex < await TrDetail.find({status:"Uploaded",toDirector:"null"}).count()) {
             results.next = {
                 page: page + 1,
                 limit: limit
@@ -325,6 +325,16 @@ async function completedTestReports(req, res) {
     }
 };
 
+async function getApprovalReportPage(req, res) {
+    try {
+        // res.json(res.paginatedResult)
+        let tr= req.query.trNo
+        let data= await TrDetail.findOne({trNumber:tr})
+        res.status(201).render("pages/director/approve_retest", {data:data});
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
 
 async function getVerifyReportPage(req, res) {
     try {
@@ -364,6 +374,33 @@ async function sendToDiretor(req, res) {
 };
 
 
+async function trApprovalDirector(req, res) {
+    try {
+        let tr= req.body.trNo
+        let data= await TrDetail.findOneAndUpdate({trNumber:tr},{
+            isAuthorized:"Yes"
+        })
+        console.log(data);
+        res.redirect("/user/director?page=1&limit=7")
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
+
+async function retestDirector(req, res) {
+    try {
+        let tr= req.body.trNo
+        let data= await TrDetail.findOneAndUpdate({trNumber:tr},{
+            suggestion:req.body.suggestion
+        })
+        console.log(data);
+        res.redirect("/user/director?page=1&limit=7")
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
 module.exports = {
     itDetails: itDetails,
     trDetails: trDetails,
@@ -380,4 +417,7 @@ module.exports = {
     getVerifyReportPage:getVerifyReportPage,
     sendToDiretor:sendToDiretor,
     retestToLabTester:retestToLabTester,
+    getApprovalReportPage:getApprovalReportPage,
+    trApprovalDirector:trApprovalDirector,
+    retestDirector:retestDirector,
 }
