@@ -106,7 +106,9 @@ router.get("/user/finalInvoice", auth, Manager.getdirectorInovoiceRecords)
 router.get("/user/createUserPage", auth, Manager.createUserPage)
 router.get("/user/getApprovalReportPage", auth, Details.getApprovalReportPage)
 router.post("/user/trApproval", auth, Details.trApprovalDirector)
+router.get("/user/finalApprovalPage", auth, Details.finalApproval)
 router.post("/user/retestDirector", auth, Details.retestDirector)
+router.get("/user/getfinalInvoice", auth, Details.getfinalInvoices)
 
 
 // Reception

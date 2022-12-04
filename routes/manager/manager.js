@@ -50,7 +50,7 @@ async function getdirectorInovoiceRecords(req, res) {
 
         const results = {}
 
-        if (endIndex < await InvoiceDetail.find({isAuthorized:"null"}).count()) {
+        if (endIndex < await InvoiceDetail.find({isAuthorized:"null",paymentStatus:"Completed"}).count()) {
             results.next = {
                 page: page + 1,
                 limit: limit
@@ -64,7 +64,7 @@ async function getdirectorInovoiceRecords(req, res) {
             }
         }
 
-        let data = await InvoiceDetail.find({isAuthorized:"null"}).sort({trNumber:"desc"}).limit(limit).skip(startIndex)
+        let data = await InvoiceDetail.find({isAuthorized:"null",paymentStatus:"Completed"}).sort({trNumber:"desc"}).limit(limit).skip(startIndex)
 
         res.status(201).render("pages/director/directorFinalAuthorize", { data: data, next: results.next, prev: results.previous });
 

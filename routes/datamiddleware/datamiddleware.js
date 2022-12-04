@@ -51,7 +51,7 @@ async function InFinacialDataMiddleware(req, res) {
 
         let data= await InvoiceDetails.findOne({invoiceNumber:inNo})
         // console.log("reached");
-        // console.log(data);
+        console.log(data);
         res.status(201).render("pages/financial/successInvoice", { success: success,inNo:inNo, data:data });
 
     } catch (error) {

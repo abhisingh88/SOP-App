@@ -422,6 +422,55 @@ async function retestDirector(req, res) {
     }
 };
 
+
+async function finalApproval(req, res) {
+    try {
+        let inNo = req.query.inNo
+        // console.log(it);
+        let data = await InvoiceDetails.findOneAndUpdate({ invoiceNumber: inNo }, {
+            isAuthorized: "Yes"
+        })
+        // console.log(data);
+        res.status(201).render("pages/director/directorFinalAuthorize", { success: true , activeITtab:true});
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
+async function getfinalInvoices(req, res) {
+    try {
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+
+        const results = {}
+
+        if (endIndex < await InvoiceDetails.find({isAuthorized:"Yes", paymentStatus:"Completed"}).count()) {
+            results.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+
+        let data = await InvoiceDetails.find({isAuthorized:"Yes", paymentStatus:"Completed"}).sort({invoiceNumber:"desc"}).limit(limit).skip(startIndex)
+
+        res.status(201).render("pages/director/finalInvoiceReportList", { data: data, next: results.next, prev: results.previous });
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
 module.exports = {
     itDetails: itDetails,
     trDetails: trDetails,
@@ -441,4 +490,6 @@ module.exports = {
     getApprovalReportPage:getApprovalReportPage,
     trApprovalDirector:trApprovalDirector,
     retestDirector:retestDirector,
+    finalApproval:finalApproval,
+    getfinalInvoices:getfinalInvoices,
 }

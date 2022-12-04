@@ -39,7 +39,7 @@
 
         {{/if}}
 
-        <h1>Authorize Final Report</h1>
+        <h1>Final Report List</h1>
         <hr>
         <div class="row">
           <div class="col-md-4 srch-box">
@@ -68,7 +68,6 @@
                 <th scope="col">Total Cost</th>
                 <th scope="col">Contact</th>
                 <th scope="col">Payment Status</th>
-                <th scope="col">Final Approval</th>
               </tr>
             </thead>
             <tbody>
@@ -95,10 +94,6 @@
                 <td>{{totalCost}}</td>
                 <td>{{contact}}</td>
                 <td>{{paymentStatus}}</td>
-                <td>
-                  <a href="/user/finalApprovalPage?inNo={{invoiceNumber}}"><button class="btn btn-primary">Go To</button>
-                  </a>
-                </td>
               </tr>
               {{/each}}
             </tbody>
