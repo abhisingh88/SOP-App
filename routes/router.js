@@ -76,7 +76,7 @@ router.get("/error", CredManager.errorPage)
 router.get("/user/itdata", auth, DataMiddleware.receptionDataMiddleware)
 router.get("/user/trdata", auth, DataMiddleware.TrlabHeadDataMiddleware)
 router.get("/user/pidata", auth, DataMiddleware.PiFinancialDataMiddleware)
-// router.get("/user/invoicedata", auth, DataMiddleware.labHeadDataMiddleware)
+router.get("/user/invoicedata", auth, DataMiddleware.InFinacialDataMiddleware)
 
 
 // data/files uploader
@@ -138,13 +138,13 @@ router.post("/user/testViewSubmissionUpdate", [auth, uploadTr.single('trfile'),]
 
 
 // Financial
-router.get("/user/generatePiFinancial", auth, Manager.PiFinancial)
+// router.get("/user/finance", auth, Manager.finance)
 router.get("/user/dataOfItLab", auth, Manager.dataFromreceptionToFinance)
-router.get("/user/finance", auth, Manager.finance)
+router.get("/user/generatePiFinancial", auth, Manager.PiFinancial)
+router.get("/user/getInvoiceRecords", auth, Manager.getInvoiceRecords)
+router.get("/user/generateInvoiceFinancial", auth, Manager.generateInvoiceFinancial)
 
 // Test-List Update API
-
-
 
 // Function for paginated result
 function paginatedResult(model, param1,param2) {

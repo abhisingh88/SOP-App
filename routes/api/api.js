@@ -6,6 +6,7 @@ const UserDetail = require("../../models/userModel");
 const ItDetail = require("../../models/itDetails");
 const TrDetail = require("../../models/trDetails");
 const PiDetails = require("../../models/piDetails");
+const InvoiceDetails = require("../../models/invoiceDetails");
 
 
 
@@ -195,17 +196,49 @@ async function piDetails(req, res) {
 
 async function invoiceDetails(req, res) {
     try {
+        let inNo = "INV-"
+        inNo += format.asString('yy-MM-dd', new Date());
+        let year = format('yy', new Date());;
+        var count = await InvoiceDetails.count({ year: year })
+        if (count == 0) {
+            count = 1;
+        } else {
+            count += 1
+        }
+        inNo += "-";
+        count = count.toString();
+        inNo += count;
 
-        req.user.tokens = req.user.tokens.filter((elem) => {
-            return elem.token != req.token
+        let counter=parseInt(req.body.counter)
+        let testData=[]
+        for (let i = 0; i < counter; i++) {
+            let obj={
+                testType:req.body.testType[i],
+                noOfSample:req.body.noOfSample[i],
+                cost:req.body.cost[i]
+            }
+            testData.push(obj);
+        }
+        console.log(req.body);
+
+        const inDetail = new InvoiceDetails({
+            invoiceNumber:inNo,
+            trNumber: req.body.trNumber,
+            companyName: req.body.companyName,
+            contact: req.body.contact,
+            testData:testData,
+            totalCost:req.body.totalCost,
+            advancePayment:req.body.advancePayment,
+            paymentStatus:req.body.paymentStatus,
         })
+        console.log("done");
+        const inStatus = await inDetail.save();
+        console.log(inStatus);
+        let data = await TrDetail.findOneAndUpdate({ trNumber: req.body.trNumber }, {
+            isInvoiceGen: "Generated"
+        })
+        res.redirect('/user/invoicedata?success=' + true + "&inNo=" + inNo);
 
-        res.clearCookie("internal")
-
-        console.log("Logout Successfully!!");
-
-        await req.user.save()
-        res.redirect("/")
 
     } catch (error) {
         res.status(500).send(error)
@@ -245,12 +278,6 @@ async function piDetailsRes(req, res) {
 
 async function itDetailsRes(req, res) {
     try {
-        // res.json(res.paginatedResult)
-        // console.log(res.paginatedResult);
-        // console.log("from it: ", res.paginatedResult);
-        // console.log("from next: ", res.paginatedResult.next);
-        // console.log("from prev: ", res.paginatedResult.previous);
-
         res.status(201).render("pages/reception/receptionItRecords", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous , activeITtab:true});
 
     } catch (error) {
@@ -260,12 +287,6 @@ async function itDetailsRes(req, res) {
 
 async function itDetailsRes(req, res) {
     try {
-        // res.json(res.paginatedResult)
-        // console.log(res.paginatedResult);
-        // console.log("from it: ", res.paginatedResult);
-        // console.log("from next: ", res.paginatedResult.next);
-        // console.log("from prev: ", res.paginatedResult.previous);
-
         res.status(201).render("pages/reception/receptionItRecords", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous , activeITtab:true});
 
     } catch (error) {

@@ -1,5 +1,6 @@
 const TrDetail = require("../../models/trDetails")
 const PiDetail = require("../../models/piDetails")
+const InvoiceDetails = require("../../models/invoiceDetails")
 
 async function receptionDataMiddleware(req, res) {
     try {
@@ -42,8 +43,24 @@ async function PiFinancialDataMiddleware(req, res) {
         res.status(401).send(error)
     }
 };
+
+async function InFinacialDataMiddleware(req, res) {
+    try {
+        let success=req.query.success
+        let inNo=req.query.inNo
+
+        let data= await InvoiceDetails.findOne({invoiceNumber:inNo})
+        // console.log("reached");
+        // console.log(data);
+        res.status(201).render("pages/financial/successInvoice", { success: success,inNo:inNo, data:data });
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
 module.exports={
     receptionDataMiddleware:receptionDataMiddleware,
     TrlabHeadDataMiddleware:TrlabHeadDataMiddleware,
     PiFinancialDataMiddleware:PiFinancialDataMiddleware,
+    InFinacialDataMiddleware:InFinacialDataMiddleware,
 }

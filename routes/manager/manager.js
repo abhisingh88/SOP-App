@@ -403,6 +403,55 @@ async function reissuedTrDataToTester(req, res) {
     }
 };
 
+
+async function getInvoiceRecords(req, res) {
+    try {
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+
+        const results = {}
+
+        if (endIndex < await TrDetail.find({isAuthorized:"Yes",isInvoiceGen:"null"}).count()) {
+            results.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+
+        let data = await TrDetail.find({isAuthorized:"Yes",isInvoiceGen:"null"}).sort({trNumber:"desc"}).limit(limit).skip(startIndex)
+        
+        res.status(201).render("pages/financial/invoiceRecordsFinancial", { data: data, next: results.next, prev: results.previous });
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+async function generateInvoiceFinancial(req, res) {
+    try {
+
+        let data = await TrDetail.findOne({trNumber:req.query.trNo})
+        let piData = await PiDetail.findOne({piNumber:data.piNumber})
+        data.piData=piData
+        data.counter=data.testData.length
+        // console.log(data.counter);
+        res.status(201).render("pages/financial/getOneInvoicePage", {data: data});
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
 module.exports = {
     director: directorPage,
     getdirectorInovoiceRecords:getdirectorInovoiceRecords,
@@ -423,4 +472,6 @@ module.exports = {
     testViewSubmission:testViewSubmission,
     testViewSubmissionUpdate:testViewSubmissionUpdate,
     reissuedTrDataToTester:reissuedTrDataToTester,
+    getInvoiceRecords:getInvoiceRecords,
+    generateInvoiceFinancial:generateInvoiceFinancial,
 }

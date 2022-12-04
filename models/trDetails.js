@@ -85,6 +85,10 @@ const trSchema = new mongoose.Schema({
     isAuthorized: {
         type: String,
         default:"null"
+    },
+    isInvoiceGen: {
+        type: String,
+        default:"null"
     }
 });
 

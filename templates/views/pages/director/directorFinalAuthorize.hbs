@@ -16,89 +16,103 @@
 </head>
 
 <body>
-  {{> navigation }}
+  {{> navbar }}
 
-  <h1>Authorize Final Report</h1>
-  <hr>
-  <div class="row">
-    <div class="col-md-4 srch-box">
-      <div class="input-group">
-        <input class="form-control border-1 rounded-0 border-dark" type="search" id="example-search-input"
-          placeholder="Search Invoice no.">
-        <span class="input-group-append">
-          <button class="btn btn-outline-dark border-1 rounded-0" type="button">
-            <i class="fa fa-search"></i>
-          </button>
-        </span>
+
+
+  {{!-- {{> navigation }} --}}
+  <div class="container-flex">
+    <div class="row">
+      <div class="col-3">
+        {{> directorSidebar }}
+      </div>
+
+      <div class="col-8 mx-0">
+        <h1>Authorize Final Report</h1>
+        <hr>
+        <div class="row">
+          <div class="col-md-4 srch-box">
+            <div class="input-group">
+              <input class="form-control border-1 rounded-0 border-dark" type="search" id="example-search-input"
+                placeholder="Search Invoice no.">
+              <span class="input-group-append">
+                <button class="btn btn-outline-dark border-1 rounded-0" type="button">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Invoice No.</th>
+                <th scope="col">Company</th>
+                <th scope="col">Date</th>
+                <th scope="col">Remark</th>
+                <th scope="col">Final Report</th>
+                <th scope="col">Proforma Invoice</th>
+                <th scope="col">Final Authorization</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each data}}
+              <tr>
+                <td>{{invoiceNumber}}</td>
+                <td>{{companyName}}</td>
+                <td>{{trimString date}}</td>
+                <td><a href="http://localhost:3000/trDocs/{{filename}}" target="_blank"><button
+                      class="btn btn-primary">View
+                      Report</button></a>
+                </td>
+                <td>
+                  <ol>
+                    {{#eachProperty testData}}
+                    <li>{{value.testType}}</li>
+                    {{/eachProperty }}
+                  </ol>
+                </td>
+                <td>
+                  <ul>
+                    {{#eachProperty testData}}
+                    <li>{{value.noOfSample}}</li>
+                    {{/eachProperty }}
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    {{#eachProperty testData}}
+                    <li>{{value.cost}}</li>
+                    {{/eachProperty }}
+                  </ul>
+                </td>
+                <td>{{contact}}</td>
+                <td>{{totalCost}}</td>
+                <td>
+                  <a href="/user/getApprovalReportPage?trNo={{trNumber}}"><button class="btn btn-primary">Go To</button>
+                  </a>
+                </td>
+              </tr>
+              {{/each}}
+
+              <tr>
+                <td>SOP-TR-2021_11_01</td>
+                <td>Hindustan Unilever</td>
+                <td>12/05/2021</td>
+                <td>Fast Testing</td>
+                <td><a href="#">View</a></td>
+                <td><a href="#">View</a></td>
+                <td><button>Approve</button></td>
+                <td>Dispatched</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Invoice No.</th>
-          <th scope="col">Company</th>
-          <th scope="col">Date</th>
-          <th scope="col">Remark</th>
-          <th scope="col">Final Report</th>
-          <th scope="col">Proforma Invoice</th>
-          <th scope="col">Final Authorization</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each data}}
-        <tr>
-          <td>{{invoiceNumber}}</td>
-          <td>{{companyName}}</td>
-          <td>{{trimString date}}</td>
-          <td><a href="http://localhost:3000/trDocs/{{filename}}" target="_blank"><button class="btn btn-primary">View
-                Report</button></a>
-          </td>
-          <td>
-            <ol>
-              {{#eachProperty testData}}
-              <li>{{value.testType}}</li>
-              {{/eachProperty }}
-            </ol>
-          </td>
-          <td>
-            <ul>
-              {{#eachProperty testData}}
-              <li>{{value.noOfSample}}</li>
-              {{/eachProperty }}
-            </ul>
-          </td>
-          <td>
-            <ul>
-              {{#eachProperty testData}}
-              <li>{{value.cost}}</li>
-              {{/eachProperty }}
-            </ul>
-          </td>
-          <td>{{contact}}</td>
-          <td>{{totalCost}}</td>
-          <td>
-            <a href="/user/getApprovalReportPage?trNo={{trNumber}}"><button class="btn btn-primary">Go To</button>
-            </a>
-          </td>
-        </tr>
-        {{/each}}
-
-        <tr>
-          <td>SOP-TR-2021_11_01</td>
-          <td>Hindustan Unilever</td>
-          <td>12/05/2021</td>
-          <td>Fast Testing</td>
-          <td><a href="#">View</a></td>
-          <td><a href="#">View</a></td>
-          <td><button>Approve</button></td>
-          <td>Dispatched</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </body>
 
