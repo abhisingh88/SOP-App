@@ -12,7 +12,7 @@ async function getlabheadTrRecords(req, res) {
         data=res.paginatedResult.results
         data.userImage = userImg
 
-        res.status(201).render("pages/labhead/labheadRecords", { data: data, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+        res.status(201).render("pages/labhead/labheadRecords", { data: data, next: res.paginatedResult.next, prev: res.paginatedResult.previous, allocationTab:true });
     } catch (error) {
         res.status(401).send(error)
     }
@@ -28,7 +28,7 @@ async function getlabheadPiRecords(req, res) {
         data=res.paginatedResult.results
         data.userImage = userImg
 
-        res.status(201).render("pages/labhead/prRecordsList", { data:data, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+        res.status(201).render("pages/labhead/prRecordsList", { data:data, next: res.paginatedResult.next, prev: res.paginatedResult.previous, prListTab:true });
 
     } catch (error) {
         res.status(401).send(error)
@@ -44,7 +44,7 @@ async function approvedTestReportList(req, res) {
         data=res.paginatedResult.results
         data.userImage = userImg
 
-        res.status(201).render("pages/labhead/approvedTrList", { data:data, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+        res.status(201).render("pages/labhead/approvedTrList", { data:data, next: res.paginatedResult.next, prev: res.paginatedResult.previous, approvedTestListTab:true });
 
     } catch (error) {
         res.status(401).send(error)
@@ -64,7 +64,7 @@ async function labheadAllocateToTesterPage(req, res) {
 
         data.userImage=userImg
 
-        res.status(201).render("pages/labhead/labheadTesterAllocate", { data: data, tester:testerData });
+        res.status(201).render("pages/labhead/labheadTesterAllocate", { data: data, tester:testerData, allocationTab:true });
 
     } catch (error) {
         res.status(401).send(error)
@@ -83,7 +83,7 @@ async function TrlabheadPage(req, res) {
         data.userImage=userImg
         data.counter=data.testData.length
 
-        res.status(201).render("pages/labhead/labhead", { data: data });
+        res.status(201).render("pages/labhead/labhead", { data: data, prListTab:true });
 
     } catch (error) {
         res.status(401).send(error)
@@ -122,7 +122,7 @@ async function completedTestReports(req, res) {
         userImg = userData.userImage
         data.userImage=userImg
 
-        res.status(201).render("pages/labhead/submittedTestReport", { data: data, next: results.next, prev: results.previous });
+        res.status(201).render("pages/labhead/submittedTestReport", { data: data, next: results.next, prev: results.previous, completedTestTab:true });
     } catch (error) {
         res.status(500).send(error)
     }
@@ -139,7 +139,7 @@ async function getVerifyReportPage(req, res) {
         userImg = userData.userImage
         data.userImage=userImg
 
-        res.status(201).render("pages/labhead/labheadVerifyReport", {data:data});
+        res.status(201).render("pages/labhead/labheadVerifyReport", {data:data, completedTestTab:true});
     } catch (error) {
         res.status(500).send(error)
     }
@@ -151,7 +151,7 @@ async function sendToDiretor(req, res) {
         let data= await TrDetail.findOneAndUpdate({trNumber:tr},{
             toDirector:"Yes"
         })
-        res.redirect("/user/completedTestReports?page=1&limit=7")
+        res.redirect("/user/completedTestReports?page=1&limit=6")
     } catch (error) {
         res.status(500).send(error)
     }
@@ -165,7 +165,7 @@ async function retestToLabTester(req, res) {
             remark:"null",
         })
         // console.log(data);
-        res.redirect("/user/completedTestReports?page=1&limit=7")
+        res.redirect("/user/completedTestReports?page=1&limit=6")
     } catch (error) {
         res.status(500).send(error)
     }
@@ -187,7 +187,7 @@ async function labheadAllocateToTester(req, res) {
         userImg = userData.userImage
         data.userImage=userImg
 
-        res.status(200).render("pages/labhead/labheadTesterAllocate",{success:true, data:data})
+        res.status(200).render("pages/labhead/labheadTesterAllocate",{success:true, data:data, allocationTab:true})
 
     } catch (error) {
         res.status(401).send(error)
