@@ -3,7 +3,7 @@
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="/user/tester" class="nav-link active" aria-current="page">
+          <a href="/user/tester" class="nav-link text-white {{#if testReqTab }} active {{/if}}" aria-current="page">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="/"></use>
             </svg>
@@ -11,7 +11,7 @@
           </a>
         </li>
         <li>
-          <a href="/user/reissuedTrDataToTester" class="nav-link text-white">
+          <a href="/user/reissuedTrDataToTester" class="nav-link text-white {{#if reissuedTestTab }} active {{/if}}">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2"></use>
             </svg>

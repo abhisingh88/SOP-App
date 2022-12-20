@@ -1,6 +1,7 @@
 const TrDetail = require("../../models/trDetails")
 const PiDetail = require("../../models/piDetails")
 const InvoiceDetails = require("../../models/invoiceDetails")
+const UserDetail= require("../../models/userModel")
 
 async function receptionDataMiddleware(req, res) {
     try {
@@ -23,6 +24,12 @@ async function TrlabHeadDataMiddleware(req, res) {
         let data= await TrDetail.findOne({trNumber:tr})
         // console.log("reached");
         // console.log(data);
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+        data.userImage=userImg
+
         res.status(201).render("pages/labhead/successTrPage", { success: success,tr:tr, data:data });
 
     } catch (error) {

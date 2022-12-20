@@ -1,8 +1,16 @@
 const ItDetails = require("../../models/itDetails")
+const UserDetail = require("../../models/userModel")
 
 async function receptionPage(req, res) {
     try {
-        res.status(201).render("pages/reception/reception", { homeActive: true });
+
+        data={}
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+        data.userImage=userImg
+
+        res.status(201).render("pages/reception/reception", {data:data, homeActive: true });
 
     } catch (error) {
         res.status(401).send(error)

@@ -12,7 +12,7 @@ async function getlabheadTrRecords(req, res) {
         data=res.paginatedResult.results
         data.userImage = userImg
 
-        res.status(201).render("pages/labhead/labheadRecords", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+        res.status(201).render("pages/labhead/labheadRecords", { data: data, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
     } catch (error) {
         res.status(401).send(error)
     }
@@ -28,7 +28,7 @@ async function getlabheadPiRecords(req, res) {
         data=res.paginatedResult.results
         data.userImage = userImg
 
-        res.status(201).render("pages/labhead/prRecordsList", { data:res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+        res.status(201).render("pages/labhead/prRecordsList", { data:data, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
 
     } catch (error) {
         res.status(401).send(error)
@@ -44,7 +44,7 @@ async function approvedTestReportList(req, res) {
         data=res.paginatedResult.results
         data.userImage = userImg
 
-        res.status(201).render("pages/labhead/approvedTrList", { data:res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+        res.status(201).render("pages/labhead/approvedTrList", { data:data, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
 
     } catch (error) {
         res.status(401).send(error)
@@ -133,6 +133,12 @@ async function getVerifyReportPage(req, res) {
     try {
         let tr= req.query.trNo
         let data= await TrDetail.findOne({trNumber:tr})
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+        data.userImage=userImg
+
         res.status(201).render("pages/labhead/labheadVerifyReport", {data:data});
     } catch (error) {
         res.status(500).send(error)
@@ -175,6 +181,12 @@ async function labheadAllocateToTester(req, res) {
             allocatedTo:req.body.testerId,
             testerName:testerName,
         })
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+        data.userImage=userImg
+
         res.status(200).render("pages/labhead/labheadTesterAllocate",{success:true, data:data})
 
     } catch (error) {

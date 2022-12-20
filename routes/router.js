@@ -183,9 +183,9 @@ router.post("/user/labheadAllocateToTester", auth, LabHead.labheadAllocateToTest
 
 // Lab Tester
 router.get("/user/tester", auth, LabTester.tester)
+router.get("/user/reissuedTrDataToTester", auth, LabTester.reissuedTrDataToTester)
 router.get("/user/testViewSubmission", auth, LabTester.getTestViewSubmission)
 router.get("/user/testViewSubmissionUpdate", auth, LabTester.getTestViewSubmissionUpdate)
-router.get("/user/reissuedTrDataToTester", auth, LabTester.reissuedTrDataToTester)
 router.post("/user/testViewSubmission", [auth, uploadTr.single('trfile'),], LabTester.testViewSubmission)
 router.post("/user/testViewSubmissionUpdate", [auth, uploadTr.single('trfile'),], LabTester.testViewSubmissionUpdate)
 
