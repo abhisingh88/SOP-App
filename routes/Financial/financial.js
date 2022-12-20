@@ -6,6 +6,7 @@ const InvoiceDetail = require("../../models/invoiceDetails");
 
 async function financePage(req, res) {
     try {
+
         res.status(201).render("pages/financial/finance");
 
     } catch (error) {
@@ -16,7 +17,15 @@ async function financePage(req, res) {
 
 async function dataFromreceptionToFinance(req, res) {
     try {
-        res.status(201).render("pages/financial/itFromRec_LabHead", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data=res.paginatedResult.results
+        data.userImage = userImg
+
+        res.status(201).render("pages/financial/itFromRec_LabHead", { data: data, next: res.paginatedResult.next, prev: res.paginatedResult.previous,ItReqTab:true });
 
     } catch (error) {
         res.status(401).send(error)
@@ -34,7 +43,7 @@ async function PiFinancial(req, res) {
         let data = await ItDetails.findOne({ itNumber: it })
 
         data.userImage = userImg
-        res.status(201).render("pages/financial/generatePr", { data: data });
+        res.status(201).render("pages/financial/generatePr", { data: data , ItReqTab:true});
 
     } catch (error) {
         res.status(401).send(error)
@@ -43,7 +52,15 @@ async function PiFinancial(req, res) {
 
 async function getPiForm(req, res) {
     try {
-        res.status(201).render("pages/financial/generatePiForm");
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data={}
+        data.userImage = userImg
+
+        res.status(201).render("pages/financial/generatePiForm", {data:data,generatePiTab:true});
     } catch (error) {
         res.status(401).send(error)
     }
@@ -53,15 +70,32 @@ async function getPiForm(req, res) {
 
 async function getInvoiceRecords(req, res) {
     try {
-        res.status(201).render("pages/financial/invoiceRecordsFinancial", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data=res.paginatedResult.results
+        data.userImage = userImg
+
+        res.status(201).render("pages/financial/invoiceRecordsFinancial", { data: data, next: res.paginatedResult.next, prev: res.paginatedResult.previous, invoiceListTab:true });
 
     } catch (error) {
         res.status(401).send(error)
     }
 };
+
 async function getPiDataList(req, res) {
     try {
-        res.status(201).render("pages/financial/piDataList", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data=res.paginatedResult.results
+        data.userImage = userImg
+
+        res.status(201).render("pages/financial/piDataList", { data: data, next: res.paginatedResult.next, prev: res.paginatedResult.previous, GenPiListTab:true });
 
     } catch (error) {
         res.status(401).send(error)
@@ -82,7 +116,29 @@ async function updatePiDetails(req, res) {
 
         data.userImage = userImg
 
-        res.status(201).render("pages/financial/updatePiPage", { data: data });
+        res.status(201).render("pages/financial/updatePiPage", { data: data, GenPiListTab:true });
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+
+async function generateInvoiceFinancial(req, res) {
+    try {
+
+        let data = await TrDetail.findOne({trNumber:req.query.trNo})
+        let piData = await PiDetail.findOne({piNumber:data.piNumber})
+        data.piData=piData
+        data.counter=data.testData.length
+        // console.log(data.counter);
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data.userImage = userImg
+
+        res.status(201).render("pages/financial/getOneInvoicePage", {data: data, invoiceListTab:true});
 
     } catch (error) {
         res.status(401).send(error)
@@ -97,4 +153,6 @@ module.exports = {
     getInvoiceRecords: getInvoiceRecords,
     getPiDataList:getPiDataList,
     updatePiDetails:updatePiDetails,
+    generateInvoiceFinancial:generateInvoiceFinancial,
+
 }   

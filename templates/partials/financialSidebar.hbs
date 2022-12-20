@@ -3,15 +3,15 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
-                <a href="/user/generatePiForm" class="nav-link text-white" aria-current="page">
+                <a href="/user/generatePiForm" class="nav-link text-white {{#if generatePiTab }} active {{/if}}" aria-current="page">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="/"></use>
                     </svg>
-                    Generate Pi
+                    Generate PI
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/user/dataOfItLab?page=1&limit=7" class="nav-link active" aria-current="page">
+                <a href="/user/dataOfItLab?page=1&limit=6" class="nav-link text-white {{#if ItReqTab }} active {{/if}}" aria-current="page">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="/"></use>
                     </svg>
@@ -19,7 +19,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/user/getPiDataList?page=1&limit=7" class="nav-link text-white" aria-current="page">
+                <a href="/user/getPiDataList?page=1&limit=6" class="nav-link text-white {{#if GenPiListTab }} active {{/if}}" aria-current="page">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="/"></use>
                     </svg>
@@ -27,7 +27,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/user/getInvoiceRecords?page=1&limit=7" class="nav-link text-white" aria-current="page">
+                <a href="/user/getInvoiceRecords?page=1&limit=6" class="nav-link text-white {{#if invoiceListTab }} active {{/if}}" aria-current="page">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="/"></use>
                     </svg>

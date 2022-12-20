@@ -216,10 +216,6 @@ async function piDetailsForAcceptance(req, res) {
         })
         const piStatus = await piDetail.save();
 
-        let data = await ItDetail.findOneAndUpdate({ itNumber: req.body.itNumber }, {
-            statusOfPi: "Generated"
-        })
-
         res.redirect('/user/pidata?success=' + true + "&piNo=" + pi);
 
 
