@@ -160,7 +160,6 @@ async function setPiDetails(req, res) {
             isPiAccepted:"Yes",
         })
         const piStatus = await piDetails.save();
-        console.log(piStatus);
 
         let data = await ItDetail.findOneAndUpdate({ itNumber: req.body.itNumber }, {
             statusOfPi: "Generated"
@@ -204,7 +203,6 @@ async function piDetailsForAcceptance(req, res) {
             }
             testData.push(obj);
         }
-        // console.log(testData);
         const piDetail = new PiDetail({
             piNumber: pi,
             companyName: req.body.companyName,
@@ -214,9 +212,7 @@ async function piDetailsForAcceptance(req, res) {
             isPiAccepted:"No"
         })
         
-        // console.log(piDetail);
         const piStatus = await piDetail.save();
-        // console.log(piStatus);
         res.redirect('/user/pidata?success=' + true + "&piNo=" + pi);
 
     } catch (error) {
@@ -246,6 +242,7 @@ async function updatePiDetails(req, res) {
             advancePayment:req.body.advancePayment,
             poDo:req.body.poDoStatus,
             isPiAccepted:req.body.piStatus,
+            totalCost:req.body.totalCost,
         })
         res.redirect("/user/getPiDataList?page=1&limit=7&success="+true)
     } catch (error) {
