@@ -58,6 +58,18 @@ const piSchema = new mongoose.Schema({
         type: String,
         default:"No"
     },
+    poDo:{
+        type:String,
+        default:"No"
+    },
+    poDoFile:{
+        type:String,
+        default:"null"
+    },
+    testReqForm:{
+        type:String,
+        default:"null"   
+    },
     mode:{
         type:String,
         default:"null"
@@ -73,6 +85,14 @@ const piSchema = new mongoose.Schema({
     statusOfTr:{
         type: String,
         default:"Not Generated"
+    },
+    statusOfInvoice:{
+        type: String,
+        default:"Not Generated"
+    },
+    isPiAccepted:{
+        type:String,
+        default:"No"
     }
 })
 

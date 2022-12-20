@@ -72,6 +72,9 @@
                 <th scope="col">View Report</th>
                 <th scope="col">Contact</th>
                 <th scope="col">Send To the Director / Suggest Improvment</th>
+                <th scope="col">Remark From Director</th>
+                <th scope="col">Comment From Lab Tester</th>
+                <th scope="col">Is Authorized</th>
               </tr>
             </thead>
             <tbody>
@@ -104,6 +107,9 @@
                       class="btn btn-primary">Go To</button>
                   </a>
                 </td>
+                <td>{{remark}}</td>
+                <td>{{commentFromTester}}</td>
+                <td>{{isAuthorized}}</td>
               </tr>
               {{/each}}
             </tbody>

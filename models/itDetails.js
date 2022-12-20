@@ -44,6 +44,14 @@ const itSchema = new mongoose.Schema({
     statusOfPi:{
         type: String,
         default:"Not Generated"
+    },
+    statusOfInvoice:{
+        type: String,
+        default:"Not Generated"
+    },
+    testDesc:{
+        type: String,
+        default:"Null"
     }
 })
 

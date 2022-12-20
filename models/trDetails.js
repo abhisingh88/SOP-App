@@ -89,6 +89,10 @@ const trSchema = new mongoose.Schema({
     isInvoiceGen: {
         type: String,
         default:"null"
+    },
+    isTrCompleted:{
+        type:String,
+        default:"No"
     }
 });
 

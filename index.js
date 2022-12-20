@@ -19,7 +19,9 @@ const static_path = path.join(__dirname, "./public")
 app.use(express.static(static_path))
 
 app.use("/userImages",express.static("./uploads/userData/"))
-app.use("/trDocs",express.static("./uploads/trFiles/"))
+app.use("/trDocs",express.static("./uploads/testReportFiles/"))
+app.use("/testReqFiles",express.static("./uploads/testReqFiles/"))
+app.use("/invoiceFiles",express.static("./uploads/invoiceFiles/"))
 
 const template_path = path.join(__dirname, "./templates/views")
 const parials_path = path.join(__dirname, "./templates/partials")

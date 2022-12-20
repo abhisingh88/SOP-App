@@ -7,6 +7,7 @@ async function receptionDataMiddleware(req, res) {
         let success=req.query.success
         let it=req.query.itNo
         // console.log("reached");
+        // console.log(data);
         res.status(201).render("pages/reception/reception", { success: success, itNo:it, homeActive:true });
 
     } catch (error) {
@@ -21,7 +22,7 @@ async function TrlabHeadDataMiddleware(req, res) {
 
         let data= await TrDetail.findOne({trNumber:tr})
         // console.log("reached");
-        console.log(data);
+        // console.log(data);
         res.status(201).render("pages/labhead/successTrPage", { success: success,tr:tr, data:data });
 
     } catch (error) {
@@ -51,7 +52,7 @@ async function InFinacialDataMiddleware(req, res) {
 
         let data= await InvoiceDetails.findOne({invoiceNumber:inNo})
         // console.log("reached");
-        console.log(data);
+        // console.log(data);
         res.status(201).render("pages/financial/successInvoice", { success: success,inNo:inNo, data:data });
 
     } catch (error) {
