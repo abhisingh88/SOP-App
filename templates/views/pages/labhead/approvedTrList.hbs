@@ -37,14 +37,13 @@
 
 
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Thank You!!</strong> We have Intilized the request for testing
-          <h3>Your TR No is: {{tr}}</h3>
+          <strong>Thank You!!</strong>
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
         {{/if}}
 
-        <h1>Test Report List</h1>
+        <h1>Submitted Test Report List</h1>
         <hr>
         <div class="row">
           <div class="col-md-4 srch-box">
@@ -70,9 +69,9 @@
                 <th scope="col">No Of Sample</th>
                 <th scope="col">Company Contact</th>
                 <th scope="col">Date Generated</th>
-                <th scope="col">Allocate</th>
-                {{!-- <th scope="col">Report Corrections</th>
-                <th scope="col">Status</th> --}}
+                <th scope="col">View Report</th>
+                <th scope="col">Remark From Director</th>
+                <th scope="col">Comment From Lab Tester</th>
               </tr>
             </thead>
             <tbody>
@@ -96,22 +95,17 @@
                 </td>
                 <td>{{contact}}</td>
                 <td>{{trimString date}}</td>
-                {{#eq allocatedTo "null"}}
-                <td><a href="/user/labheadAllocateToTester?trNo={{trNumber}}"><button
-                      class="btn btn-primary">Allocate</button></a>
-                </td>
-                {{/eq}}
-                {{#ifnoteq allocatedTo "null"}}
-                  <td>{{testerName}}</td>
-                {{/ifnoteq}}
-
-                {{!-- <td>{{submittedToLabHead}}</td>
-                <td>Pending</td> --}}
+                <td><a href="http://localhost:3000/trDocs/{{filename}}" target="_blank"><button
+                      class="btn btn-primary">View Report</button></a>
+                </td>                
+                <td>{{remark}}</td>
+                <td>{{commentFromTester}}</td>
               </tr>
               {{/each}}
             </tbody>
           </table>
         </div>
+
         <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-end">
 
@@ -130,6 +124,7 @@
             {{/if}}
           </ul>
         </nav>
+
       </div>
     </div>
   </div>

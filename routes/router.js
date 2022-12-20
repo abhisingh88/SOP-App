@@ -169,6 +169,7 @@ router.get("/data/submittedItDetailsCount", [auth, paginatedResult(ItDetail, { s
 //LabHead Paginated Result
 router.get("/user/pilabheadRecords", [auth, paginatedResult(PiDetail, {isPiAccepted:"Yes"}, {date: "desc", piNumber: "desc" })], LabHead.getlabheadPiRecords)
 router.get("/user/trlabheadRecords", [auth, paginatedResult(TrDetail, {}, { date: "desc", trNumber: "desc" })], LabHead.getlabheadTrRecords)
+router.get("/user/approvedTestReportList", [auth, paginatedResult(TrDetail, {isAuthorized:"Yes"}, { date: "desc", trNumber: "desc" })], LabHead.approvedTestReportList)
 router.get("/user/completedTestReports", auth, LabHead.completedTestReports)
 
 router.get("/user/labheadAllocateToTester", auth, LabHead.labheadAllocateToTesterPage)

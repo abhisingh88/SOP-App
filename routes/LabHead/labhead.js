@@ -35,6 +35,22 @@ async function getlabheadPiRecords(req, res) {
     }
 };
 
+async function approvedTestReportList(req, res) {
+    try {
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data=res.paginatedResult.results
+        data.userImage = userImg
+
+        res.status(201).render("pages/labhead/approvedTrList", { data:res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous });
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
 
 async function labheadAllocateToTesterPage(req, res) {
     try {
@@ -45,7 +61,9 @@ async function labheadAllocateToTesterPage(req, res) {
         let tr = req.query.trNo
         let data = await TrDetail.findOne({trNumber:tr})
         let testerData = await UserDetail.find({role:"Tester"})
+
         data.userImage=userImg
+
         res.status(201).render("pages/labhead/labheadTesterAllocate", { data: data, tester:testerData });
 
     } catch (error) {
@@ -151,8 +169,11 @@ async function retestToLabTester(req, res) {
 async function labheadAllocateToTester(req, res) {
     try {        
         let tr=req.body.trNo
+        let tempUserData= await UserDetail.findOne({_id:req.body.testerId})
+        let testerName=tempUserData.username
         let data = await TrDetail.findOneAndUpdate({ trNumber: tr }, {
-            allocatedTo:req.body.testerId
+            allocatedTo:req.body.testerId,
+            testerName:testerName,
         })
         res.status(200).render("pages/labhead/labheadTesterAllocate",{success:true, data:data})
 
@@ -171,5 +192,5 @@ module.exports = {
     sendToDiretor:sendToDiretor,
     retestToLabTester:retestToLabTester,
     labheadAllocateToTester:labheadAllocateToTester,
-
+    approvedTestReportList:approvedTestReportList,
 }

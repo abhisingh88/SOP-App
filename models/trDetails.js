@@ -58,6 +58,10 @@ const trSchema = new mongoose.Schema({
         type: String,
         default:"null"
     },
+    testerName: {
+        type: String,
+        default:"null"
+    },
     parentTr: {
         type: String,
         default:"null",
