@@ -4,8 +4,8 @@ var format = require('date-format');
 const UserDetail = require("../../models/userModel");
 const ItDetail = require("../../models/itDetails");
 const TrDetail = require("../../models/trDetails");
-const PiDetails = require("../../models/piDetails");
-const InvoiceDetails = require("../../models/invoiceDetails");
+const PiDetail = require("../../models/piDetails");
+const InvoiceDetail = require("../../models/invoiceDetails");
 
 
 
@@ -108,7 +108,7 @@ async function trDetails(req, res) {
         })
         const trStatus = await trDetail.save();
 
-        let data = await PiDetails.findOneAndUpdate({ piNumber: req.body.piNumber }, {
+        let data = await PiDetail.findOneAndUpdate({ piNumber: req.body.piNumber }, {
             statusOfTr: "Generated"
         })
 
@@ -121,13 +121,13 @@ async function trDetails(req, res) {
 };
 
 
-async function piDetails(req, res) {
+async function setPiDetails(req, res) {
     try {
 
         let pi = "PI-"
         pi += format.asString('yy-MM-dd', new Date());
         let year = format('yy', new Date());;
-        var count = await PiDetails.count({ year: year })
+        var count = await PiDetail.count({ year: year })
         if (count == 0) {
             count = 1;
         } else {
@@ -149,8 +149,7 @@ async function piDetails(req, res) {
             }
             testData.push(obj);
         }
-
-        const piDetail = new PiDetails({
+        const piDetails = new PiDetail({
             piNumber: pi,
             itNumber: req.body.itNumber,
             companyName: req.body.companyName,
@@ -160,7 +159,8 @@ async function piDetails(req, res) {
             advancePayment: req.body.advancePayment,
             isPiAccepted:"Yes",
         })
-        const piStatus = await piDetail.save();
+        const piStatus = await piDetails.save();
+        console.log(piStatus);
 
         let data = await ItDetail.findOneAndUpdate({ itNumber: req.body.itNumber }, {
             statusOfPi: "Generated"
@@ -182,7 +182,7 @@ async function piDetailsForAcceptance(req, res) {
         let pi = "PI-"
         pi += format.asString('yy-MM-dd', new Date());
         let year = format('yy', new Date());;
-        var count = await PiDetails.count({ year: year })
+        var count = await PiDetail.count({ year: year })
         if (count == 0) {
             count = 1;
         } else {
@@ -204,21 +204,20 @@ async function piDetailsForAcceptance(req, res) {
             }
             testData.push(obj);
         }
-
-        const piDetail = new PiDetails({
+        // console.log(testData);
+        const piDetail = new PiDetail({
             piNumber: pi,
-            itNumber: req.body.itNumber,
             companyName: req.body.companyName,
             contact: req.body.contact,
             testData: testData,
             totalCost: req.body.totalCost,
-            isPiAccepted:"No",
+            isPiAccepted:"No"
         })
+        
+        // console.log(piDetail);
         const piStatus = await piDetail.save();
-
+        // console.log(piStatus);
         res.redirect('/user/pidata?success=' + true + "&piNo=" + pi);
-
-
 
     } catch (error) {
         res.status(400).send("Error occureed plz try again!!")
@@ -241,8 +240,8 @@ async function updatePiDetails(req, res) {
             }
             testData.push(obj);
         }
-
-        let data= await PiDetails.findOneAndUpdate({piNumber:req.body.piNumber},{
+        console.log(testData);
+        let data= await PiDetail.findOneAndUpdate({piNumber:req.body.piNumber},{
             testData:testData,
             advancePayment:req.body.advancePayment,
             poDo:req.body.poDoStatus,
@@ -260,7 +259,7 @@ async function invoiceDetails(req, res) {
         let inNo = "INV-"
         inNo += format.asString('yy-MM-dd', new Date());
         let year = format('yy', new Date());;
-        var count = await InvoiceDetails.count({ year: year })
+        var count = await InvoiceDetail.count({ year: year })
         if (count == 0) {
             count = 1;
         } else {
@@ -282,7 +281,7 @@ async function invoiceDetails(req, res) {
         }
         console.log(req.body);
 
-        const inDetail = new InvoiceDetails({
+        const inDetail = new InvoiceDetail({
             invoiceNumber: inNo,
             trNumber: req.body.trNumber,
             companyName: req.body.companyName,
@@ -336,7 +335,7 @@ module.exports = {
     createUser: createUser,
     itDetails: itDetails,
     trDetails: trDetails,
-    piDetails: piDetails,
+    piDetails: setPiDetails,
     piDetailsForAcceptance:piDetailsForAcceptance,
     updatePiDetails:updatePiDetails,
     invoiceDetails: invoiceDetails,

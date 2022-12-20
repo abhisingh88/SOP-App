@@ -22,10 +22,10 @@
     var counter = 1;
     let testData = []
     function add_TestField() {
-      html = `<div><input type="text" placeholder="Test Type" name="testType" id="test${counter}" required>
+      html = `<div><input type="text" placeholder="Test Type" name="testType">
               {{!-- <br> --}}
-              <input type="text" placeholder="Number of Sample" name="noOfSample" id="no${counter}" required>
-              <input type="text" placeholder="Cost" name="cost" id="cost" required>
+              <input type="text" placeholder="Number of Sample" name="noOfSample">
+              <input type="text" placeholder="Cost" name="cost">
               </div>`
       var testData = document.getElementById("testCollection")
       testData.innerHTML += html
@@ -90,9 +90,11 @@
           <br>
 
           <div id="testCollection">
-              <input type="text" placeholder="Test Type" name="testType" id="test" required>
-              <input type="text" placeholder="Number of Sample" name="noOfSample" id="no" required>
-              <input type="text" placeholder="Cost" name="cost" id="cost" required>
+            <div>
+              <input type="text" placeholder="Test Type" name="testType" id="test0">
+              <input type="text" placeholder="Number of Sample" name="noOfSample" id="no0">
+              <input type="text" placeholder="Cost" name="cost" id="cost0" >
+            </div>
           </div>
 
           <button type="submit" class="addbtn" id="testAddBtn" onclick="add_TestField()">Add</button>

@@ -12,13 +12,12 @@ const piSchema = new mongoose.Schema({
     },
     itNumber:{
         type: String,
-        // required: true,
         default:"null"
+        // required: true,
     },
     companyName: {
         type: String,
         required: true,
-        unique: true
     },
     contact: {
         type: String,
@@ -28,15 +27,12 @@ const piSchema = new mongoose.Schema({
         {
             testType: {
                 type: String,
-                required: true
             },
             noOfSample: {
                 type: String,
-                required: true
             },
             cost:{
                 type: String,
-                required: true
             }
         }
     ],

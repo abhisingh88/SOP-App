@@ -195,7 +195,7 @@ router.post("/user/testViewSubmissionUpdate", [auth, uploadTr.single('trfile'),]
 // Paginated Result
 router.get("/user/dataOfItLab", [auth, paginatedResult(ItDetail, { submittedToLabHead: "Yes", statusOfPi: "Not Generated" }, { Reqdate: "desc", itNumber: "desc" })], Financial.dataFromreceptionToFinance)
 router.get("/user/getInvoiceRecords", [auth, paginatedResult(TrDetail, { isAuthorized: "Yes", isInvoiceGen: "null" }, { trNumber: "desc" })], Financial.getInvoiceRecords)
-router.get("/user/getPiDataList", [auth, paginatedResult(PiDetail, {}, { piNumber: "desc" })], Financial.getPiDataList)
+router.get("/user/getPiDataList", [auth, paginatedResult(PiDetail, {}, { date:"desc",piNumber: "desc" })], Financial.getPiDataList)
 
 router.get("/user/PiFinancialDataOfIt", auth, Financial.PiFinancial)
 router.get("/user/generatePiForm", auth, Financial.getPiForm)
