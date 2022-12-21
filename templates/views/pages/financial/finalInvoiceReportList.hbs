@@ -16,7 +16,7 @@
 </head>
 
 <body>
-  {{> navbar }}
+  {{> navbar userImg=data.userImage }}
 
 
 
@@ -62,9 +62,9 @@
                 <th scope="col">Invoice No.</th>
                 <th scope="col">Company</th>
                 <th scope="col">Date</th>
-                <th scope="col">Proforma Invoice</th>
                 <th scope="col">Test Type</th>
                 <th scope="col">No Of Sample</th>
+                <th scope="col">Cost Each</th>
                 <th scope="col">Total Cost</th>
                 <th scope="col">Contact</th>
                 <th scope="col">Payment Status</th>
@@ -77,7 +77,6 @@
                 <td>{{invoiceNumber}}</td>
                 <td>{{companyName}}</td>
                 <td>{{trimString date}}</td>
-                <td>{{companyName}}</td>
                 <td>
                   <ol>
                     {{#eachProperty testData}}
@@ -89,6 +88,13 @@
                   <ul>
                     {{#eachProperty testData}}
                     <li>{{value.noOfSample}}</li>
+                    {{/eachProperty }}
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    {{#eachProperty testData}}
+                    <li>{{value.cost}}</li>
                     {{/eachProperty }}
                   </ul>
                 </td>

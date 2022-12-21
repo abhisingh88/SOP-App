@@ -39,6 +39,10 @@ const invoiceSchema = new mongoose.Schema({
         type: String,
         default: "null"
     },
+    advancePayment: {
+        type: String,
+        default: "null"
+    },
     contact: {
         type: String,
         default: "null"

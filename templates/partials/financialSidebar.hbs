@@ -35,6 +35,14 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="/user/getPendingInvoiceList?page=1&limit=6" class="nav-link text-white {{#if pendingInvoiceListTab }} active {{/if}}" aria-current="page">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="/"></use>
+                    </svg>
+                    View Pending Invoice
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="/user/getApprovedFinalInvoiceList?page=1&limit=6" class="nav-link text-white {{#if approvedInvoiceListTab }} active {{/if}}" aria-current="page">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="/"></use>

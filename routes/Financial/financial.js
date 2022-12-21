@@ -162,6 +162,43 @@ async function getApprovedFinalInvoiceList(req, res) {
     }
 };
 
+async function getPendingInvoiceList(req, res) {
+    try {
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data=res.paginatedResult.results
+        data.userImage = userImg
+
+        res.status(201).render("pages/financial/pendingInvoiceReportList", { data: data, next: res.paginatedResult.next, prev: res.paginatedResult.previous, pendingInvoiceListTab:true });
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
+
+async function updatePendingInvoice(req, res) {
+    try {
+
+        userId=req.cookies.userId;
+        userData=await UserDetail.findOne({_id:userId})
+        userImg=userData.userImage
+        
+        let inNo = req.query.inNo
+        let data = await InvoiceDetail.findOne({invoiceNumber:inNo})
+
+        data.userImage=userImg
+
+        res.status(201).render("pages/financial/onePendingInvoiceReport", { data: data, pendingInvoiceListTab:true });
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
 module.exports = {
     finance: financePage,
     dataFromreceptionToFinance: dataFromreceptionToFinance,
@@ -172,5 +209,6 @@ module.exports = {
     updatePiDetails:updatePiDetails,
     generateInvoiceFinancial:generateInvoiceFinancial,
     getApprovedFinalInvoiceList:getApprovedFinalInvoiceList,
-
+    getPendingInvoiceList:getPendingInvoiceList,
+    updatePendingInvoice:updatePendingInvoice,
 }   

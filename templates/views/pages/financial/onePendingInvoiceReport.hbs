@@ -48,17 +48,17 @@
                         </div>
                     </div>
                     <hr>
-                    <form action="/data/invoiceDetails" method="post" enctype='multipart/form-data'>
+                    <form action="/data/updateInvoiceDetails" method="post">
 
-                        <input type="text" id="trNum" name="trNumber" value="{{data.trNumber}}">
-                        <input type="hidden" id="counterVal" name="counter" value='{{data.counter}}'>
+                        <input type="text" id="inNum" name="inNumber" value="{{data.invoiceNumber}}">
 
                         <input type="text" placeholder="Company Name" value="{{data.companyName}}" name="companyName"
                             id="comp" required>
 
                         <br>
-
-                        {{#eachProperty data.piData.testData}}
+                        
+                        <label for="testData">Test Data:</label>
+                        {{#eachProperty data.testData}}
                         <div id="testCollection">
                             <input type="text" placeholder="Test Type" value="{{value.testType}}" name="testType"
                                 id="test" required>
@@ -68,19 +68,14 @@
                         </div>
                         {{/eachProperty }}
                         <label for="">Total Cost</label>
-                        <input type="text" value="{{data.piData.totalCost}}" name="totalCost">
+                        <input type="text" value="{{data.totalCost}}" name="totalCost">
                         <br>
                         <label for="">Advance Payment</label>
-                        <input type="text" value="{{data.piData.advancePayment}}" name="advancePayment">
-                        {{!-- <button type="submit" class="addbtn" id="testAddBtn"
-                            onclick="add_TestField()">Add</button>
-                        <button type="submit" class="rembtn" id="testRemBtn"
-                            onclick="remove_TestField()">Remove</button>
-                        <br> --}}
+                        <input type="text" value="{{data.advancePayment}}" name="advancePayment">
                         
 
                         <br>
-                        <input type="date" placeholder="Date" name="date" id="date" required>
+                        {{!-- <input type="date" placeholder="Date" name="date" id="date" required> --}}
                         <br>
                         <select class="form-select form-select-sm" name="paymentStatus"
                             aria-label=".form-select-sm example">
@@ -95,40 +90,14 @@
 
                         <br>
 
-                        <div id="file-container">
-                            <p id="filePdf"><i class="fas fa-file-upload"></i>Upload Invoice File</p>
-                            <input id="fileUpload" type="file" name="invoicefile" placeholder="Upload Invoice File"
-                                required capture />
-                        </div>
-
                         <hr>
 
-                        {{!-- <div id="file-container">
-                            <p id="fileImage"><i class="fas fa-file-upload"></i>Upload Filled Form</p>
-                        </div>
-                        <input id="fileUpload" type="file" name="file" placeholder="Upload File" required capture>
-                        <hr> --}}
-
-                        <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+                        <button type="submit" id="submitBtn" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        $("#filePdf").click(function (e) {
-            $("#fileUpload").click();
-        });
-        function fasterPreview(uploader) {
-            if (uploader.files && uploader.files[0]) {
-                $('#filePdf').attr('src',
-                    window.URL.createObjectURL(uploader.files[0]));
-            }
-        }
-        $("#fileUpload").change(function () {
-            fasterPreview(this);
-        });
-    </script>
 </body>
 
 </html>

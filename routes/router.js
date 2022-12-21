@@ -136,6 +136,7 @@ router.post("/data/invoiceDetails",[auth, uploadInvoiceForm.single('invoicefile'
 router.post("/data/piDetails", Details.piDetails)
 router.post("/data/piDetailsForAcceptance", Details.piDetailsForAcceptance)
 router.post("/data/updatePiDetails", Details.updatePiDetails)
+router.post("/data/updateInvoiceDetails", Details.updateInvoiceDetails)
 
 
 
@@ -199,9 +200,11 @@ router.get("/user/dataOfItLab", [auth, paginatedResult(ItDetail, { submittedToLa
 router.get("/user/getInvoiceRecords", [auth, paginatedResult(TrDetail, { isAuthorized: "Yes", isInvoiceGen: "null" }, { trNumber: "desc" })], Financial.getInvoiceRecords)
 router.get("/user/getPiDataList", [auth, paginatedResult(PiDetail, {}, { date:"desc",piNumber: "desc" })], Financial.getPiDataList)
 router.get("/user/getApprovedFinalInvoiceList", [auth, paginatedResult(InvoiceDetail, { isAuthorized: "Yes", paymentStatus: "Completed" }, { invoiceNumber: "desc" })], Financial.getApprovedFinalInvoiceList)
+router.get("/user/getPendingInvoiceList", [auth, paginatedResult(InvoiceDetail, { isAuthorized: "null", paymentStatus: "notCompleted" }, { invoiceNumber: "desc" })], Financial.getPendingInvoiceList)
 
 
 router.get("/user/PiFinancialDataOfIt", auth, Financial.PiFinancial)
+router.get("/user/updatePendingInvoice", auth, Financial.updatePendingInvoice)
 router.get("/user/generatePiForm", auth, Financial.getPiForm)
 router.get("/user/updatePiDetails", auth, Financial.updatePiDetails)
 router.get("/user/generateInvoiceFinancial", auth, Financial.generateInvoiceFinancial)

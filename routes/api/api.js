@@ -328,6 +328,7 @@ async function invoiceDetails(req, res) {
             totalCost: req.body.totalCost,
             advancePayment: req.body.advancePayment,
             paymentStatus: req.body.paymentStatus,
+            advancePayment:req.body.advancePayment,
             reportfile:req.file.filename,
         })
 
@@ -337,6 +338,21 @@ async function invoiceDetails(req, res) {
         })
 
         res.redirect('/user/invoicedata?success=' + true + "&inNo=" + inNo);
+
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
+async function updateInvoiceDetails(req, res) {
+    try {
+        let data = await InvoiceDetail.findOneAndUpdate({ invoiceNumber: req.body.inNumber }, {
+            advancePayment: req.body.advancePayment,
+            totalCost: req.body.totalCost,
+            paymentStatus:req.body.paymentStatus
+        })
+        res.redirect('/user/invoicedata?success=' + true + "&inNo=" + req.body.inNumber);
 
 
     } catch (error) {
@@ -378,6 +394,7 @@ module.exports = {
     piDetailsForAcceptance: piDetailsForAcceptance,
     updatePiDetails: updatePiDetails,
     invoiceDetails: invoiceDetails,
+    updateInvoiceDetails:updateInvoiceDetails,
     invoiceDetailsRes: invoiceDetailsRes,
     trDetailssRes: trDetailssRes,
     piDetailsRes: piDetailsRes,

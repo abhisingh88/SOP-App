@@ -62,7 +62,7 @@ async function finalApproval(req, res) {
         let data = await InvoiceDetail.findOneAndUpdate({ invoiceNumber: inNo }, {
             isAuthorized: "Yes"
         })
-        res.status(201).render("pages/director/directorFinalAuthorize", { success: true , invoiceListTab:true});
+        res.status(201).render("pages/director/directorFinalAuthorize", {success: true , invoiceListTab:true});
 
     } catch (error) {
         res.status(500).send(error)
