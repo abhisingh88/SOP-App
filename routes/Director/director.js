@@ -36,7 +36,7 @@ async function getApprovalReportPage(req, res) {
     try {
         let tr= req.query.trNo
         let data= await TrDetail.findOne({trNumber:tr})
-        res.status(201).render("pages/director/approve_retest", {data:data, invoiceListTab:true});
+        res.status(201).render("pages/director/approve_retest", {data:data, testReportTab:true});
     } catch (error) {
         res.status(500).send(error)
     }
@@ -93,6 +93,24 @@ async function createUser(req, res) {
     }
 };
 
+async function getApprovedTestList(req, res) {
+    try {
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data=res.paginatedResult.results
+        data.userImage = userImg
+
+        res.status(201).render("pages/director/approvedTrList", { data:data, next: res.paginatedResult.next, prev: res.paginatedResult.previous, ApproveTestTab:true });
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+
+
+
 module.exports = {
     director: directorPage,
     getdirectorInovoiceRecords: getdirectorInovoiceRecords,
@@ -102,5 +120,6 @@ module.exports = {
     finalApproval:finalApproval,
     retestDirector:retestDirector,
     createUserPage: createUser,
+    getApprovedTestList:getApprovedTestList,
 
 }

@@ -144,6 +144,7 @@ router.post("/data/updatePiDetails", Details.updatePiDetails)
 router.get("/user/director", [auth, paginatedResult(TrDetail, { toDirector: "Yes", isAuthorized: "null", suggestion: "null" }, { trNumber: "desc" })], Director.director)
 router.get("/user/finalInvoice", [auth, paginatedResult(InvoiceDetail, { isAuthorized: "null", paymentStatus: "Completed" }, { trNumber: "desc" })], Director.getdirectorInovoiceRecords)
 router.get("/user/getfinalInvoice", [auth, paginatedResult(InvoiceDetail, { isAuthorized: "Yes", paymentStatus: "Completed" }, { invoiceNumber: "desc" })], Director.getfinalInvoices)
+router.get("/user/getApprovedTestList", [auth, paginatedResult(TrDetail, {isAuthorized:"Yes"}, { date: "desc", trNumber: "desc" })], Director.getApprovedTestList)
 
 router.get("/user/getApprovalReportPage", auth, Director.getApprovalReportPage)
 router.post("/user/trApproval", auth, Director.trApprovalDirector)
@@ -197,6 +198,8 @@ router.post("/user/testViewSubmissionUpdate", [auth, uploadTr.single('trfile'),]
 router.get("/user/dataOfItLab", [auth, paginatedResult(ItDetail, { submittedToLabHead: "Yes", statusOfPi: "Not Generated" }, { Reqdate: "desc", itNumber: "desc" })], Financial.dataFromreceptionToFinance)
 router.get("/user/getInvoiceRecords", [auth, paginatedResult(TrDetail, { isAuthorized: "Yes", isInvoiceGen: "null" }, { trNumber: "desc" })], Financial.getInvoiceRecords)
 router.get("/user/getPiDataList", [auth, paginatedResult(PiDetail, {}, { date:"desc",piNumber: "desc" })], Financial.getPiDataList)
+router.get("/user/getApprovedFinalInvoiceList", [auth, paginatedResult(InvoiceDetail, { isAuthorized: "Yes", paymentStatus: "Completed" }, { invoiceNumber: "desc" })], Financial.getApprovedFinalInvoiceList)
+
 
 router.get("/user/PiFinancialDataOfIt", auth, Financial.PiFinancial)
 router.get("/user/generatePiForm", auth, Financial.getPiForm)

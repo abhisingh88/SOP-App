@@ -145,6 +145,23 @@ async function generateInvoiceFinancial(req, res) {
     }
 };
 
+async function getApprovedFinalInvoiceList(req, res) {
+    try {
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data=res.paginatedResult.results
+        data.userImage = userImg
+
+        res.status(201).render("pages/financial/finalInvoiceReportList", { data: data, next: res.paginatedResult.next, prev: res.paginatedResult.previous, approvedInvoiceListTab:true });
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+};
+
 module.exports = {
     finance: financePage,
     dataFromreceptionToFinance: dataFromreceptionToFinance,
@@ -154,5 +171,6 @@ module.exports = {
     getPiDataList:getPiDataList,
     updatePiDetails:updatePiDetails,
     generateInvoiceFinancial:generateInvoiceFinancial,
+    getApprovedFinalInvoiceList:getApprovedFinalInvoiceList,
 
 }   
