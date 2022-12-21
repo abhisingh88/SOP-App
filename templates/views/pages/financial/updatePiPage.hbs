@@ -114,13 +114,11 @@
     </div>
 
     <script>
-        var counter = document.getElementById("counterVal").value;
-        let testData = []
         function add_TestField() {
+            var counter = document.getElementById("counterVal").value;
             html = `<div><input type="text" placeholder="Test Type" name="testType" id="test${counter}" required>
-              {{!-- <br> --}}
               <input type="text" placeholder="Number of Sample" name="noOfSample" id="no${counter}" required>
-              <input type="text" placeholder="Cost" name="cost" id="cost" required>
+              <input type="text" placeholder="Cost" name="cost" id="cost${counter}" required>
               </div>`
             var testData = document.getElementById("testCollection")
             testData.innerHTML += html
@@ -129,6 +127,7 @@
         }
 
         function remove_TestField() {
+            var counter = document.getElementById("counterVal").value;
             if (counter <= 1) {
                 alert("Atleast One field is Compulsory")
             } else {

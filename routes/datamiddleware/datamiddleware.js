@@ -45,7 +45,7 @@ async function PiFinancialDataMiddleware(req, res) {
         let data= await PiDetail.findOne({piNumber:pi})
         // console.log("reached");
         // console.log(data);
-        res.status(201).render("pages/financial/successPiPage", { success: success,pi:pi, data:data });
+        res.status(201).render("pages/financial/successPiPage", { success: success,pi:pi, data:data, generatePiTab:true });
 
     } catch (error) {
         res.status(401).send(error)

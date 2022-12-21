@@ -18,35 +18,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script>
-    var counter = 1;
-    let testData = []
-    function add_TestField() {
-      html = `<div><input type="text" placeholder="Test Type" name="testType">
-              {{!-- <br> --}}
-              <input type="text" placeholder="Number of Sample" name="noOfSample">
-              <input type="text" placeholder="Cost" name="cost">
-              </div>`
-      var testData = document.getElementById("testCollection")
-      testData.innerHTML += html
-      counter++;
-      document.getElementById("counterVal").value = counter.toString();
-    }
-
-    function remove_TestField() {
-      if (counter <= 1) {
-        alert("Atleast One field is Compulsory")
-      } else {
-        var testData = document.getElementById("testCollection")
-        testData.removeChild(testData.lastChild)
-        counter--;
-        document.getElementById("counterVal").value = counter.toString();
-      }
-    }
-
-
-  </script>
-
 </head>
 
 <body>
@@ -64,7 +35,7 @@
       </div>
 
       <div class="col-9 mx-0">
-      
+
         <form action="/data/piDetails" method="post">
           <h1>Proforma Invoice Form</h1>
           <hr>
@@ -76,24 +47,23 @@
           <br>
           <input type="text" placeholder="Company Name" value="{{data.companyName}}" name="companyName" id="comp"
             required>
-            <br>
+          <br>
 
           <label for="Contact">Contact :</label>
           <br>
-          <input type="text" placeholder="Contact" value="{{data.contact}}" name="contact" id="contact"
-            required>
+          <input type="text" placeholder="Contact" value="{{data.contact}}" name="contact" id="contact" required>
 
           <br>
           <label for="reqDate">Req Date :</label>
           <br>
-          <input type="date" placeholder="Date" name="date" id="date" >
+          <input type="date" placeholder="Date" name="date" id="date">
           <br>
 
           <div id="testCollection">
             <div>
               <input type="text" placeholder="Test Type" name="testType" id="test0">
               <input type="text" placeholder="Number of Sample" name="noOfSample" id="no0">
-              <input type="text" placeholder="Cost" name="cost" id="cost0" >
+              <input type="text" placeholder="Cost" name="cost" id="cost0">
             </div>
           </div>
 
@@ -103,9 +73,28 @@
 
           <input type="text" placeholder="Total Cost" name="totalCost" id="totalCost" required>
           <br>
-          
-          <input type="text" placeholder="Advance Payment" name="advancePayment" id="advancePayment" required>
+
+          <input type="text" placeholder="Advance Payment" name="advancePayment" id="advancePayment">
           <br>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="poDoStatus" value="Yes" id="flexRadioDefault1" >
+            <label class="form-check-label" for="flexRadioDefault1">
+              PO/DO Given
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="poDoStatus" value="No" id="flexRadioDefault2" checked
+              >
+            <label class="form-check-label" for="flexRadioDefault2">
+              PO/DO Not Given
+            </label>
+          </div>
+
+          <select class="form-select form-select-sm" name="piStatus" aria-label=".form-select-sm example" required>
+            <option disabled="disabled" selected>Is PI Accepted</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
 
           <hr>
 
@@ -120,6 +109,33 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function add_TestField() {
+      var counter = document.getElementById("counterVal").value;
+      html = `<div>
+                <input type="text" placeholder="Test Type" name="testType" id="test${counter}" required>
+                <input type="text" placeholder="Number of Sample" name="noOfSample" id="no${counter}" required>
+                <input type="text" placeholder="Cost" name="cost" id="cost${counter}" required>
+              </div>`
+      var testData = document.getElementById("testCollection")
+      testData.innerHTML += html
+      counter++;
+      document.getElementById("counterVal").value = counter.toString();
+    }
+
+    function remove_TestField() {
+      var counter = document.getElementById("counterVal").value;
+      if (counter <= 1) {
+        alert("Atleast One field is Compulsory")
+      } else {
+        var testData = document.getElementById("testCollection")
+        testData.removeChild(testData.lastChild)
+        counter--;
+        document.getElementById("counterVal").value = counter.toString();
+      }
+    }
+  </script>
 
   <script>
     $("#fileImage").click(function (e) {

@@ -140,24 +140,35 @@ async function setPiDetails(req, res) {
 
         let counter = parseInt(req.body.counter)
         let testData = []
-
-        for (let i = 0; i < counter; i++) {
-            let obj = {
-                testType: req.body.testType[i],
-                noOfSample: req.body.noOfSample[i],
-                cost: req.body.cost[i]
+        let obj = {}
+        if (counter == 1) {
+            obj = {
+                testType: req.body.testType,
+                noOfSample: req.body.noOfSample,
+                cost: req.body.cost
             }
             testData.push(obj);
+        }
+        else {
+            for (let i = 0; i < counter; i++) {
+                obj = {
+                    testType: req.body.testType[i],
+                    noOfSample: req.body.noOfSample[i],
+                    cost: req.body.cost[i]
+                }
+                testData.push(obj);
+            }
         }
         const piDetails = new PiDetail({
             piNumber: pi,
             itNumber: req.body.itNumber,
             companyName: req.body.companyName,
             contact: req.body.contact,
+            poDo: req.body.poDoStatus,
+            isPiAccepted: req.body.piStatus,
             testData: testData,
             totalCost: req.body.totalCost,
             advancePayment: req.body.advancePayment,
-            isPiAccepted:"Yes",
         })
         const piStatus = await piDetails.save();
 
@@ -194,24 +205,35 @@ async function piDetailsForAcceptance(req, res) {
 
         let counter = parseInt(req.body.counter)
         let testData = []
-
-        for (let i = 0; i < counter; i++) {
-            let obj = {
-                testType: req.body.testType[i],
-                noOfSample: req.body.noOfSample[i],
-                cost: req.body.cost[i]
+        let obj = {}
+        if (counter == 1) {
+            obj = {
+                testType: req.body.testType,
+                noOfSample: req.body.noOfSample,
+                cost: req.body.cost
             }
             testData.push(obj);
         }
+        else {
+            for (let i = 0; i < counter; i++) {
+                obj = {
+                    testType: req.body.testType[i],
+                    noOfSample: req.body.noOfSample[i],
+                    cost: req.body.cost[i]
+                }
+                testData.push(obj);
+            }
+        }
+        // console.log(testData);
         const piDetail = new PiDetail({
             piNumber: pi,
             companyName: req.body.companyName,
             contact: req.body.contact,
             testData: testData,
             totalCost: req.body.totalCost,
-            isPiAccepted:"No"
+            isPiAccepted: "No"
         })
-        
+        // console.log(piDetail);
         const piStatus = await piDetail.save();
         res.redirect('/user/pidata?success=' + true + "&piNo=" + pi);
 
@@ -223,28 +245,37 @@ async function piDetailsForAcceptance(req, res) {
 async function updatePiDetails(req, res) {
     try {
 
-        console.log(req.body);
-
         let counter = parseInt(req.body.counter)
         let testData = []
 
-        for (let i = 0; i < counter; i++) {
-            let obj = {
-                testType: req.body.testType[i],
-                noOfSample: req.body.noOfSample[i],
-                cost: req.body.cost[i]
+        let obj = {}
+        if (counter == 1) {
+            obj = {
+                testType: req.body.testType,
+                noOfSample: req.body.noOfSample,
+                cost: req.body.cost
             }
             testData.push(obj);
         }
-        console.log(testData);
-        let data= await PiDetail.findOneAndUpdate({piNumber:req.body.piNumber},{
-            testData:testData,
-            advancePayment:req.body.advancePayment,
-            poDo:req.body.poDoStatus,
-            isPiAccepted:req.body.piStatus,
-            totalCost:req.body.totalCost,
+        else {
+            for (let i = 0; i < counter; i++) {
+                obj = {
+                    testType: req.body.testType[i],
+                    noOfSample: req.body.noOfSample[i],
+                    cost: req.body.cost[i]
+                }
+                testData.push(obj);
+            }
+        }
+
+        let data = await PiDetail.findOneAndUpdate({ piNumber: req.body.piNumber }, {
+            testData: testData,
+            advancePayment: req.body.advancePayment,
+            poDo: req.body.poDoStatus,
+            isPiAccepted: req.body.piStatus,
+            totalCost: req.body.totalCost,
         })
-        res.redirect("/user/getPiDataList?page=1&limit=7&success="+true)
+        res.redirect("/user/getPiDataList?page=1&limit=7&success=" + true)
     } catch (error) {
         res.status(400).send("Error occureed plz try again!!")
     }
@@ -333,8 +364,8 @@ module.exports = {
     itDetails: itDetails,
     trDetails: trDetails,
     piDetails: setPiDetails,
-    piDetailsForAcceptance:piDetailsForAcceptance,
-    updatePiDetails:updatePiDetails,
+    piDetailsForAcceptance: piDetailsForAcceptance,
+    updatePiDetails: updatePiDetails,
     invoiceDetails: invoiceDetails,
     invoiceDetailsRes: invoiceDetailsRes,
     trDetailssRes: trDetailssRes,
