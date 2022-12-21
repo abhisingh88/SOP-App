@@ -67,6 +67,7 @@
                 <th scope="col">No Of Sample</th>
                 <th scope="col">Total Cost</th>
                 <th scope="col">Contact</th>
+                <th scope="col">View Report</th>
                 <th scope="col">Payment Status</th>
                 <th scope="col">Final Approval</th>
               </tr>
@@ -94,6 +95,8 @@
                 </td>
                 <td>{{totalCost}}</td>
                 <td>{{contact}}</td>
+                <td><a href="http://localhost:3000/invoiceFiles/{{reportfile}}" target="_blank"><button
+                      class="btn btn-primary">View Report</button></a></td>
                 <td>{{paymentStatus}}</td>
                 <td>
                   <a href="/user/finalApprovalPage?inNo={{invoiceNumber}}"><button class="btn btn-primary">Go To</button>

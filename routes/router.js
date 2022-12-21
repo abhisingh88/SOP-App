@@ -69,7 +69,7 @@ const testReqFormStorage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         // console.log(file);
-        cb(null, "TR" + "-" + Date.now() + path.extname(file.originalname))
+        cb(null, "TRF" + "-" + Date.now() + path.extname(file.originalname))
     }
 })
 
@@ -89,7 +89,7 @@ const invoiceFormStorage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         // console.log(file);
-        cb(null, "TR" + "-" + Date.now() + path.extname(file.originalname))
+        cb(null, "INV" + "-" + Date.now() + path.extname(file.originalname))
     }
 })
 
@@ -132,7 +132,7 @@ router.get("/user/invoicedata", auth, DataMiddleware.InFinacialDataMiddleware)
 // data/files uploader
 router.post("/data/itDetails", Details.itDetails)
 router.post("/data/trDetails", Details.trDetails)
-router.post("/data/invoiceDetails", Details.invoiceDetails)
+router.post("/data/invoiceDetails",[auth, uploadInvoiceForm.single('invoicefile'),], Details.invoiceDetails)
 router.post("/data/piDetails", Details.piDetails)
 router.post("/data/piDetailsForAcceptance", Details.piDetailsForAcceptance)
 router.post("/data/updatePiDetails", Details.updatePiDetails)

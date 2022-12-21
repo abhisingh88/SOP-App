@@ -64,8 +64,7 @@
                                 id="test" required>
                             <input type="text" placeholder="Number of Sample" value="{{value.noOfSample}}"
                                 name="noOfSample" id="no" required>
-                            <input type="text" placeholder="Cost" value="{{value.cost}}" name="cost" id="cost"
-                                required>
+                            <input type="text" placeholder="Cost" value="{{value.cost}}" name="cost" id="cost" required>
                         </div>
                         {{/eachProperty }}
                         <label for="">Total Cost</label>
@@ -82,7 +81,8 @@
                         <br>
                         <input type="date" placeholder="Date" name="date" id="date" required>
                         <br>
-                        <select class="form-select form-select-sm" name="paymentStatus" aria-label=".form-select-sm example">
+                        <select class="form-select form-select-sm" name="paymentStatus"
+                            aria-label=".form-select-sm example">
                             <option disabled="disabled" selected>Payment Status</option>
                             <option value="notCompleted">Not Completed</option>
                             <option value="Completed">Completed</option>
@@ -92,6 +92,13 @@
                         <input type="text" placeholder="Contact Persom" name="contact" value="{{data.contact}}"
                             id="contactPerson" required>
 
+                        <br>
+
+                        <div id="file-container">
+                            <p id="filePdf"><i class="fas fa-file-upload"></i>Upload Invoice File</p>
+                            <input id="fileUpload" type="file" name="invoicefile" placeholder="Upload Invoice File"
+                                required capture />
+                        </div>
 
                         <hr>
 
@@ -107,6 +114,20 @@
             </div>
         </div>
     </div>
+    <script>
+        $("#filePdf").click(function (e) {
+            $("#fileUpload").click();
+        });
+        function fasterPreview(uploader) {
+            if (uploader.files && uploader.files[0]) {
+                $('#filePdf').attr('src',
+                    window.URL.createObjectURL(uploader.files[0]));
+            }
+        }
+        $("#fileUpload").change(function () {
+            fasterPreview(this);
+        });
+    </script>
 </body>
 
 </html>

@@ -36,7 +36,7 @@ async function getApprovalReportPage(req, res) {
     try {
         let tr= req.query.trNo
         let data= await TrDetail.findOne({trNumber:tr})
-        res.status(201).render("pages/director/approve_retest", {data:data, ApproveInvoiceTab:true});
+        res.status(201).render("pages/director/approve_retest", {data:data, invoiceListTab:true});
     } catch (error) {
         res.status(500).send(error)
     }
@@ -62,7 +62,7 @@ async function finalApproval(req, res) {
         let data = await InvoiceDetail.findOneAndUpdate({ invoiceNumber: inNo }, {
             isAuthorized: "Yes"
         })
-        res.status(201).render("pages/director/directorFinalAuthorize", { success: true , activeITtab:true});
+        res.status(201).render("pages/director/directorFinalAuthorize", { success: true , invoiceListTab:true});
 
     } catch (error) {
         res.status(500).send(error)

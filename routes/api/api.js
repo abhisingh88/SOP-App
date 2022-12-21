@@ -299,16 +299,26 @@ async function invoiceDetails(req, res) {
 
         let counter = parseInt(req.body.counter)
         let testData = []
-        for (let i = 0; i < counter; i++) {
-            let obj = {
-                testType: req.body.testType[i],
-                noOfSample: req.body.noOfSample[i],
-                cost: req.body.cost[i]
+        let obj = {}
+        if (counter == 1) {
+            obj = {
+                testType: req.body.testType,
+                noOfSample: req.body.noOfSample,
+                cost: req.body.cost
             }
             testData.push(obj);
         }
-        console.log(req.body);
-
+        else {
+            for (let i = 0; i < counter; i++) {
+                obj = {
+                    testType: req.body.testType[i],
+                    noOfSample: req.body.noOfSample[i],
+                    cost: req.body.cost[i]
+                }
+                testData.push(obj);
+            }
+        }
+        
         const inDetail = new InvoiceDetail({
             invoiceNumber: inNo,
             trNumber: req.body.trNumber,
@@ -318,13 +328,14 @@ async function invoiceDetails(req, res) {
             totalCost: req.body.totalCost,
             advancePayment: req.body.advancePayment,
             paymentStatus: req.body.paymentStatus,
+            reportfile:req.file.filename,
         })
-        console.log("done");
+
         const inStatus = await inDetail.save();
-        console.log(inStatus);
         let data = await TrDetail.findOneAndUpdate({ trNumber: req.body.trNumber }, {
             isInvoiceGen: "Generated"
         })
+
         res.redirect('/user/invoicedata?success=' + true + "&inNo=" + inNo);
 
 
