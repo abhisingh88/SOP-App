@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <hr>
-                    <form action="/data/invoiceDetails" method="post">
+                    <form action="/data/invoiceDetails" method="post" enctype='multipart/form-data'>
 
                         <input type="text" id="trNum" name="trNumber" value="{{data.trNumber}}">
                         <input type="hidden" id="counterVal" name="counter" value='{{data.counter}}'>

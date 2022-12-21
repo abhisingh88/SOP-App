@@ -150,9 +150,10 @@ router.post("/user/trApproval", auth, Director.trApprovalDirector)
 router.get("/user/finalApprovalPage", auth, Director.finalApproval)
 router.post("/user/retestDirector", auth, Director.retestDirector)
 router.get("/user/createUserPage", auth, Director.createUserPage)
-
 // Other endpoints
 router.post("/user/createUser", uploadUser.single('profile_photo'), Details.createUser)
+
+
 
 
 // Reception
