@@ -145,6 +145,8 @@ router.get("/user/getItDataStatus", auth, Tracker.getItDataStatus)
 router.get("/user/getPiDataStatus", auth, Tracker.getPiDataStatus)
 router.get("/user/getTrDataStatus", auth, Tracker.getTrDataStatus)
 router.get("/user/getInvoiceDataStatus", auth, Tracker.getInvoiceDataStatus)
+router.get("/user/getDirectorTrDataStatus", auth, Tracker.getDirectorTrDataStatus)
+router.get("/user/getDirectorInvoiceDataStatus", auth, Tracker.getDirectorInvoiceDataStatus)
 
 // Director
 //Paginated Result
