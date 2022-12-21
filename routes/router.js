@@ -22,6 +22,7 @@ const Director = require("./Director/director")
 const LabHead = require("./LabHead/labhead")
 const LabTester = require("./LabTester/labtester")
 const Financial = require("./Financial/financial")
+const Tracker = require("./Tracker/tracker")
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -139,6 +140,11 @@ router.post("/data/updatePiDetails", Details.updatePiDetails)
 router.post("/data/updateInvoiceDetails", Details.updateInvoiceDetails)
 
 
+// Tracker End Points
+router.get("/user/getItDataStatus", auth, Tracker.getItDataStatus)
+router.get("/user/getPiDataStatus", auth, Tracker.getPiDataStatus)
+router.get("/user/getTrDataStatus", auth, Tracker.getTrDataStatus)
+router.get("/user/getInvoiceDataStatus", auth, Tracker.getInvoiceDataStatus)
 
 // Director
 //Paginated Result
@@ -146,6 +152,7 @@ router.get("/user/director", [auth, paginatedResult(TrDetail, { toDirector: "Yes
 router.get("/user/finalInvoice", [auth, paginatedResult(InvoiceDetail, { isAuthorized: "null", paymentStatus: "Completed" }, { trNumber: "desc" })], Director.getdirectorInovoiceRecords)
 router.get("/user/getfinalInvoice", [auth, paginatedResult(InvoiceDetail, { isAuthorized: "Yes", paymentStatus: "Completed" }, { invoiceNumber: "desc" })], Director.getfinalInvoices)
 router.get("/user/getApprovedTestList", [auth, paginatedResult(TrDetail, {isAuthorized:"Yes"}, { date: "desc", trNumber: "desc" })], Director.getApprovedTestList)
+
 
 router.get("/user/getApprovalReportPage", auth, Director.getApprovalReportPage)
 router.post("/user/trApproval", auth, Director.trApprovalDirector)
@@ -159,13 +166,15 @@ router.post("/user/createUser", uploadUser.single('profile_photo'), Details.crea
 
 
 // Reception
+// Reception paginated file details
+router.get("/data/itDetailsCount", [auth, paginatedResult(ItDetail, { submittedToLabHead: "NO" }, { Reqdate: 'desc', itNumber: 'desc' })], Reception.itDetailsRes)
+router.get("/data/submittedItDetailsCount", [auth, paginatedResult(ItDetail, { submittedToLabHead: "Yes" }, { Reqdate: 'desc', itNumber: 'desc' })], Reception.submittedItDetailsRes)
+
 router.get("/user/reception", auth, Reception.reception)
 router.get("/user/receptionToLabHead", auth, Reception.receptionToLabHead)
 router.get("/user/updateItStatus", auth, Reception.updateItStatus)
 
-// Reception paginated file details
-router.get("/data/itDetailsCount", [auth, paginatedResult(ItDetail, { submittedToLabHead: "NO" }, { Reqdate: 'desc', itNumber: 'desc' })], Reception.itDetailsRes)
-router.get("/data/submittedItDetailsCount", [auth, paginatedResult(ItDetail, { submittedToLabHead: "Yes" }, { Reqdate: 'desc', itNumber: 'desc' })], Reception.submittedItDetailsRes)
+
 
 
 // Lab Head
@@ -201,7 +210,6 @@ router.get("/user/getInvoiceRecords", [auth, paginatedResult(TrDetail, { isAutho
 router.get("/user/getPiDataList", [auth, paginatedResult(PiDetail, {}, { date:"desc",piNumber: "desc" })], Financial.getPiDataList)
 router.get("/user/getApprovedFinalInvoiceList", [auth, paginatedResult(InvoiceDetail, { isAuthorized: "Yes", paymentStatus: "Completed" }, { invoiceNumber: "desc" })], Financial.getApprovedFinalInvoiceList)
 router.get("/user/getPendingInvoiceList", [auth, paginatedResult(InvoiceDetail, { isAuthorized: "null", paymentStatus: "notCompleted" }, { invoiceNumber: "desc" })], Financial.getPendingInvoiceList)
-
 
 router.get("/user/PiFinancialDataOfIt", auth, Financial.PiFinancial)
 router.get("/user/updatePendingInvoice", auth, Financial.updatePendingInvoice)

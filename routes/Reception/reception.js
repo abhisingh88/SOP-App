@@ -60,11 +60,12 @@ async function updateItStatus(req, res) {
     }
 };
 
+
+
 module.exports = {
     reception: receptionPage,
     receptionToLabHead: receptionToLabHead,
     itDetailsRes: itDetailsRes,
     submittedItDetailsRes:submittedItDetailsRes,
     updateItStatus: updateItStatus,
-
 }
