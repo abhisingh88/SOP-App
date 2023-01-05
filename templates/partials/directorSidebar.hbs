@@ -1,5 +1,8 @@
-<div class="col-3">
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; min-height: 92vh;">
+
+<div class="p-0">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white vh-100" style="background-color: #3aafa9;">
+    <a class="navbar-brand" href="#"><img src="/public/images/sies_sop_logo.jpg" alt=""></a>
+
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
@@ -7,7 +10,7 @@
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="/"></use>
             </svg>
-            View Test Report List
+            Test Report List
           </a>
         </li>
         <li>
@@ -15,13 +18,13 @@
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2"></use>
             </svg>
-            View Approved Test List
+            Approved Test List
           </a>
         </li>
         <li>
           <a href="/user/finalInvoice?page=1&limit=6" class="nav-link text-white {{#if ApproveInvoiceTab }} active {{/if}}">
             <svg class="bi me-2" width="16" height="16">
-              <use xlink:href="#speedometer2"></use>
+              <use xlink:href="#table"></use>
             </svg>
             Approve Final Invoice
           </a>
@@ -29,15 +32,15 @@
         <li>
           <a href="/user/getfinalInvoice?page=1&limit=6" class="nav-link text-white {{#if invoiceListTab }} active {{/if}}">
             <svg class="bi me-2" width="16" height="16">
-              <use xlink:href="#speedometer2"></use>
+              <use xlink:href="#grid"></use>
             </svg>
-            View Final Invoices List
+            Final Invoice List
           </a>
         </li>
         <li>
           <a href="/user/createUserPage" class="nav-link text-white {{#if createUserTab }} active {{/if}}">
             <svg class="bi me-2" width="16" height="16">
-              <use xlink:href="#table"></use>
+              <use xlink:href="#people-circle"></use>
             </svg>
             Create User
           </a>
@@ -45,7 +48,7 @@
         <li>
           <a href="/user/getDirectorTrDataStatus" class="nav-link text-white {{#if getOneTrRecordTab }} active {{/if}}">
             <svg class="bi me-2" width="16" height="16">
-              <use xlink:href="#table"></use>
+              <use xlink:href="#people-circle"></use>
             </svg>
             Get TR Record
           </a>
@@ -53,7 +56,7 @@
         <li>
           <a href="/user/getDirectorInvoiceDataStatus" class="nav-link text-white {{#if getOneInRecordTab }} active {{/if}}">
             <svg class="bi me-2" width="16" height="16">
-              <use xlink:href="#table"></use>
+              <use xlink:href="#people-circle"></use>
             </svg>
             Get Invoice Record
           </a>
@@ -62,13 +65,13 @@
       <hr>
 
 
-      <div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
+      <div class="dropdown my-1">
+        <a href="#" class="d-flex justify-content-center align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
           data-bs-toggle="dropdown" aria-expanded="false">
           {{!-- <img src="https://abhisingh88.github.io/me/static/media/me2.58c2c28c.jpg" alt="" width="32" height="32" --}}
           <img src="http://localhost:3000/userImages/{{userImg}}" alt="" width="32" height="32"
             class="rounded-circle me-2">
-          <strong>Director</strong>
+          <d3>Director</d3>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
           <li><a class="dropdown-item" href="/user/logout">Sign out</a></li>
