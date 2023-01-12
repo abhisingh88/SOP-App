@@ -18,6 +18,7 @@ app.set("view engine", "hbs");
 const static_path = path.join(__dirname, "./public")
 app.use(express.static(static_path))
 
+app.use("/logo",express.static("./public/images/"))
 app.use("/userImages",express.static("./uploads/userData/"))
 app.use("/trDocs",express.static("./uploads/testReportFiles/"))
 app.use("/testReqFiles",express.static("./uploads/testReqFiles/"))
