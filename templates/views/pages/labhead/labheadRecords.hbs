@@ -52,6 +52,7 @@
                 <th scope="col">Company Name</th>
                 <th scope="col">Test Type</th>
                 <th scope="col">No Of Sample</th>
+                <th scope="col">Conditions</th>
                 <th scope="col">Company Contact</th>
                 <th scope="col">Date Generated</th>
                 <th scope="col">Allocate</th>
@@ -75,6 +76,13 @@
                   <ul>
                     {{#eachProperty testData}}
                     <li>{{value.noOfSample}}</li>
+                    {{/eachProperty }}
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    {{#eachProperty testData}}
+                    <li>{{value.conditions}}</li>
                     {{/eachProperty }}
                   </ul>
                 </td>

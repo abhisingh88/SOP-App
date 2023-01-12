@@ -53,13 +53,14 @@
                 <th scope="col">Company Contact</th>
                 <th scope="col">Test Type</th>
                 <th scope="col">No Of Sample</th>
+                <th scope="col">Conditions</th>
                 <th scope="col">Cost</th>
                 <th scope="col">Total Cost</th>
                 <th scope="col">Advance Payment</th>
                 <th scope="col">PO/DO</th>
+                <th scope="col">PO/DO No</th>
                 <th scope="col">Date Generated</th>
                 <th scope="col">Generate TR</th>
-                <th scope="col">Status</th>
                 {{!-- <th scope="col">Report Corrections</th>
                 <th scope="col">Status</th> --}}
               </tr>
@@ -87,6 +88,13 @@
                 <td>
                   <ul>
                     {{#eachProperty testData}}
+                    <li>{{value.conditions}}</li>
+                    {{/eachProperty }}
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    {{#eachProperty testData}}
                     <li>{{value.cost}}</li>
                     {{/eachProperty }}
                   </ul>
@@ -94,6 +102,7 @@
                 <td>{{totalCost}}</td>
                 <td>{{advancePayment}}</td>
                 <td>{{poDo}}</td>
+                <td>{{poDoNo}}</td>
                 <td>{{trimString date}}</td>
 
                 {{#eq statusOfTr "Not Generated"}}
@@ -105,7 +114,6 @@
                   <td>{{statusOfTr}}</td>
                 {{/ifnoteq}}
 
-                <td>{{status}}</td>
               </tr>
               {{/each}}
             </tbody>
