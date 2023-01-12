@@ -119,10 +119,10 @@ opacity:1;
   height: 150px;
 }
 
-#fileUpload
+/* #fileUpload
 {
   display: none;
-}
+} */
 #fileImage
 {
   cursor: pointer;
