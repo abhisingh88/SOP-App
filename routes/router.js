@@ -148,6 +148,7 @@ router.get("/user/getInvoiceDataStatus", auth, Tracker.getInvoiceDataStatus)
 router.get("/user/getDirectorTrDataStatus", auth, Tracker.getDirectorTrDataStatus)
 router.get("/user/getDirectorInvoiceDataStatus", auth, Tracker.getDirectorInvoiceDataStatus)
 
+
 // Director
 //Paginated Result
 router.get("/user/director", [auth, paginatedResult(TrDetail, { toDirector: "Yes", isAuthorized: "null", suggestion: "null" }, { trNumber: "desc" })], Director.director)

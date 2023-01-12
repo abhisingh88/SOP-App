@@ -52,10 +52,11 @@
                 <th scope="col">Company Name</th>
                 <th scope="col">Test Type</th>
                 <th scope="col">No Of Sample</th>
+                <th scope="col">Conditions</th>
                 <th scope="col">Cost</th>
                 <th scope="col">Date Generated</th>
                 <th scope="col">Total Cost</th>
-                <th scope="col">Allocation Status</th>
+                {{!-- <th scope="col">Allocation Status</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -80,13 +81,20 @@
                 <td>
                   <ul>
                     {{#eachProperty data.testData}}
+                      <li>{{value.conditions}}</li>
+                    {{/eachProperty }}
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    {{#eachProperty data.testData}}
                       <li>{{value.cost}}</li>
                     {{/eachProperty }}
                   </ul>
                 </td>
                 <td>{{trimString data.date}}</td>
                 <td>{{data.totalCost}}</td>
-                <td>Allocated</td>
+                {{!-- <td>Allocated</td> --}}
               </tr>
               {{/if}}
             </tbody>

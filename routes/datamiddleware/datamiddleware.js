@@ -51,7 +51,7 @@ async function PiFinancialDataMiddleware(req, res) {
         userImg = userData.userImage
         data.userImage=userImg
         
-        res.status(201).render("pages/financial/successPiPage", { success: success,pi:pi, data:data, generatePiTab:true });
+        res.status(201).render("pages/financial/successPiPage", { success: success,pi:pi, data:data, ItReqTab:true });
 
     } catch (error) {
         res.status(401).send(error)

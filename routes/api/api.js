@@ -231,7 +231,8 @@ async function piDetailsForAcceptance(req, res) {
             obj = {
                 testType: req.body.testType,
                 noOfSample: req.body.noOfSample,
-                cost: req.body.cost
+                cost: req.body.cost,
+                conditions:req.body.conditions,
             }
             testData.push(obj);
         }
@@ -240,19 +241,21 @@ async function piDetailsForAcceptance(req, res) {
                 obj = {
                     testType: req.body.testType[i],
                     noOfSample: req.body.noOfSample[i],
-                    cost: req.body.cost[i]
+                    cost: req.body.cost[i],
+                    conditions:req.body.conditions[i],
+                    
                 }
                 testData.push(obj);
             }
         }
-        // console.log(testData);
         const piDetail = new PiDetail({
             piNumber: pi,
             companyName: req.body.companyName,
             contact: req.body.contact,
             testData: testData,
             totalCost: req.body.totalCost,
-            isPiAccepted: "No"
+            isPiAccepted: "No",
+            poDoNo:req.body.poDoNo,
         })
         // console.log(piDetail);
         const piStatus = await piDetail.save();

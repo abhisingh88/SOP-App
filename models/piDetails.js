@@ -33,7 +33,10 @@ const piSchema = new mongoose.Schema({
             },
             cost:{
                 type: String,
-            }
+            }, 
+            conditions:{
+                type: String,
+            },
         }
     ],
     totalCost:{
@@ -57,6 +60,10 @@ const piSchema = new mongoose.Schema({
     poDo:{
         type:String,
         default:"No"
+    },
+    poDoNo:{
+        type:String,
+        default:"null"
     },
     poDoFile:{
         type:String,

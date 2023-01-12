@@ -28,7 +28,7 @@ async function getPiDataStatus(req, res) {
         userData = await UserDetail.findOne({ _id: userId })
         userImg = userData.userImage
         
-        res.status(201).render("pages/tracker/piDataStatus", { data: data, success: true , getOnePiRecordTab:true});
+        res.status(201).render("pages/tracker/piDataStatus", { data: data, userImage:userImg, success: true , getOnePiRecordTab:true});
 
     } catch (error) {
         res.status(500).send(error)
@@ -59,7 +59,7 @@ async function getInvoiceDataStatus(req, res) {
         userData = await UserDetail.findOne({ _id: userId })
         userImg = userData.userImage
 
-        res.status(201).render("pages/tracker/inDataStatus", { data: data, success: true , getOneInRecordTab:true});
+        res.status(201).render("pages/tracker/inDataStatus", { data: data,  userImage:userImg, success: true , getOneInRecordTab:true});
         
     } catch (error) {
         res.status(500).send(error)
