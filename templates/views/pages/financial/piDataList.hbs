@@ -43,8 +43,10 @@
                   <th scope="col">Contact No.</th>
                   <th scope="col">Test Type</th>
                   <th scope="col">No Of Sample</th>
+                  <th scope="col">Conditions</th>
                   <th scope="col">Update PI Details</th>
                   <th scope="col">Status Of TR</th>
+                  <th scope="col">PO/DO No</th>
                 </tr>
               </thead>
               <tbody>
@@ -69,6 +71,13 @@
                     </ul>
                   </td>
                   <td>
+                    <ul>
+                      {{#eachProperty testData}}
+                      <li>{{value.conditions}}</li>
+                      {{/eachProperty }}
+                    </ul>
+                  </td>
+                  <td>
                     {{#eq isPiAccepted "No"}}
                     <a href="/user/updatePiDetails?piNo={{piNumber}}"><button
                         class="btn btn-primary">Update</button>
@@ -79,6 +88,7 @@
                     {{/eq}}
                   </td>
                   <td>{{statusOfTr}}</td>
+                  <td>{{poDoNo}}</td>
                 </tr>
                 {{/each}}
               </tbody>
