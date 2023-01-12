@@ -66,6 +66,7 @@ async function logoutUser(req, res) {
         })
 
         res.clearCookie("sop")
+        res.clearCookie("userId")
 
         console.log("Logout Successful!!");
 

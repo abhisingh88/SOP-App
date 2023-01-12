@@ -87,16 +87,37 @@ async function trDetails(req, res) {
         tr += count;
 
 
+        // let counter = parseInt(req.body.counter)
+        // let testData = []
+        // for (let i = 0; i < counter; i++) {
+        //     let obj = {
+        //         testType: req.body.testType[i],
+        //         noOfSample: req.body.noOfSample[i]
+        //     }
+        //     testData.push(obj);
+        // }
+
         let counter = parseInt(req.body.counter)
         let testData = []
-        for (let i = 0; i < counter; i++) {
-            let obj = {
-                testType: req.body.testType[i],
-                noOfSample: req.body.noOfSample[i]
+        let obj = {}
+        if (counter == 1) {
+            obj = {
+                testType: req.body.testType,
+                noOfSample: req.body.noOfSample,
+                cost: req.body.cost
             }
             testData.push(obj);
         }
-
+        else {
+            for (let i = 0; i < counter; i++) {
+                obj = {
+                    testType: req.body.testType[i],
+                    noOfSample: req.body.noOfSample[i],
+                    cost: req.body.cost[i]
+                }
+                testData.push(obj);
+            }
+        }
 
         const trDetail = new TrDetail({
             trNumber: tr,
@@ -284,16 +305,19 @@ async function updatePiDetails(req, res) {
 
 async function invoiceDetails(req, res) {
     try {
-        let inNo = "INV-"
-        inNo += format.asString('yy-MM-dd', new Date());
-        let year = format('yy', new Date());;
+        let inNo = "SOP/INV/"
+        let year = format('yy', new Date());
+
+        // inNo += format.asString('yy-MM-dd', new Date());
+        
+        inNo+="/"+year+"-"+year+1;
+        inNo += "/";
         var count = await InvoiceDetail.count({ year: year })
         if (count == 0) {
             count = 1;
         } else {
             count += 1
         }
-        inNo += "-";
         count = count.toString();
         inNo += count;
 

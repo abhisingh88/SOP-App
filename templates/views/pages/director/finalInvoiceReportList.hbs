@@ -60,6 +60,7 @@
             <thead>
               <tr>
                 <th scope="col">Invoice No.</th>
+                <th scope="col">TR No.</th>
                 <th scope="col">Company</th>
                 <th scope="col">Date</th>
                 <th scope="col">Proforma Invoice</th>
@@ -75,6 +76,7 @@
               {{#each data}}
               <tr>
                 <td>{{invoiceNumber}}</td>
+                <td>{{trNumber}}</td>
                 <td>{{companyName}}</td>
                 <td>{{trimString date}}</td>
                 <td>{{companyName}}</td>
@@ -97,7 +99,7 @@
                 <td>{{paymentStatus}}</td>
                 
                 <td><a href="http://localhost:3000/invoiceFiles/{{reportfile}}" target="_blank"><button
-                      class="btn btn-primary">View Report</button></a></td>
+                      class="btn btn-primary">View Invoice</button></a></td>
               </tr>
               {{/each}}
             </tbody>
