@@ -51,11 +51,12 @@
                     <br>
                     {{#eachProperty data.testData}}
                     <div id="testCollection">
-                        <input style="width: 24.50%;" type="text" placeholder="Test Type" value="{{value.testType}}" name="testType" id="test"
-                            required>
-                        <input style="width: 24.50%;" type="text" placeholder="Number of Sample" value="{{value.noOfSample}}" name="noOfSample"
-                            id="noOfSample" required>
-                        <input style="width: 24.50%;" type="text" placeholder="Conditions" value="{{value.conditions}}"                 name="conditions" id="conditions" required>
+                        <input style="width: 24.50%;" type="text" placeholder="Test Type" value="{{value.testType}}"
+                            name="testType" id="test" required>
+                        <input style="width: 24.50%;" type="text" placeholder="Number of Sample"
+                            value="{{value.noOfSample}}" name="noOfSample" id="noOfSample" required>
+                        <input style="width: 24.50%;" type="text" placeholder="Conditions" value="{{value.conditions}}"
+                            name="conditions" id="conditions" required>
                         <input style="width: 24.50%;" type="text" placeholder="Cost" value="{{value.cost}}" name="cost"
                             id="cost" required>
                     </div>
@@ -74,20 +75,21 @@
                     <br>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="poDoStatus" value="Yes" id="flexRadioDefault1" required>
+                        <input class="form-check-input" type="radio" name="poDoStatus" value="Yes"
+                            id="flexRadioDefault1" required>
                         <label class="form-check-label" for="flexRadioDefault1">
                             PO/DO Given
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="poDoStatus" value="No" id="flexRadioDefault2" checked
-                            required>
+                        <input class="form-check-input" type="radio" name="poDoStatus" value="No" id="flexRadioDefault2"
+                            checked required>
                         <label class="form-check-label" for="flexRadioDefault2">
                             PO/DO Not Given
                         </label>
                     </div>
                     <br>
-                    <input type="text" placeholder="PO/DO No." name="poDoNo" id="poDoNo">
+                    <input type="text" placeholder="PO/DO No." name="poDoNo" id="poDoNo" value="{{data.poDoNo}}">
                     <select id="role" name="piStatus" aria-label=".form-select-sm example">
                         <option disabled="disabled" selected>Is PI Accepted</option>
                         <option value="Yes">Yes</option>
