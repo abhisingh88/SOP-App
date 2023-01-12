@@ -45,6 +45,12 @@ async function PiFinancialDataMiddleware(req, res) {
         let data= await PiDetail.findOne({piNumber:pi})
         // console.log("reached");
         // console.log(data);
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+        data.userImage=userImg
+        
         res.status(201).render("pages/financial/successPiPage", { success: success,pi:pi, data:data, generatePiTab:true });
 
     } catch (error) {
