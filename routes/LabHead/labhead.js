@@ -93,36 +93,16 @@ async function TrlabheadPage(req, res) {
 
 async function completedTestReports(req, res) {
     try {
-        const page = parseInt(req.query.page)
-        const limit = parseInt(req.query.limit)
-
-        const startIndex = (page - 1) * limit
-        const endIndex = page * limit
-
-        const results = {}
-
-        if (endIndex < await TrDetail.find({status:"Uploaded",toDirector:"null"}).count()) {
-            results.next = {
-                page: page + 1,
-                limit: limit
-            }
-        }
-
-        if (startIndex > 0) {
-            results.previous = {
-                page: page - 1,
-                limit: limit
-            }
-        }
-
-        let data = await TrDetail.find({status:"Uploaded", $and:[{toDirector:"null"},{suggestion:"null"}]}).sort({trNumber:"desc"}).limit(limit).skip(startIndex)
 
         userId = req.cookies.userId;
         userData = await UserDetail.findOne({ _id: userId })
         userImg = userData.userImage
-        data.userImage=userImg
 
-        res.status(201).render("pages/labhead/submittedTestReport", { data: data, next: results.next, prev: results.previous, completedTestTab:true });
+        data=res.paginatedResult.results
+        data.userImage = userImg
+
+        res.status(201).render("pages/labhead/submittedTestReport", { data:data, next: res.paginatedResult.next, prev: res.paginatedResult.previous, completedTestTab:true });
+
     } catch (error) {
         res.status(500).send(error)
     }

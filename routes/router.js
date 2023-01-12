@@ -184,7 +184,7 @@ router.get("/user/updateItStatus", auth, Reception.updateItStatus)
 router.get("/user/pilabheadRecords", [auth, paginatedResult(PiDetail, {isPiAccepted:"Yes"}, {date: "desc", piNumber: "desc" })], LabHead.getlabheadPiRecords)
 router.get("/user/trlabheadRecords", [auth, paginatedResult(TrDetail, {}, { date: "desc", trNumber: "desc" })], LabHead.getlabheadTrRecords)
 router.get("/user/approvedTestReportList", [auth, paginatedResult(TrDetail, {isAuthorized:"Yes"}, { date: "desc", trNumber: "desc" })], LabHead.approvedTestReportList)
-router.get("/user/completedTestReports", auth, LabHead.completedTestReports)
+router.get("/user/completedTestReports", [auth, paginatedResult(TrDetail, {status:"Uploaded", $and:[{toDirector:"null"},{suggestion:"null"}]}, { trNumber: "desc",date: "desc" })], LabHead.completedTestReports)
 
 router.get("/user/labheadAllocateToTester", auth, LabHead.labheadAllocateToTesterPage)
 router.get("/user/generateTrLabhead", auth, LabHead.Trlabhead)
@@ -205,7 +205,6 @@ router.post("/user/testViewSubmissionUpdate", [auth, uploadTr.single('trfile'),]
 
 
 // Financial
-// router.get("/user/finance", auth, Financial.finance)
 // Paginated Result
 router.get("/user/dataOfItLab", [auth, paginatedResult(ItDetail, { submittedToLabHead: "Yes", statusOfPi: "Not Generated" }, { Reqdate: "desc", itNumber: "desc" })], Financial.dataFromreceptionToFinance)
 router.get("/user/getInvoiceRecords", [auth, paginatedResult(TrDetail, { isAuthorized: "Yes", isInvoiceGen: "null" }, { trNumber: "desc" })], Financial.getInvoiceRecords)
