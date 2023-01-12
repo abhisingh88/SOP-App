@@ -65,7 +65,7 @@
                 <th scope="col">Contact No.</th>
                 <th scope="col">Total Cost</th>
                 <th scope="col">Payment Status</th>
-                <th scope="col">Report File</th>
+                <th scope="col">View Final Invoice</th>
 
               </tr>
             </thead>
@@ -93,7 +93,7 @@
                 <td>{{data.totalCost}}</td>
                 <td>{{data.paymentStatus}}</td>
                 <td><a href="http://localhost:3000/invoiceFiles/{{data.reportfile}}" target="_blank"><button
-                      class="btn btn-primary">View Report</button></a></td>
+                      class="btn btn-primary">View Invoice</button></a></td>
                 {{/if}}
               </tr>
             </tbody>
