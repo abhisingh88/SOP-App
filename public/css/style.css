@@ -4,7 +4,7 @@
 }
 
 body {
-    margin: 3% 3%;
+  background-color: #def2f1;
 }
 
 a {
@@ -16,8 +16,9 @@ a {
 }
 
 .table {
-  border: 1px solid black;
-  background: #FEF8F8;
+  border: 1px solid #17252a;
+  background: #fff;
+  color: #17252a;
 }
 
 .row {
@@ -28,16 +29,21 @@ a {
 .srch-box {
     padding: 0%;
     margin: 0 0 24px 0;
-    background: #C4C4C4;
+    background: #3aafa9;
+}
+
+.form-select {
+  border: 0.5px solid #3aafa9;
 }
 
 h1 {
   font-weight: lighter;
-  color: #8A8989;
+  color: #17252a;
 }
 
 hr {
   margin-bottom: 2%;
+  color: #17252a;
 }
 
 
