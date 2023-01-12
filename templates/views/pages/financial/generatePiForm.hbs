@@ -53,11 +53,13 @@
           <input type="date" placeholder="Date" name="date" id="date" >
           <br>
 
+          <label for="testCollection"><i>Note: First add the required number of fields, then fill the test data</i></label>
           <div id="testCollection">
             <div>
-              <input type="text" placeholder="Test Type" name="testType">
-              <input type="text" placeholder="Number of Samples" name="noOfSample">
-              <input type="text" placeholder="Cost" name="cost">
+              <input style="width: 24.50%;" type="text" placeholder="Test Type" name="testType">
+              <input style="width: 24.50%;" type="text" placeholder="Number of Samples" name="noOfSample">
+              <input style="width: 24.50%;" type="text" placeholder="Conditions" name="conditions">
+              <input style="width: 24.50%;" type="text" placeholder="Cost" name="cost">
             </div>
           </div>
 
@@ -87,9 +89,10 @@
     function add_TestField() {
       var counter = document.getElementById("counterVal").value;
       html = `<div>
-                <input type="text" placeholder="Test Type" name="testType" id="test${counter}" required>
-                <input type="text" placeholder="Number of Sample" name="noOfSample" id="no${counter}" required>
-                <input type="text" placeholder="Cost" name="cost" id="cost${counter}" required>
+                <input style="width: 24.50%;" type="text" placeholder="Test Type" name="testType" id="test${counter}" required>
+                <input style="width: 24.50%;" type="text" placeholder="Number of Sample" name="noOfSample" id="no${counter}" required>
+                <input style="width: 24.50%;" type="text" placeholder="Conditions" name="conditions" id="no${counter}" required>
+                <input style="width: 24.50%;" type="text" placeholder="Cost" name="cost" id="cost${counter}" required>
               </div>`
       var testData = document.getElementById("testCollection")
       testData.innerHTML += html
