@@ -13,7 +13,7 @@ async function getItDataStatus(req, res) {
         userData = await UserDetail.findOne({ _id: userId })
         userImg = userData.userImage
 
-        res.status(201).render("pages/tracker/itDataStatus", { data: data, success: true , getOneItRecordTab:true});
+        res.status(201).render("pages/tracker/itDataStatus", { data: data, userImage:userImg, success: true , getOneItRecordTab:true});
 
     } catch (error) {
         res.status(500).send(error)
