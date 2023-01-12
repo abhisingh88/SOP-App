@@ -32,7 +32,10 @@ const invoiceSchema = new mongoose.Schema({
             cost: {
                 type: String,
                 required: true
-            }
+            }, 
+            conditions:{
+                type: String,
+            },
         }
     ],
     totalCost: {

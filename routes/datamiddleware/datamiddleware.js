@@ -63,10 +63,16 @@ async function InFinacialDataMiddleware(req, res) {
         let success=req.query.success
         let inNo=req.query.inNo
 
+        
+
         let data= await InvoiceDetails.findOne({invoiceNumber:inNo})
-        // console.log("reached");
-        // console.log(data);
-        res.status(201).render("pages/financial/successInvoice", { success: success,inNo:inNo, data:data });
+        
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+        data.userImage=userImg
+
+        res.status(201).render("pages/financial/successInvoice", { success: success,inNo:inNo, data:data, invoiceListTab:true });
 
     } catch (error) {
         res.status(401).send(error)

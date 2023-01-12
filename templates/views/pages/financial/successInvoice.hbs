@@ -41,7 +41,7 @@
 
         {{/if}}
 
-        <h1 class="my-4">Test Report List</h1>
+        <h1>Your Invoice Data</h1>
         <hr>
         
         <div class="table-responsive">
@@ -52,6 +52,7 @@
                 <th scope="col">Company Name</th>
                 <th scope="col">Test Type</th>
                 <th scope="col">No Of Sample</th>
+                <th scope="col">Conditions</th>
                 <th scope="col">Cost</th>
                 <th scope="col">Date Generated</th>
                 <th scope="col">Total Cost</th>
@@ -74,6 +75,13 @@
                   <ul>
                     {{#eachProperty data.testData}}
                       <li>{{value.noOfSample}}</li>
+                    {{/eachProperty }}
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    {{#eachProperty data.testData}}
+                      <li>{{value.conditions}}</li>
                     {{/eachProperty }}
                   </ul>
                 </td>
