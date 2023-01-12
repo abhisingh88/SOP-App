@@ -86,17 +86,6 @@ async function trDetails(req, res) {
         count = count.toString();
         tr += count;
 
-
-        // let counter = parseInt(req.body.counter)
-        // let testData = []
-        // for (let i = 0; i < counter; i++) {
-        //     let obj = {
-        //         testType: req.body.testType[i],
-        //         noOfSample: req.body.noOfSample[i]
-        //     }
-        //     testData.push(obj);
-        // }
-
         let counter = parseInt(req.body.counter)
         let testData = []
         let obj = {}
@@ -166,7 +155,8 @@ async function setPiDetails(req, res) {
             obj = {
                 testType: req.body.testType,
                 noOfSample: req.body.noOfSample,
-                cost: req.body.cost
+                cost: req.body.cost,
+                conditions:req.body.conditions,
             }
             testData.push(obj);
         }
@@ -175,7 +165,8 @@ async function setPiDetails(req, res) {
                 obj = {
                     testType: req.body.testType[i],
                     noOfSample: req.body.noOfSample[i],
-                    cost: req.body.cost[i]
+                    cost: req.body.cost[i],
+                    conditions:req.body.conditions[i],
                 }
                 testData.push(obj);
             }
@@ -190,6 +181,7 @@ async function setPiDetails(req, res) {
             testData: testData,
             totalCost: req.body.totalCost,
             advancePayment: req.body.advancePayment,
+            poDoNo:req.body.poDoNo,
         })
         const piStatus = await piDetails.save();
 
@@ -277,7 +269,8 @@ async function updatePiDetails(req, res) {
             obj = {
                 testType: req.body.testType,
                 noOfSample: req.body.noOfSample,
-                cost: req.body.cost
+                cost: req.body.cost,
+                conditions:req.body.conditions,
             }
             testData.push(obj);
         }
@@ -286,7 +279,8 @@ async function updatePiDetails(req, res) {
                 obj = {
                     testType: req.body.testType[i],
                     noOfSample: req.body.noOfSample[i],
-                    cost: req.body.cost[i]
+                    cost: req.body.cost[i],
+                    conditions:req.body.conditions[i],
                 }
                 testData.push(obj);
             }
@@ -298,6 +292,7 @@ async function updatePiDetails(req, res) {
             poDo: req.body.poDoStatus,
             isPiAccepted: req.body.piStatus,
             totalCost: req.body.totalCost,
+            poDoNo:req.body.poDoNo,
         })
         res.redirect("/user/getPiDataList?page=1&limit=7&success=" + true)
     } catch (error) {
