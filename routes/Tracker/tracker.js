@@ -37,13 +37,13 @@ async function getPiDataStatus(req, res) {
 async function getTrDataStatus(req, res) {
     try {
         let trNo = req.query.trNo
-        let data = await TrDetail.findOne({ trNumber: trNo })
+        let data= await TrDetail.findOne({ trNumber: trNo })
 
         userId = req.cookies.userId;
         userData = await UserDetail.findOne({ _id: userId })
         userImg = userData.userImage
 
-        res.status(201).render("pages/tracker/trDataStatus", { data: data, success: true , getOneTrRecordTab:true});
+        res.status(201).render("pages/tracker/trDataStatus", { data: data, userImage:userImg, success: true , getOneTrRecordTab:true});
 
     } catch (error) {
         res.status(500).send(error)
