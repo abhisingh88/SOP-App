@@ -311,7 +311,7 @@ async function invoiceDetails(req, res) {
 
         // inNo += format.asString('yy-MM-dd', new Date());
         
-        inNo+="/"+year+"-"+year+1;
+        inNo+="/"+year+"-"+Number(year)+1;
         inNo += "/";
         var count = await InvoiceDetail.count({ year: year })
         if (count == 0) {
@@ -329,7 +329,8 @@ async function invoiceDetails(req, res) {
             obj = {
                 testType: req.body.testType,
                 noOfSample: req.body.noOfSample,
-                cost: req.body.cost
+                cost: req.body.cost,
+                conditions:req.body.conditions,
             }
             testData.push(obj);
         }
@@ -338,7 +339,8 @@ async function invoiceDetails(req, res) {
                 obj = {
                     testType: req.body.testType[i],
                     noOfSample: req.body.noOfSample[i],
-                    cost: req.body.cost[i]
+                    cost: req.body.cost[i],
+                    conditions:req.body.conditions[i],
                 }
                 testData.push(obj);
             }
