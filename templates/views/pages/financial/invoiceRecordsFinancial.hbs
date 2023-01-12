@@ -44,6 +44,9 @@
                   <th scope="col">Contact No.</th>
                   <th scope="col">Test Type</th>
                   <th scope="col">No Of Sample</th>
+                  <th scope="col">Conditions</th>
+                  <th scope="col">Cost</th>
+                  {{!-- <th scope="col">Total Cost</th> --}}
                   <th scope="col">Generate Invoice</th>
                 </tr>
               </thead>
@@ -69,6 +72,21 @@
                       {{/eachProperty }}
                     </ul>
                   </td>
+                  <td>
+                    <ul>
+                      {{#eachProperty testData}}
+                      <li>{{value.conditions}}</li>
+                      {{/eachProperty }}
+                    </ul>
+                  </td>
+                  <td>
+                    <ul>
+                      {{#eachProperty testData}}
+                      <li>{{value.cost}}</li>
+                      {{/eachProperty }}
+                    </ul>
+                  </td>
+                  {{!-- <td>{{totalCost}}</td> --}}
                   <td><a href="/user/generateInvoiceFinancial?trNo={{trNumber}}"><button
                         class="btn btn-primary">Get Data</button></a></td>
                 </tr>

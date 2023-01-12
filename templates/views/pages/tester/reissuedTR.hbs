@@ -33,7 +33,7 @@
       <div class="col-10 mx-0 mt-4 p-4">
         <h1 class="my-4">Re-issued Test Report List</h1>
         <hr>
-        
+
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
@@ -57,39 +57,39 @@
                 <td>
                   <ol>
                     {{#eachProperty testData}}
-                      <li>{{value.testType}}</li>
+                    <li>{{value.testType}}</li>
                     {{/eachProperty }}
                   </ol>
                 </td>
                 <td>
                   <ul>
                     {{#eachProperty testData}}
-                      <li>{{value.noOfSample}}</li>
+                    <li>{{value.noOfSample}}</li>
                     {{/eachProperty }}
                   </ul>
                 </td>
                 <td>{{contact}}</td>
                 <td>{{trimString date}}</td>
-                <td><a href="/user/testViewSubmissionUpdate?trNo={{trNumber}}"><button
-                      class="btn btn-primary">Update Test Report</button></a>
-                  </td>
+                <td><a href="/user/testViewSubmissionUpdate?trNo={{trNumber}}"><button class="btn btn-primary">Update
+                      Test Report</button></a>
+                </td>
                 {{!-- {{#eq status "null"}}
-                  <td><a href="/user/testViewSubmission?trNo={{trNumber}}"><button
-                      class="btn btn-primary">Upload Test Report</button></a>
-                  </td>
+                <td><a href="/user/testViewSubmission?trNo={{trNumber}}"><button class="btn btn-primary">Upload Test
+                      Report</button></a>
+                </td>
                 {{/eq}}
                 {{#ifnoteq status "null"}}
-                  <td><a href="/user/testViewSubmission?trNo={{trNumber}}"><button
-                      class="btn btn-primary">Update Test Report</button></a>
-                  </td>
+                <td><a href="/user/testViewSubmission?trNo={{trNumber}}"><button class="btn btn-primary">Update Test
+                      Report</button></a>
+                </td>
                 {{/ifnoteq}} --}}
                 <td>{{suggestion}}</td>
                 {{!-- {{#if status}}
-                  <td>{{status}}</td>
+                <td>{{status}}</td>
                 {{else}}
-                  <td>Pending</td>
+                <td>Pending</td>
                 {{/if}} --}}
-                
+
                 {{!-- <td>{{submittedToLabHead}}</td> --}}
               </tr>
               {{/each}}
@@ -97,6 +97,24 @@
             </tbody>
           </table>
         </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-end">
+
+            {{#if data.prev}}
+            <li class="page-item">
+              <a class="page-link" href="/user/tester?page={{data.prev.page}}&limit={{data.prev.limit}}">Previous</a>
+            </li>
+            {{/if}}
+            {{!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li> --}}
+            {{#if data.next}}
+            <li class="page-item">
+              <a class="page-link" href="/user/tester?page={{data.next.page}}&limit={{data.next.limit}}">Next</a>
+            </li>
+            {{/if}}
+          </ul>
+        </nav>
       </div>
     </div>
   </div>

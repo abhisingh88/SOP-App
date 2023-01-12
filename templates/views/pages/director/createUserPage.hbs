@@ -23,12 +23,12 @@
 </head>
 
 <body>
-  {{> navbar }}
+  {{> navbar userImg=data.userImage }}
 
   <div class="container-flex">
     <div class="row m-0">
       <div class="col-2 p-0 position-fixed">
-        {{> directorSidebar }}
+        {{> directorSidebar userImg=data.userImage }}
       </div>
       <div class="col-9" style="margin: 3% 20%;">
         {{#if success}}

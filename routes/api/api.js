@@ -28,7 +28,7 @@ async function createUser(req, res) {
 
         const register = await registerUser.save();
 
-        res.status(201).render("pages/director/createUserPage", { success: true });
+        res.status(201).render("pages/director/createUserPage", { success: true, createUserTab:true });
     } catch (error) {
         res.status(401).send(error)
     }
@@ -254,7 +254,7 @@ async function piDetailsForAcceptance(req, res) {
         })
         // console.log(piDetail);
         const piStatus = await piDetail.save();
-        res.redirect('/user/pidata?success=' + true + "&piNo=" + pi);
+        res.redirect('/user/genpidata?success=' + true + "&piNo=" + pi);
 
     } catch (error) {
         res.status(400).send("Error occureed plz try again!!")
@@ -311,7 +311,10 @@ async function invoiceDetails(req, res) {
 
         // inNo += format.asString('yy-MM-dd', new Date());
         
-        inNo+="/"+year+"-"+Number(year)+1;
+        inNo+="/"+year+"-";
+        let temp=Number(year);
+        temp+1;
+        inNo+=temp;
         inNo += "/";
         var count = await InvoiceDetail.count({ year: year })
         if (count == 0) {

@@ -127,6 +127,7 @@ router.get("/error", CredManager.errorPage)
 router.get("/user/itdata", auth, DataMiddleware.receptionDataMiddleware)
 router.get("/user/trdata", auth, DataMiddleware.TrlabHeadDataMiddleware)
 router.get("/user/pidata", auth, DataMiddleware.PiFinancialDataMiddleware)
+router.get("/user/genpidata", auth, DataMiddleware.GenPiFinancialDataMiddleware)
 router.get("/user/invoicedata", auth, DataMiddleware.InFinacialDataMiddleware)
 
 

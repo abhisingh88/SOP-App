@@ -40,7 +40,7 @@
 
         {{/if}}
 
-        <h1 class="my-4">Submitted Test Report List</h1>
+        <h1 class="my-4">Approved Test Report List</h1>
         <hr>
         
         <div class="table-responsive">
@@ -95,7 +95,7 @@
 
             {{#if prev}}
             <li class="page-item">
-              <a class="page-link" href="/user/labheadRecords?page={{prev.page}}&limit={{prev.limit}}">Previous</a>
+              <a class="page-link" href="/user/approvedTestReportList?page={{prev.page}}&limit={{prev.limit}}">Previous</a>
             </li>
             {{/if}}
             {{!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -103,7 +103,7 @@
             <li class="page-item"><a class="page-link" href="#">3</a></li> --}}
             {{#if next}}
             <li class="page-item">
-              <a class="page-link" href="/user/labheadRecords?page={{next.page}}&limit={{next.limit}}">Next</a>
+              <a class="page-link" href="/user/approvedTestReportList?page={{next.page}}&limit={{next.limit}}">Next</a>
             </li>
             {{/if}}
           </ul>

@@ -75,7 +75,7 @@ async function getDirectorTrDataStatus(req, res) {
         userData = await UserDetail.findOne({ _id: userId })
         userImg = userData.userImage
 
-        res.status(201).render("pages/tracker/directorTrDataStatus", { data: data, success: true , getOneTrRecordTab:true});
+        res.status(201).render("pages/tracker/directorTrDataStatus", { data: data, userImage:userImg, success: true , getOneTrRecordTab:true});
 
     } catch (error) {
         res.status(500).send(error)
@@ -91,7 +91,7 @@ async function getDirectorInvoiceDataStatus(req, res) {
         userData = await UserDetail.findOne({ _id: userId })
         userImg = userData.userImage
 
-        res.status(201).render("pages/tracker/directorInDataStatus", { data: data, success: true , getOneInRecordTab:true});
+        res.status(201).render("pages/tracker/directorInDataStatus", { data: data, userImage:userImg, success: true , getOneInRecordTab:true});
 
     } catch (error) {
         res.status(500).send(error)

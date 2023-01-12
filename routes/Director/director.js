@@ -6,7 +6,16 @@ const InvoiceDetail = require("../../models/invoiceDetails");
 
 async function directorPage(req, res) {
     try {
-        res.status(201).render("pages/director/director", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous,testReportTab:true });
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data=res.paginatedResult.results
+        data.userImage = userImg
+
+
+        res.status(201).render("pages/director/director", { data: data, next: res.paginatedResult.next, prev: res.paginatedResult.previous,testReportTab:true });
 
     } catch (error) {
         res.status(401).send(error)
@@ -15,7 +24,16 @@ async function directorPage(req, res) {
 
 async function getdirectorInovoiceRecords(req, res) {
     try {
-        res.status(201).render("pages/director/directorFinalAuthorize", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous, ApproveInvoiceTab:true });
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data=res.paginatedResult.results
+        data.userImage = userImg
+
+
+        res.status(201).render("pages/director/directorFinalAuthorize", { data: data, next: res.paginatedResult.next, prev: res.paginatedResult.previous, ApproveInvoiceTab:true });
 
     } catch (error) {
         res.status(401).send(error)
@@ -25,7 +43,16 @@ async function getdirectorInovoiceRecords(req, res) {
 
 async function getfinalInvoices(req, res) {
     try {
-        res.status(201).render("pages/director/finalInvoiceReportList", { data: res.paginatedResult.results, next: res.paginatedResult.next, prev: res.paginatedResult.previous, invoiceListTab:true });
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+
+        data=res.paginatedResult.results
+        data.userImage = userImg
+
+
+        res.status(201).render("pages/director/finalInvoiceReportList", { data: data, next: res.paginatedResult.next, prev: res.paginatedResult.previous, invoiceListTab:true });
 
     } catch (error) {
         res.status(500).send(error)
@@ -86,7 +113,16 @@ async function retestDirector(req, res) {
 
 async function createUser(req, res) {
     try {
-        res.status(201).render("pages/director/createUserPage", {createUserTab:true});
+
+        data={}
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+        data.userImage = userImg
+
+
+        res.status(201).render("pages/director/createUserPage", {data:data, createUserTab:true});
 
     } catch (error) {
         res.status(401).send(error)

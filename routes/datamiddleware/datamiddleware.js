@@ -51,6 +51,26 @@ async function PiFinancialDataMiddleware(req, res) {
         userImg = userData.userImage
         data.userImage=userImg
         
+        res.status(201).render("pages/financial/successPiPage", { success: success,pi:pi, data:data, ItReqTab:true });
+
+    } catch (error) {
+        res.status(401).send(error)
+    }
+};
+async function GenPiFinancialDataMiddleware(req, res) {
+    try {
+        let success=req.query.success
+        let pi=req.query.piNo
+
+        let data= await PiDetail.findOne({piNumber:pi})
+        // console.log("reached");
+        // console.log(data);
+
+        userId = req.cookies.userId;
+        userData = await UserDetail.findOne({ _id: userId })
+        userImg = userData.userImage
+        data.userImage=userImg
+        
         res.status(201).render("pages/financial/successPiPage", { success: success,pi:pi, data:data, generatePiTab:true });
 
     } catch (error) {
@@ -82,5 +102,6 @@ module.exports={
     receptionDataMiddleware:receptionDataMiddleware,
     TrlabHeadDataMiddleware:TrlabHeadDataMiddleware,
     PiFinancialDataMiddleware:PiFinancialDataMiddleware,
+    GenPiFinancialDataMiddleware:GenPiFinancialDataMiddleware,
     InFinacialDataMiddleware:InFinacialDataMiddleware,
 }
