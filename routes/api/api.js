@@ -93,8 +93,8 @@ async function trDetails(req, res) {
             obj = {
                 testType: req.body.testType,
                 noOfSample: req.body.noOfSample,
-                cost: req.body.cost,
                 conditions:req.body.conditions,
+                cost: req.body.cost,
             }
             testData.push(obj);
         }

@@ -36,11 +36,13 @@ async function getTestViewSubmission(req, res) {
 async function getTestViewSubmissionUpdate(req, res) {
     try {        
         let tr=req.query.trNo
+
         let userId=req.cookies.userId
         userData = await UserDetail.findOne({ _id: userId })
         userImg = userData.userImage
 
         let data = await TrDetail.findOne({ trNumber: tr })
+        data.userImage=userImg
         res.status(200).render("pages/tester/testerReportUpdate",{data:data, reissuedTestTab:true})
 
     } catch (error) {

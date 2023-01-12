@@ -13,7 +13,7 @@ const trSchema = new mongoose.Schema({
     piNumber: {
         type: String,
         required: true,
-        unique:true,
+        unique: true,
     },
     companyName: {
         type: String,
@@ -28,8 +28,16 @@ const trSchema = new mongoose.Schema({
             noOfSample: {
                 type: String,
                 required: true
+            },
+            cost: {
+                type: String,
+                required: true
+            },
+            conditions:{
+                type: String,
+                required: true
             }
-        }
+        },
     ],
     contact: {
         type: String,
@@ -48,55 +56,55 @@ const trSchema = new mongoose.Schema({
     },
     receivedBy: {
         type: String,
-        default:"null",
+        default: "null",
     },
     filename: {
         type: String,
-        default:"null"
+        default: "null"
     },
     allocatedTo: {
         type: String,
-        default:"null"
+        default: "null"
     },
     testerName: {
         type: String,
-        default:"null"
+        default: "null"
     },
     parentTr: {
         type: String,
-        default:"null",
+        default: "null",
     },
     status: {
         type: String,
-        default:"null"
+        default: "null"
     },
     suggestion: {
         type: String,
-        default:"null"
+        default: "null"
     },
     remark: {
         type: String,
-        default:"null"
+        default: "null"
     },
-    commentFromTester:{
+    commentFromTester: {
         type: String,
-        default:"null"
+        default: "null"
     },
     toDirector: {
         type: String,
-        default:"null"
+        default: "null"
     },
     isAuthorized: {
         type: String,
-        default:"null"
+        default: "null"
     },
     isInvoiceGen: {
         type: String,
-        default:"null"
+        default: "null"
     },
-    isTrCompleted:{
-        type:String,
-        default:"No"
+    isTrCompleted: {
+        type: String,
+        default: "No"
     }
 });
 
