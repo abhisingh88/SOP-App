@@ -55,9 +55,9 @@
                             required>
                         <input style="width: 24.50%;" type="text" placeholder="Number of Sample" value="{{value.noOfSample}}" name="noOfSample"
                             id="noOfSample" required>
-                        <input style="width: 24.50%;" type="text" placeholder="Cost" value="{{value.cost}}" name="cost"
+                        <input style="width: 24.50%;" type="text" placeholder="Conditions" value="{{value.conditions}}" name="cost"
                             id="cost" required>
-                        <input style="width: 24.50%;" type="text" placeholder="Cost" value="{{value.conditions}}" name="cost"
+                        <input style="width: 24.50%;" type="text" placeholder="Cost" value="{{value.cost}}" name="cost"
                             id="cost" required>
                     </div>
                     {{/eachProperty }}
@@ -119,7 +119,7 @@
         function remove_TestField() {
             var counter = document.getElementById("counterVal").value;
             if (counter <= 1) {
-                alert("Atleast One field is Compulsory")
+                alert("Atleast One field is Compulsory");
             } else {
                 var testData = document.getElementById("testCollection")
                 testData.removeChild(testData.lastChild)
