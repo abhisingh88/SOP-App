@@ -93,7 +93,8 @@ async function trDetails(req, res) {
             obj = {
                 testType: req.body.testType,
                 noOfSample: req.body.noOfSample,
-                cost: req.body.cost
+                cost: req.body.cost,
+                conditions:req.body.conditions,
             }
             testData.push(obj);
         }
@@ -102,12 +103,14 @@ async function trDetails(req, res) {
                 obj = {
                     testType: req.body.testType[i],
                     noOfSample: req.body.noOfSample[i],
-                    cost: req.body.cost[i]
+                    cost: req.body.cost[i],
+                    conditions:req.body.conditions[i],
                 }
                 testData.push(obj);
             }
         }
 
+        // console.log(testData);
         const trDetail = new TrDetail({
             trNumber: tr,
             piNumber: req.body.piNumber,

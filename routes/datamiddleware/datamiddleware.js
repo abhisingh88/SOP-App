@@ -30,7 +30,7 @@ async function TrlabHeadDataMiddleware(req, res) {
         userImg = userData.userImage
         data.userImage=userImg
 
-        res.status(201).render("pages/labhead/successTrPage", { success: success,tr:tr, data:data });
+        res.status(201).render("pages/labhead/successTrPage", { success: success, prListTab:true,tr:tr, data:data });
 
     } catch (error) {
         res.status(401).send(error)
@@ -51,7 +51,7 @@ async function PiFinancialDataMiddleware(req, res) {
         userImg = userData.userImage
         data.userImage=userImg
         
-        res.status(201).render("pages/financial/successPiPage", { success: success,pi:pi, data:data, ItReqTab:true });
+        res.status(201).render("pages/financial/successPiPage", { success: success,pi:pi, data:data, generatePiTab:true });
 
     } catch (error) {
         res.status(401).send(error)
